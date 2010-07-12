@@ -1,0 +1,24 @@
+[user]
+  name = George Guimarães
+  email = george@plataformatec.com.br
+[color]
+  ui = auto
+  status = auto
+  diff = auto
+  branch = auto
+[alias]
+  ci = commit
+  st = status
+  co = checkout
+  br = branch
+  ls = ls-files
+[core]
+  excludesfile = ~/.gitignore
+[pack]
+  threads = 0
+[merge]
+  tool = opendiff
+  summary = true
+
+[bash]
+  showDirtyState = true

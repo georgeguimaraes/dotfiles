@@ -1,6 +1,15 @@
 [user]
   name = George Guimarães
   email = george@plataformatec.com.br
+[core]
+  excludesfile = ~/.gitignore
+[pack]
+  threads = 0
+[merge]
+  tool = opendiff
+  summary = true
+[bash]
+  showDirtyState = true
 [color]
   ui = auto
   status = auto
@@ -15,14 +24,4 @@
   graph = log --graph --all --decorate
   gr    = log --graph --pretty=oneline --abrev-commit --all --decorate
   one   = log --pretty='format:%Cgreen%H %Cred%ai %Creset- %s' --decorate
-
-[core]
-  excludesfile = ~/.gitignore
-[pack]
-  threads = 0
-[merge]
-  tool = opendiff
-  summary = true
-
-[bash]
-  showDirtyState = true
+  cached = diff --cached

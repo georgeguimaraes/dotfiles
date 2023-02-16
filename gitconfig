@@ -1,13 +1,18 @@
 [user]
   name = George Guimarães
-  email = george@plataformatec.com.br
+  email = george.guimaraes@gmail.com
+  signingkey = 20E86F6F5FC22FA7
 [core]
   excludesfile = ~/.gitignore
+	autocrlf = false
+	safecrlf = false
+	editor = nvim
 [pack]
   threads = 0
 [merge]
   tool = opendiff
   summary = true
+  ff = false
 [bash]
   showDirtyState = true
 [color]
@@ -25,3 +30,13 @@
   gr    = log --graph --pretty=oneline --abrev-commit --all --decorate
   one   = log --pretty='format:%Cgreen%H %Cred%ai %Creset- %s' --decorate
   cached = diff --cached
+  amend = commit --amend
+  pureb = pull --rebase
+  continue = rebase --continue
+  abort = rebase --abort
+[commit]
+  gpgsign = false
+[pull]
+	rebase = true
+[init]
+	defaultBranch = main

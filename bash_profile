@@ -1,7 +1,7 @@
 export GREP_OPTIONS="--color=auto"
 export GREP_COLOR="4;33"
 export CLICOLOR="auto"
-export EDITOR="mvim"
+export EDITOR="vim -f"
 
 export GIT_PS1_SHOWDIRTYSTATE=1
 export GIT_PS1_SHOWUNTRACKEDFILES=1
@@ -26,6 +26,7 @@ alias gpl='git pull'
 alias gs='git status'
 alias gd='git diff'
 alias g='git'
+alias ga='git add'
 
 alias bi="bundle install"
 alias bu="bundle update"
@@ -48,9 +49,9 @@ alias ll='ls -FGlAhp'                       # Preferred 'ls' implementation
 alias f='open -a Finder ./'                 # f:            Opens current directory in MacOS Finder
 ql () { qlmanage -p "$*" >& /dev/null; }    # ql:           Opens any file in MacOS Quicklook Preview
 
-CDPATH=".:~:~/projects:~/projects/ptec:/GData:/GData/Plataformatec"
+CDPATH=".:~:~/code:~/code/ptec"
 HISTIGNORE="&:ls:[bf]g:exit"
-export PATH=/usr/local/sbin:/usr/local/bin:~/.bin:$PATH
+export PATH=/usr/local/sbin:/usr/local/bin:~/bin:$PATH
 
 shopt -s cdspell
 
@@ -64,3 +65,16 @@ export DISABLE_SPRING=1
 
 export EXENV_ROOT=/usr/local/var/exenv
 if which exenv > /dev/null; then eval "$(exenv init -)"; fi
+
+export ERL_AFLAGS="-kernel shell_history enabled"
+
+test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+
+. $HOME/.asdf/asdf.sh
+. $HOME/.asdf/completions/asdf.bash
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/george/google-cloud-sdk/path.bash.inc' ]; then . '/Users/george/google-cloud-sdk/path.bash.inc'; fi
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/george/google-cloud-sdk/completion.bash.inc' ]; then . '/Users/george/google-cloud-sdk/completion.bash.inc'; fi
+

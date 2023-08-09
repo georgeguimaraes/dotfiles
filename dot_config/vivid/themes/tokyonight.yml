@@ -1,0 +1,137 @@
+colors:
+  # based on tokyonight
+  # https://github.com/enkia/tokyo-night-vscode-theme
+
+  red: '8c4351'
+  orange: 'ff9e64'
+  yellow: 'e0af68'
+  green1: '9ece6a'
+  green2: '73daca' # terminal green
+  blue1: 'b4f9f8' # regex literal strings
+  blue2: '2ac3de'
+  blue3: '7dcfff' #terminal cyan
+  purple1: '7aa2f7' #terminal blue
+  purple2: 'bb9af7' #terminal magenta
+  purple3: 'c0caf5' #variables
+  gray1: 'a9b1d6' #editor foreground
+  gray2: '9aa5ce' #markdown text
+  sand: 'cfc9c2'
+  dark_blue1: '565f89'
+  dark_blue2: '414868'
+  bg1: '24283b'
+  bg2: '1a1b26'
+
+
+core:
+  normal_text: {}
+  regular_file: {}
+  reset_to_normal: {}
+
+  directory:
+    foreground: purple1
+
+  symlink:
+    foreground: green1
+
+  multi_hard_link: {}
+
+  fifo:
+    foreground: green1
+    background: dark_blue1
+
+  socket:
+    foreground: green1
+    background: dark_blue1
+
+  door:
+    foreground: green1
+    background: dark_blue1
+
+  block_device:
+    foreground: purple3
+    background: dark_blue1
+
+  character_device:
+    foreground: gray1
+    background: dark_blue1
+
+  broken_symlink:
+    foreground: green1
+    background: red
+
+  missing_symlink_target:
+    foreground: green1
+    background: red
+
+  setuid: {}
+
+  setgid: {}
+
+  file_with_capability: {}
+
+  sticky_other_writable: {}
+
+  other_writable: {}
+
+  sticky: {}
+
+  executable_file:
+    foreground: red
+    font-style: bold
+
+text:
+  special:
+    foreground: orange
+
+  todo:
+    font-style: bold
+
+  licenses:
+    foreground: blue2
+
+  configuration:
+    foreground: blue3
+
+  other:
+    foreground: purple3
+
+markup:
+  foreground: purple3
+
+programming:
+  source:
+    foreground: purple2
+
+  tooling:
+    foreground: gray1
+
+    continuous-integration:
+      foreground: gray2
+
+media:
+  image:
+    foreground: green2
+
+  audio:
+    foreground: blue3
+
+  video:
+    foreground: orange
+    font-style: bold
+
+  fonts:
+    foreground: orange
+
+office:
+  foreground: orange
+
+archives:
+  foreground: sand
+  font-style: underline
+
+executable:
+  foreground: red
+  font-style: bold
+
+unimportant:
+  foreground: gray1

@@ -1,6 +1,101 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
+local process_icons = {
+	["docker"] = {
+		{ Text = wezterm.nerdfonts.linux_docker },
+	},
+	["docker-compose"] = {
+		{ Text = wezterm.nerdfonts.linux_docker },
+	},
+	["kuberlr"] = {
+		{ Text = wezterm.nerdfonts.linux_docker },
+	},
+	["kubectl"] = {
+		{ Text = wezterm.nerdfonts.linux_docker },
+	},
+	["nvim"] = {
+		{ Text = wezterm.nerdfonts.custom_vim },
+	},
+	["vim"] = {
+		{ Text = wezterm.nerdfonts.dev_vim },
+	},
+	["node"] = {
+		{ Text = wezterm.nerdfonts.mdi_hexagon },
+	},
+	["zsh"] = {
+		{ Text = wezterm.nerdfonts.cod_terminal },
+	},
+	["bash"] = {
+		{ Text = wezterm.nerdfonts.cod_terminal_bash },
+	},
+	["btm"] = {
+		{ Text = wezterm.nerdfonts.mdi_chart_donut_variant },
+	},
+	["htop"] = {
+		{ Text = wezterm.nerdfonts.mdi_chart_donut_variant },
+	},
+	["cargo"] = {
+		{ Text = wezterm.nerdfonts.dev_rust },
+	},
+	["go"] = {
+		{ Text = wezterm.nerdfonts.mdi_language_go },
+	},
+	["lazydocker"] = {
+		{ Text = wezterm.nerdfonts.linux_docker },
+	},
+	["git"] = {
+		{ Text = wezterm.nerdfonts.dev_git },
+	},
+	["lua"] = {
+		{ Text = wezterm.nerdfonts.seti_lua },
+	},
+	["wget"] = {
+		{ Text = wezterm.nerdfonts.mdi_arrow_down_box },
+	},
+	["curl"] = {
+		{ Text = wezterm.nerdfonts.mdi_flattr },
+	},
+	["gh"] = {
+		{ Text = wezterm.nerdfonts.dev_github_badge },
+	},
+	["python"] = {
+		{ Text = wezterm.nerdfonts.dev_python },
+	},
+	["python3"] = {
+		{ Text = wezterm.nerdfonts.dev_python },
+	},
+	["ruby"] = {
+		{ Text = wezterm.nerdfonts.dev_ruby },
+	},
+	["beam.smp"] = {
+		{ Text = wezterm.nerdfonts.custom_elixir },
+	},
+	["elixir"] = {
+		{ Text = wezterm.nerdfonts.custom_elixir },
+	},
+}
+
+local function get_current_working_dir(tab)
+	local current_dir = tab.active_pane.current_working_dir
+	local HOME_DIR = string.format("file://%s", os.getenv("HOME"))
+
+	if current_dir == HOME_DIR then
+		return "~"
+	end
+
+	return string.gsub(current_dir, "(.*[/\\])(.*)", "%2")
+end
+
+local function get_process(tab)
+	local process_name = string.gsub(tab.active_pane.foreground_process_name, "(.*[/\\])(.*)", "%2")
+	if string.find(process_name, "kubectl") then
+		process_name = "kubectl"
+	end
+
+	return wezterm.format(process_icons[process_name] or { { Text = string.format("%s:", process_name) } })
+end
+
 config.audible_bell = "Disabled"
 config.visual_bell = {
 	fade_in_duration_ms = 75,
@@ -17,6 +112,7 @@ config.font_size = 16
 config.use_fancy_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = true
 config.enable_kitty_keyboard = true
+config.enable_csi_u_key_encoding = false
 config.window_decorations = "RESIZE"
 config.window_background_opacity = 1
 -- config.macos_window_background_blur = 20
@@ -162,102 +258,38 @@ config.keys = {
 	{ mods = "CMD", key = "LeftArrow", action = action.SendKey({ mods = "CTRL", key = "a" }) },
 	{ mods = "CMD", key = "RightArrow", action = action.SendKey({ mods = "CTRL", key = "e" }) },
 	{ mods = "CMD", key = "Backspace", action = action.SendKey({ mods = "CTRL", key = "u" }) },
-}
-
-local process_icons = {
-	["docker"] = {
-		{ Text = wezterm.nerdfonts.linux_docker },
+	{
+		mods = "CMD",
+		key = "c",
+		action = wezterm.action_callback(function(window, pane)
+			if is_vim(pane) then
+				window:perform_action(action.SendKey({ key = "y" }), pane)
+			else
+				window:perform_action(action.CopyTo("Clipboard"), pane)
+			end
+		end),
 	},
-	["docker-compose"] = {
-		{ Text = wezterm.nerdfonts.linux_docker },
-	},
-	["kuberlr"] = {
-		{ Text = wezterm.nerdfonts.linux_docker },
-	},
-	["kubectl"] = {
-		{ Text = wezterm.nerdfonts.linux_docker },
-	},
-	["nvim"] = {
-		{ Text = wezterm.nerdfonts.custom_vim },
-	},
-	["vim"] = {
-		{ Text = wezterm.nerdfonts.dev_vim },
-	},
-	["node"] = {
-		{ Text = wezterm.nerdfonts.mdi_hexagon },
-	},
-	["zsh"] = {
-		{ Text = wezterm.nerdfonts.cod_terminal },
-	},
-	["bash"] = {
-		{ Text = wezterm.nerdfonts.cod_terminal_bash },
-	},
-	["btm"] = {
-		{ Text = wezterm.nerdfonts.mdi_chart_donut_variant },
-	},
-	["htop"] = {
-		{ Text = wezterm.nerdfonts.mdi_chart_donut_variant },
-	},
-	["cargo"] = {
-		{ Text = wezterm.nerdfonts.dev_rust },
-	},
-	["go"] = {
-		{ Text = wezterm.nerdfonts.mdi_language_go },
-	},
-	["lazydocker"] = {
-		{ Text = wezterm.nerdfonts.linux_docker },
-	},
-	["git"] = {
-		{ Text = wezterm.nerdfonts.dev_git },
-	},
-	["lua"] = {
-		{ Text = wezterm.nerdfonts.seti_lua },
-	},
-	["wget"] = {
-		{ Text = wezterm.nerdfonts.mdi_arrow_down_box },
-	},
-	["curl"] = {
-		{ Text = wezterm.nerdfonts.mdi_flattr },
-	},
-	["gh"] = {
-		{ Text = wezterm.nerdfonts.dev_github_badge },
-	},
-	["python"] = {
-		{ Text = wezterm.nerdfonts.dev_python },
-	},
-	["python3"] = {
-		{ Text = wezterm.nerdfonts.dev_python },
-	},
-	["ruby"] = {
-		{ Text = wezterm.nerdfonts.dev_ruby },
-	},
-	["beam.smp"] = {
-		{ Text = wezterm.nerdfonts.custom_elixir },
-	},
-	["elixir"] = {
-		{ Text = wezterm.nerdfonts.custom_elixir },
+	{
+		mods = "CMD",
+		key = "a",
+		action = wezterm.action_callback(function(window, pane)
+			if is_vim(pane) then
+				window:perform_action(
+					action.Multiple({
+						action.SendKey({ key = "Escape" }),
+						action.SendKey({ key = "g" }),
+						action.SendKey({ key = "g" }),
+						action.SendKey({ key = "V" }),
+						action.SendKey({ key = "G" }),
+					}),
+					pane
+				)
+			else
+				window:perform_action(action.Nop, pane)
+			end
+		end),
 	},
 }
-
-local function get_current_working_dir(tab)
-	local current_dir = tab.active_pane.current_working_dir
-	local HOME_DIR = string.format("file://%s", os.getenv("HOME"))
-
-	if current_dir == HOME_DIR then
-		return "~"
-	end
-
-	return string.gsub(current_dir, "(.*[/\\])(.*)", "%2")
-end
-
-local function get_process(tab)
-	local process_name = string.gsub(tab.active_pane.foreground_process_name, "(.*[/\\])(.*)", "%2")
-	if string.find(process_name, "kubectl") then
-		process_name = "kubectl"
-	end
-
-	return wezterm.format(process_icons[process_name] or { { Text = string.format("%s:", process_name) } })
-end
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
 	local has_unseen_output = false
@@ -286,6 +318,21 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 	return {
 		{ Text = title },
 	}
+end)
+
+config.hyperlink_rules = wezterm.default_hyperlink_rules()
+-- make username/project paths clickable. this implies paths like the following are for github.
+-- ( "nvim-treesitter/nvim-treesitter" | wbthomason/packer.nvim | wez/wezterm | "wez/wezterm.git" )
+-- as long as a full url hyperlink regex exists above this it should not match a full url to
+-- github or gitlab / bitbucket (i.e. https://gitlab.com/user/project.git is still a whole clickable url)
+table.insert(config.hyperlink_rules, {
+	regex = [[["'\s]([\w\d]{1}[-\w\d]+)(/){1}([-\w\d\.]+)["'\s]] .. "]",
+	format = "https://www.github.com/$1/$3",
+})
+
+wezterm.on("gui-startup", function(cmd) -- set startup Window position
+	local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
+	window:gui_window():set_position(60, 60)
 end)
 
 return config

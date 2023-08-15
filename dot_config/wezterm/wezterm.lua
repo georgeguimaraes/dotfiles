@@ -289,6 +289,40 @@ config.keys = {
 			end
 		end),
 	},
+	{
+		mods = "CMD",
+		key = "s",
+		action = wezterm.action_callback(function(window, pane)
+			if is_vim(pane) then
+				window:perform_action(
+					action.Multiple({
+						action.SendKey({ key = "Escape" }),
+						action.SendKey({ key = ":" }),
+						action.SendKey({ key = "w" }),
+						action.SendKey({ key = "Enter" }),
+					}),
+					pane
+				)
+			else
+				window:perform_action(action.Nop, pane)
+			end
+		end),
+	},
+	{
+		mods = "CMD",
+		key = "r",
+		action = action.RotatePanes("Clockwise"),
+	},
+	{
+		mods = "CMD|SHIFT",
+		key = "r",
+		action = action.RotatePanes("CounterClockwise"),
+	},
+	{
+		mods = "CMD",
+		key = "g",
+		action = action.PaneSelect({ mode = "SwapWithActive" }),
+	},
 }
 
 wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_width)
@@ -318,6 +352,18 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 	return {
 		{ Text = title },
 	}
+end)
+
+wezterm.on("update-status", function(window, pane)
+	if window:active_key_table() == "copy_mode" then
+		window:set_right_status(wezterm.format({
+			{ Foreground = { Color = "#bb9af7" } },
+			{ Background = { Color = "#222436" } },
+			{ Text = wezterm.nerdfonts.oct_copy .. "  COPY  " },
+		}))
+	else
+		window:set_right_status("")
+	end
 end)
 
 config.hyperlink_rules = wezterm.default_hyperlink_rules()

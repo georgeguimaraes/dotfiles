@@ -4,26 +4,15 @@
   signingkey = 20E86F6F5FC22FA7
 [core]
   excludesfile = ~/.gitignore
-	autocrlf = false
-	safecrlf = false
-	editor = nvim
+  autocrlf = true
+  safecrlf = false
+  editor = nvim
   pager = delta
-
 [pack]
   threads = 0
-[merge]
-  tool = opendiff
-  summary = true
-  ff = false
-  autostash = true
-[bash]
-  showDirtyState = true
-[color]
-  ui = auto
-  status = auto
-  diff = auto
-  branch = auto
 [alias]
+  aa = add --all
+  ap = add --patch
   ci = commit
   st = status
   co = checkout
@@ -45,7 +34,7 @@
 [rebase]
   autosquash = true
 [init]
-	defaultBranch = main
+  defaultBranch = main
 
 [interactive]
   diffFilter = delta --color-only --features=interactive
@@ -64,4 +53,3 @@
   hunk-header-file-style = red
   hunk-header-line-number-style = "#067a00"
   hunk-header-style = file line-number syntax
-

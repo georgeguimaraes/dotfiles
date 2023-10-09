@@ -104,10 +104,12 @@ config.visual_bell = {
 }
 config.term = "wezterm"
 config.color_scheme = "Tokyo Night Moon"
+-- config.font = wezterm.font("Iosevka", { weight = "Medium" })
 -- config.font = wezterm.font("FiraCodeGG Nerd Font", { weight = "Medium" })
 config.font = wezterm.font("Iosevka GG", { stretch = "Expanded", weight = "Medium" })
--- config.font = wezterm.font("Victor Mono", { weight = "Medium" })
--- config.font = wezterm.font("MonoLisa", { weight = "Regular" })
+-- config.font = wezterm.font({ family = "Victor Mono", weight = 600, harfbuzz_features = { "ss01" } })
+-- config.font = wezterm.font("Maple Mono", { weight = "Medium" })
+-- config.font = wezterm.font({ family = "Rec Mono Duotone", weight = "Medium" })
 config.font_size = 16
 config.use_fancy_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = true
@@ -116,8 +118,8 @@ config.enable_csi_u_key_encoding = false
 config.window_decorations = "RESIZE"
 config.window_background_opacity = 1
 -- config.macos_window_background_blur = 20
-config.initial_cols = 140
-config.initial_rows = 40
+config.initial_cols = 228
+config.initial_rows = 56
 config.switch_to_last_active_tab_when_closing_tab = true
 config.window_close_confirmation = "NeverPrompt"
 config.pane_focus_follows_mouse = true
@@ -378,7 +380,7 @@ table.insert(config.hyperlink_rules, {
 
 wezterm.on("gui-startup", function(cmd) -- set startup Window position
   local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
-  window:gui_window():set_position(60, 60)
+  window:gui_window():set_position(128, 129)
 end)
 
 return config

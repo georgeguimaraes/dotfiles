@@ -1,0 +1,4 @@
+{
+  "default": true,
+  "line_length": { "line_length": 100 },
+}

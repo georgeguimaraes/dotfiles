@@ -15,7 +15,7 @@ local process_icons = {
     { Text = wezterm.nerdfonts.linux_docker },
   },
   ["nvim"] = {
-    { Text = wezterm.nerdfonts.custom_vim },
+    { Text = "" },
   },
   ["vim"] = {
     { Text = wezterm.nerdfonts.dev_vim },
@@ -89,6 +89,7 @@ end
 
 local function get_process(tab)
   local process_name = string.gsub(tab.active_pane.foreground_process_name, "(.*[/\\])(.*)", "%2")
+  process_name = string.lower(process_name)
   if string.find(process_name, "kubectl") then
     process_name = "kubectl"
   end
@@ -96,6 +97,7 @@ local function get_process(tab)
   return wezterm.format(process_icons[process_name] or { { Text = string.format("%s:", process_name) } })
 end
 
+config.front_end = "WebGpu"
 config.audible_bell = "Disabled"
 config.visual_bell = {
   fade_in_duration_ms = 75,
@@ -106,11 +108,17 @@ config.term = "wezterm"
 config.color_scheme = "Tokyo Night Moon"
 -- config.font = wezterm.font("Iosevka", { weight = "Medium" })
 -- config.font = wezterm.font("FiraCodeGG Nerd Font", { weight = "Medium" })
-config.font = wezterm.font("Iosevka GG", { stretch = "Expanded", weight = "Medium" })
--- config.font = wezterm.font({ family = "Victor Mono", weight = 600, harfbuzz_features = { "ss01" } })
+-- config.font = wezterm.font("Iosevka GG", { stretch = "Expanded", weight = "Medium" })
+config.font = wezterm.font({ family = "VictorMono Nerd Font", weight = 500, harfbuzz_features = {} })
+-- config.font = wezterm.font({ family = "Victor Mono", weight = 600, harfbuzz_features = {} })
 -- config.font = wezterm.font("Maple Mono", { weight = "Medium" })
 -- config.font = wezterm.font({ family = "Rec Mono Duotone", weight = "Medium" })
-config.font_size = 16
+-- config.font = wezterm.font({ family = "CaskaydiaCove Nerd Font", weight = "Medium" })
+-- config.font = wezterm.font({ family = "Dank Mono" })
+-- config.font = wezterm.font({ family = "Fantasque Sans Mono" })
+-- config.font = wezterm.font({ family = "CommitMono-GG" })
+-- config.font = wezterm.font({ family = "Mononoki" })
+config.font_size = 17
 config.use_fancy_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = true
 config.enable_kitty_keyboard = true
@@ -118,8 +126,8 @@ config.enable_csi_u_key_encoding = false
 config.window_decorations = "RESIZE"
 config.window_background_opacity = 1
 -- config.macos_window_background_blur = 20
-config.initial_cols = 228
-config.initial_rows = 56
+config.initial_cols = 254
+config.initial_rows = 51
 config.switch_to_last_active_tab_when_closing_tab = true
 config.window_close_confirmation = "NeverPrompt"
 config.pane_focus_follows_mouse = true
@@ -213,12 +221,18 @@ config.keys = {
   {
     mods = "CMD",
     key = "d",
-    action = action.SplitHorizontal,
+    action = action.SplitPane({
+      direction = "Right",
+      size = { Percent = 33 },
+    }),
   },
   {
     mods = "CMD|SHIFT",
     key = "d",
-    action = action.SplitVertical,
+    action = action.SplitPane({
+      direction = "Down",
+      size = { Percent = 33 },
+    }),
   },
   {
     mods = "CMD",
@@ -338,7 +352,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
     end
   end
 
-  local title = string.format("%s  %s", get_process(tab), get_current_working_dir(tab))
+  local title = string.format("%s   %s", get_process(tab), get_current_working_dir(tab))
 
   if tab.active_pane.is_zoomed then
     title = title .. " " .. wezterm.nerdfonts.md_alpha_z_box
@@ -380,7 +394,7 @@ table.insert(config.hyperlink_rules, {
 
 wezterm.on("gui-startup", function(cmd) -- set startup Window position
   local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
-  window:gui_window():set_position(128, 129)
+  window:gui_window():set_position(120, 110)
 end)
 
 return config

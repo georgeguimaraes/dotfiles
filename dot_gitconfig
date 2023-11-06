@@ -4,8 +4,8 @@
   signingkey = 20E86F6F5FC22FA7
 [core]
   excludesfile = ~/.gitignore
-  autocrlf = true
-  safecrlf = false
+  autocrlf = input
+  safecrlf = true
   editor = nvim
   pager = delta
 [pack]

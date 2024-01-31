@@ -1,0 +1,9 @@
+#!/bin/bash
+
+NAME=$1
+REMOTE_REPO=$2
+DIR=$3
+
+git remote add -f $NAME $REMOTE_REPO
+git merge -s ours --no-commit $NAME/master
+git read-tree --prefix=$DIR -u $NAME/master

@@ -109,7 +109,7 @@ config.color_scheme = "Tokyo Night Moon"
 -- config.font = wezterm.font("Iosevka", { weight = "Medium" })
 -- config.font = wezterm.font("FiraCodeGG Nerd Font", { weight = "Medium" })
 -- config.font = wezterm.font("Iosevka GG", { stretch = "Expanded", weight = "Medium" })
-config.font = wezterm.font({ family = "VictorMono Nerd Font", weight = 500, harfbuzz_features = {} })
+config.font = wezterm.font({ family = "VictorMono Nerd Font", weight = 500, harfbuzz_features = { "ss01=off" } })
 -- config.font = wezterm.font({ family = "Victor Mono", weight = 600, harfbuzz_features = {} })
 -- config.font = wezterm.font("Maple Mono", { weight = "Medium" })
 -- config.font = wezterm.font({ family = "Rec Mono Duotone", weight = "Medium" })
@@ -122,10 +122,11 @@ config.font_size = 17
 config.use_fancy_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = true
 config.enable_kitty_keyboard = true
+config.enable_kitty_graphics = true
 config.enable_csi_u_key_encoding = false
 config.window_decorations = "RESIZE"
-config.window_background_opacity = 1
--- config.macos_window_background_blur = 20
+config.window_background_opacity = 0.97
+config.macos_window_background_blur = 30
 config.initial_cols = 254
 config.initial_rows = 51
 config.switch_to_last_active_tab_when_closing_tab = true
@@ -138,7 +139,7 @@ config.window_padding = {
   bottom = 10,
 }
 config.window_frame = {
-  font_size = 15,
+  font_size = 16,
   active_titlebar_bg = "#222436",
 }
 config.colors = {

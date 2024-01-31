@@ -67,10 +67,11 @@ export FZF_DEFAULT_OPTS='
   --height 70% --layout=reverse --border'
 eza_params=(
   '--git' '--icons' '--classify' '--group'
-  '--group-directories-first' '--time-style=long-iso' '--color-scale'
+  '--group-directories-first' '--time-style=long-iso' '--color-scale=all'
 )
 
 alias env="env | sort"
+alias g='git'
 alias gpl='git pull'
 alias gs='git status'
 alias gd='git diff'
@@ -100,8 +101,10 @@ alias la='eza -lbhHigUmuSa'
 alias lx='eza -lbhHigUmuSa@'
 alias tree='eza --tree $eza_params'
 alias lg='lazygit'
+alias gg='lazygit'
 alias cat=bat
 alias y=yazi
+alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 
 bindkey $'^[[A' up-line-or-search    # up arrow
 bindkey $'^[[B' down-line-or-search  # down arrow
@@ -125,4 +128,16 @@ eval "$(zoxide init zsh)"
 if type brew &>/dev/null; then
     FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 fi
+
+ source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+ source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+
 autoload -Uz compinit && compinit
+
+# pnpm
+export PNPM_HOME="/Users/george/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

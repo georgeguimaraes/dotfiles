@@ -1,11 +1,11 @@
 [user]
   name = George Guimarães
   email = george.guimaraes@gmail.com
-  signingkey = 20E86F6F5FC22FA7
+  signingkey = 20E86F6F5FC22FA7!
 [core]
   excludesfile = ~/.gitignore
   autocrlf = input
-  safecrlf = true
+  safecrlf = false
   editor = nvim
   pager = delta
 [pack]
@@ -27,7 +27,7 @@
   continue = rebase --continue
   abort = rebase --abort
 [commit]
-  gpgsign = false
+  gpgsign = true
 [pull]
   rebase = true
   autostash = true
@@ -39,8 +39,13 @@
 [interactive]
   diffFilter = delta --color-only --features=interactive
 
+[merge]
+  conflictstyle = diff3
+
 [delta]
   features = decorations
+  side-by-side = true
+  navigate = true
 
 [delta "interactive"]
   keep-plus-minus-markers = false

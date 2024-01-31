@@ -1,0 +1,20 @@
+#!/bin/zsh
+
+# Set the path to lazygit and chezmoi path
+lazygit_path=$(command -v lazygit)
+chezmoi_path=$(chezmoi source-path)
+
+# Check if lazygit is installed
+if [[ -z $lazygit_path ]]; then
+  echo "Error: lazygit is not installed. Please install it first."
+  exit 1
+fi
+
+# Check if chezmoi source-path is available
+if [[ -z $chezmoi_path ]]; then
+  echo "Error: chezmoi is not available. Please install it first."
+  exit 1
+fi
+
+# Call lazygit with -p and chezmoi source-path
+$lazygit_path -p $chezmoi_path

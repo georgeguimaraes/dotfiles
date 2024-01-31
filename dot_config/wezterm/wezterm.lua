@@ -77,10 +77,9 @@ local process_icons = {
 }
 
 local function get_current_working_dir(tab)
-  local current_dir = tab.active_pane.current_working_dir
-  local HOME_DIR = string.format("file://%s", os.getenv("HOME"))
+  local current_dir = tab.active_pane.current_working_dir.file_path
 
-  if current_dir == HOME_DIR then
+  if current_dir == os.getenv("HOME") then
     return "~"
   end
 

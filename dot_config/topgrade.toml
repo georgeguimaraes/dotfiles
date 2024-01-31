@@ -1,8 +1,8 @@
 [misc]
-disable = ["mas", "ruby_gems"]
+disable = ["mas", "ruby_gems", "pnpm"]
 
 [git]
-pull_arguments = "--rebase --autostash"
+arguments = "--rebase --autostash"
 
 [commands]
 "Lazyvim" = 'nvim --headless "+Lazy! sync" +qa'

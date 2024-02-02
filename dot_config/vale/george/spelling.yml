@@ -1,0 +1,5 @@
+extends: spelling
+message: "Check the spelling of '%s'"
+level: error
+ignore:
+  - george/spelling-exceptions.txt

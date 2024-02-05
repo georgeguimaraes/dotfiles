@@ -51,7 +51,6 @@ export EDITOR="nvim"
 export LS_COLORS="$(vivid generate tokyonight)"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export PATH="~/.local/bin:/usr/local/opt/libpq/bin:$PATH"
-export RAILS_ENV=development
 export RIPGREP_CONFIG_PATH=~/.config/ripgreprc
 export NEOVIDE_FRAME="buttonless"
 export NEOVIDE_MULTIGRID=1
@@ -140,4 +139,4 @@ case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-# pnpm end
+# pnpm endexport PATH="/opt/homebrew/opt/libpq/bin:$PATH"

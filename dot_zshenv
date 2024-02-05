@@ -1,3 +1,2 @@
 export NEOVIDE_FRAME="buttonless"
 export NEOVIDE_MULTIGRID=1
-. "$HOME/.cargo/env"

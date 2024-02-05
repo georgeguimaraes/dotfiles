@@ -2,6 +2,9 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 local process_icons = {
+  ["podman"] = {
+    { Text = wezterm.nerdfonts.linux_docker },
+  },
   ["docker"] = {
     { Text = wezterm.nerdfonts.linux_docker },
   },

@@ -1,2 +1,4 @@
 git:
   overrideGpg: true
+gui:
+  nerdFontsVersion: "3"

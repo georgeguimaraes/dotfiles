@@ -104,6 +104,7 @@ alias gg='lazygit'
 alias cat=bat
 alias y=yazi
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
+alias spelling-exceptions="nvim ~/.config/vale/george/spelling-exceptions.txt"
 
 bindkey $'^[[A' up-line-or-search    # up arrow
 bindkey $'^[[B' down-line-or-search  # down arrow
@@ -140,3 +141,6 @@ case ":$PATH:" in
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 # pnpm endexport PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+#
+export PGGSSENCMODE=disable
+export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"

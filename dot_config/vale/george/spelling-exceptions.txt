@@ -6,3 +6,8 @@ InfinitePay
 api
 CloudWalk
 env
+redis
+infinitepay
+postgres
+rbenv
+Sidekiq

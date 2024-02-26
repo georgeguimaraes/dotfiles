@@ -107,6 +107,7 @@ config.visual_bell = {
   target = "BackgroundColor",
 }
 config.term = "wezterm"
+config.max_fps = 75
 config.color_scheme = "Tokyo Night Moon"
 -- config.font = wezterm.font("Iosevka", { weight = "Medium" })
 -- config.font = wezterm.font("FiraCodeGG Nerd Font", { weight = "Medium" })
@@ -149,23 +150,23 @@ config.colors = {
   tab_bar = {
     active_tab = {
       bg_color = "#222436",
-      fg_color = "#82aaff",
+      fg_color = "#c099ff",
     },
     inactive_tab = {
       bg_color = "#1e2030",
-      fg_color = "#545c7e",
+      fg_color = "#444a73",
     },
     new_tab = {
       bg_color = "#191b28",
-      fg_color = "#82aaff",
+      fg_color = "#c8d3f5",
     },
     new_tab_hover = {
-      bg_color = "#82aaff",
-      fg_color = "#1e2030",
+      bg_color = "#191b28",
+      fg_color = "#c099ff",
     },
     inactive_tab_hover = {
+      fg_color = "#444a73",
       bg_color = "#1e2030",
-      fg_color = "#82aaff",
     },
   },
 }
@@ -266,6 +267,9 @@ config.keys = {
     key = ",",
     action = action.SpawnCommandInNewWindow({
       cwd = os.getenv("WEZTERM_CONFIG_DIR"),
+      set_environment_variables = {
+        PATH = os.getenv("PATH"),
+      },
       args = {
         "/opt/homebrew/bin/nvim",
         os.getenv("WEZTERM_CONFIG_FILE"),
@@ -363,7 +367,7 @@ wezterm.on("format-tab-title", function(tab, tabs, panes, config, hover, max_wid
 
   if has_unseen_output then
     return {
-      { Foreground = { Color = "#bb9af7" } },
+      { Foreground = { Color = "#737aa2" } },
       { Text = title },
     }
   end

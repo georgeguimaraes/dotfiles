@@ -1,5 +1,5 @@
 --hidden
 --follow
 --no-ignore
---glob=!{.git,deps,_build,.elixir_ls,node_modules,vendor}
+--glob=!{.git,deps,_build,.elixir_ls,node_modules,vendor,coverage,log}
 --smart-case

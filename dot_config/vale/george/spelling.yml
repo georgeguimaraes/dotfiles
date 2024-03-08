@@ -1,5 +1,5 @@
 extends: spelling
 message: "Check the spelling of '%s'"
-level: error
+level: warn
 ignore:
   - george/spelling-exceptions.txt

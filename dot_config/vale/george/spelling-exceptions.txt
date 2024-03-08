@@ -11,3 +11,7 @@ infinitepay
 postgres
 rbenv
 Sidekiq
+rvm
+Codacy
+rbenv
+config

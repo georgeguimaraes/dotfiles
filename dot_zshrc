@@ -144,3 +144,4 @@ esac
 #
 export PGGSSENCMODE=disable
 export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"
+alias gitanalyzed="bash ~/.gitanalyzed/gitanalyzed.sh"

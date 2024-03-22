@@ -265,12 +265,11 @@ config.keys = {
   {
     mods = "CMD",
     key = ",",
+    label = "Open Wezterm config",
     action = action.SpawnCommandInNewWindow({
       cwd = os.getenv("WEZTERM_CONFIG_DIR"),
-      set_environment_variables = {
-        PATH = os.getenv("PATH"),
-      },
       args = {
+        "env",
         "/opt/homebrew/bin/nvim",
         os.getenv("WEZTERM_CONFIG_FILE"),
       },

@@ -2,14 +2,17 @@
   name = George Guimarães
   email = george.guimaraes@gmail.com
   signingkey = 20E86F6F5FC22FA7!
+
 [core]
   excludesfile = ~/.gitignore
   autocrlf = input
   safecrlf = false
   editor = nvim
   pager = delta
+
 [pack]
   threads = 0
+
 [alias]
   aa = add --all
   ap = add --patch
@@ -26,35 +29,55 @@
   pureb = pull --rebase
   continue = rebase --continue
   abort = rebase --abort
+
 [commit]
   gpgsign = true
+
 [pull]
   rebase = true
   autostash = true
+
 [rebase]
   autosquash = true
+
 [init]
   defaultBranch = main
+[merge]
+  conflictstyle = diff3
+
+[diff]
+  colorMoved = true
 
 [interactive]
   diffFilter = delta --color-only --features=interactive
 
-[merge]
-  conflictstyle = diff3
-
 [delta]
-  features = decorations
   side-by-side = true
   navigate = true
+  line-numbers = true
+  features = decorations
 
 [delta "interactive"]
   keep-plus-minus-markers = false
 
 [delta "decorations"]
+  syntax-theme = tokyonight_storm
+  minus-style                   = syntax "#3f2d3d"
+  minus-non-emph-style          = syntax "#3f2d3d"
+  minus-emph-style              = syntax "#763842"
+  minus-empty-line-marker-style = syntax "#3f2d3d"
+  line-numbers-minus-style      = "#b2555b"
+  plus-style                    = syntax "#283b4d"
+  plus-non-emph-style           = syntax "#283b4d"
+  plus-emph-style               = syntax "#316172"
+  plus-empty-line-marker-style  = syntax "#283b4d"
+  line-numbers-plus-style       = "#399a96"
+  line-numbers-zero-style       = "#3b4261"
+
   commit-decoration-style = blue ol
   commit-style = raw
   file-style = omit
   hunk-header-decoration-style = blue box
-  hunk-header-file-style = red
-  hunk-header-line-number-style = "#067a00"
+  hunk-header-file-style = "#c0caf5"
+  hunk-header-line-number-style = "#e0af68"
   hunk-header-style = file line-number syntax

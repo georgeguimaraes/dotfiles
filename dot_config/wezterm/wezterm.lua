@@ -80,13 +80,14 @@ local process_icons = {
 }
 
 local function get_current_working_dir(tab)
-  local current_dir = tab.active_pane.current_working_dir.file_path
+  local current_dir = tab.active_pane.current_working_dir or "~"
+  local file_path = current_dir.file_path
 
-  if current_dir == os.getenv("HOME") then
+  if file_path == os.getenv("HOME") then
     return "~"
   end
 
-  return string.gsub(current_dir, "(.*[/\\])(.*)", "%2")
+  return string.gsub(file_path, "(.*[/\\])(.*)", "%2")
 end
 
 local function get_process(tab)
@@ -265,13 +266,12 @@ config.keys = {
   {
     mods = "CMD",
     key = ",",
-    label = "Open Wezterm config",
     action = action.SpawnCommandInNewWindow({
-      cwd = os.getenv("WEZTERM_CONFIG_DIR"),
-      args = {
-        "env",
-        "/opt/homebrew/bin/nvim",
-        os.getenv("WEZTERM_CONFIG_FILE"),
+      label = "Open Wezterm config",
+      args = { "/bin/zsh", "-c", "nvim " .. wezterm.shell_quote_arg(wezterm.config_file) },
+      set_environment_variables = {
+        PATH = "/Users/george/.asdf/shims:/Users/george/.asdf/bin:~/.local/bin:/Users/george/bin:/usr/local/sbin:/usr/local/bin:/Users/george/go/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/george/.cargo/bin:/opt/homebrew/opt/fzf/bin"
+          .. os.getenv("PATH"),
       },
     }),
   },

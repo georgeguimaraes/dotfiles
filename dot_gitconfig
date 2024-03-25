@@ -8,6 +8,7 @@
   autocrlf = input
   safecrlf = false
   editor = nvim
+  ; pager = DELTA_FEATURES=+side-by-side delta
   pager = delta
 
 [pack]
@@ -42,6 +43,7 @@
 
 [init]
   defaultBranch = main
+
 [merge]
   conflictstyle = diff3
 
@@ -52,11 +54,13 @@
   diffFilter = delta --color-only --features=interactive
 
 [delta]
-  side-by-side = true
   navigate = true
   line-numbers = true
   features = decorations
 
+[delta "lazygit"]
+  side-by-side = false
+ 
 [delta "interactive"]
   keep-plus-minus-markers = false
 
@@ -67,12 +71,13 @@
   minus-emph-style              = syntax "#763842"
   minus-empty-line-marker-style = syntax "#3f2d3d"
   line-numbers-minus-style      = "#b2555b"
-  plus-style                    = syntax "#283b4d"
-  plus-non-emph-style           = syntax "#283b4d"
-  plus-emph-style               = syntax "#316172"
-  plus-empty-line-marker-style  = syntax "#283b4d"
+  plus-style                    = syntax "#1E3A32"
+  plus-non-emph-style           = syntax "#1E3A32"
+  plus-emph-style               = syntax "#31655C"
+  plus-empty-line-marker-style  = syntax "#1E3A32"
   line-numbers-plus-style       = "#399a96"
-  line-numbers-zero-style       = "#3b4261"
+  line-numbers-zero-style       = "#c0caf5"
+  line-numbers-left-format      = "{nm:^4}"
 
   commit-decoration-style = blue ol
   commit-style = raw

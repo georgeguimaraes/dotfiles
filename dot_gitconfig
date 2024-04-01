@@ -15,7 +15,6 @@
   threads = 0
 
 [alias]
-  aliases = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\\ \t => \\2/' | sort
   commit = commit -s
   aa = add --all
   ap = add --patch
@@ -25,7 +24,7 @@
   br = branch
   ls = ls-files
   graph = log --graph --all --decorate
-  gr    = log --graph --pretty=oneline --abrev-commit --all --decorate
+  gr    = log --graph --pretty=oneline --abbrev-commit --all --decorate
   one   = log --pretty='format:%Cgreen%H %Cred%ai %Creset- %s' --decorate
   cached = diff --cached
   amend = commit --amend
@@ -36,6 +35,16 @@
   remotes = remote -v
   conflicts = !git --no-pager diff --name-only --diff-filter=U | xargs grep -c '^=======$'
   blame-plus = !git blame -w -M -C -C -C
+
+ ; Delete local branches that no longer exist on the remote
+  gone = !git fetch -p && git branch -vv | grep 'origin/.*: gone]' | awk '{print $1}' | xargs git branch -D
+
+  ; Rebase interactive for all commits on feature branch
+  rebase-branch = !git rebase -i --onto master `git rev-parse --abbrev-ref HEAD`~1 
+
+  ; preferred git log view
+  lg = log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(white)%s%C(reset) %C(dim white)-%C(reset) %ar %C(dim white)<%an>%C(reset)%C(auto)%d%C(reset)' --all
+  lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(white)%s%C(reset) %C(dim white)-%C(reset) %ar %C(dim white)<%an>%C(reset)%C(auto)%d%C(reset)%n' --all --stat
 
 [commit]
   gpgsign = true

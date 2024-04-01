@@ -44,7 +44,7 @@ setopt pushd_ignore_dups
 setopt pushdminus
 
 cdpath=(. ~ ~/code)
-export PATH=~/bin:/usr/local/sbin:/usr/local/bin:~/go/bin:/Users/george/.cargo/bin:$PATH
+export PATH=~/bin:~/.local/bin:/usr/local/sbin:/usr/local/bin:~/go/bin:/Users/george/.cargo/bin:$PATH
 export PAGER="less"
 export LESS="-R"
 export EDITOR="nvim"
@@ -145,3 +145,5 @@ esac
 export PGGSSENCMODE=disable
 export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"
 alias gitanalyzed="bash ~/.gitanalyzed/gitanalyzed.sh"
+
+source ~/.config/secrets.sh

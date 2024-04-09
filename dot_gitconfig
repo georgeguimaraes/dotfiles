@@ -37,7 +37,7 @@
   blame-plus = !git blame -w -M -C -C -C
 
  ; Delete local branches that no longer exist on the remote
-  gone = !git fetch -p && git branch -vv | grep 'origin/.*: gone]' | awk '{print $1}' | xargs git branch -D
+  gone = !git fetch -p && git branch -vv | grep 'origin/.*: gone]' | grep -vE '^(*|+)' | awk '{print $1}' | xargs git branch -D
 
   ; Rebase interactive for all commits on feature branch
   rebase-branch = !git rebase -i --onto master `git rev-parse --abbrev-ref HEAD`~1 

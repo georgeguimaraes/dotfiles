@@ -1,8 +1,16 @@
 git:
   overrideGpg: true
-  # paging:
-  # colorArg: never
-  # useConfig: false
-  # pager: delta --detect-dark-light=never --paging=never
+  paging:
+    colorArg: never
+    useConfig: false
+    pager: delta --detect-dark-light=never --paging=never
 gui:
   nerdFontsVersion: "3"
+customCommands:
+  - key: "G"
+    context: "localBranches"
+    command: "git gone"
+keybinding:
+  universal:
+    nextScreenMode: =
+    prevScreenMode: "-"

@@ -100,6 +100,7 @@ local function get_process(tab)
   return wezterm.format(process_icons[process_name] or { { Text = string.format("%s:", process_name) } })
 end
 
+config.scrollback_lines = 100000
 config.front_end = "WebGpu"
 config.audible_bell = "Disabled"
 config.visual_bell = {

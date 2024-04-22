@@ -3,7 +3,7 @@ disable = ["mas", "gem", "ruby_gems", "pnpm", "pip3", "yarn"]
 
 [git]
 arguments = "--rebase --autostash"
-repos = ["~/.config/nvim"]
+repos = ["~/.config/nvim", "~/.fzf/fzf-git.sh"]
 
 [commands]
 "Lazyvim" = 'nvim --headless "+Lazy! sync" +qa'

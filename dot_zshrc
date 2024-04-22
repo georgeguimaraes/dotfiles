@@ -174,4 +174,6 @@ export PGGSSENCMODE=disable
 export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"
 alias gitanalyzed="bash ~/.gitanalyzed/gitanalyzed.sh"
 
-source ~/.config/secrets.sh
+if [ -f ~/.config/secrets.sh ]; then
+  source ~/.config/secrets.sh
+fi

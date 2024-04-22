@@ -1,5 +1,6 @@
 local wezterm = require("wezterm")
 local config = wezterm.config_builder()
+local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
 
 local process_icons = {
   ["podman"] = {
@@ -179,51 +180,8 @@ local function is_vim(pane)
   return pane:get_user_vars().IS_NVIM == "true"
 end
 
-local direction_keys = {
-  Left = "h",
-  Down = "j",
-  Up = "k",
-  Right = "l",
-  -- reverse lookup
-  h = "Left",
-  j = "Down",
-  k = "Up",
-  l = "Right",
-}
-
-local function split_nav(resize_or_move, key)
-  return {
-    key = key,
-    mods = resize_or_move == "resize" and "META|CTRL" or "CTRL",
-    action = wezterm.action_callback(function(win, pane)
-      if is_vim(pane) then
-        -- pass the keys through to vim/nvim
-        win:perform_action({
-          SendKey = { key = key, mods = resize_or_move == "resize" and "META|CTRL" or "CTRL" },
-        }, pane)
-      else
-        if resize_or_move == "resize" then
-          win:perform_action({ AdjustPaneSize = { direction_keys[key], 3 } }, pane)
-        else
-          win:perform_action({ ActivatePaneDirection = direction_keys[key] }, pane)
-        end
-      end
-    end),
-  }
-end
-
 local action = wezterm.action
 config.keys = {
-  -- move between split panes
-  split_nav("move", "h"),
-  split_nav("move", "j"),
-  split_nav("move", "k"),
-  split_nav("move", "l"),
-  -- resize panes
-  split_nav("resize", "h"),
-  split_nav("resize", "j"),
-  split_nav("resize", "k"),
-  split_nav("resize", "l"),
   {
     mods = "CMD",
     key = "d",
@@ -403,5 +361,19 @@ wezterm.on("gui-startup", function(cmd) -- set startup Window position
   local tab, pane, window = wezterm.mux.spawn_window(cmd or {})
   window:gui_window():set_position(120, 110)
 end)
+
+smart_splits.apply_to_config(config, {
+  -- the default config is here, if you'd like to use the default keys,
+  -- you can omit this configuration table parameter and just use
+  -- smart_splits.apply_to_config(config)
+
+  -- directional keys to use in order of: left, down, up, right
+  direction_keys = { "h", "j", "k", "l" },
+  -- modifier keys to combine with direction_keys
+  modifiers = {
+    move = "CTRL", -- modifier to use for pane movement, e.g. CTRL+h to move left
+    resize = "META", -- modifier to use for pane resize, e.g. META+h to resize to the left
+  },
+})
 
 return config

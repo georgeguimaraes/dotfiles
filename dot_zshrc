@@ -11,19 +11,17 @@ source ~/.antidote/antidote.zsh
 antidote load ${ZDOTDIR:-$HOME}/.zsh_plugins.txt
 
 autoload -U colors && colors
-setopt combining_chars
 setopt prompt_subst
 setopt always_to_end
 setopt auto_menu
 setopt complete_in_word
-setopt zle
 setopt noflowcontrol
 setopt no_case_glob
 setopt correct
 setopt LONG_LIST_JOBS
-setopt login
-setopt interactive
-setopt interactive_comments
+# setopt login
+# setopt interactive
+# setopt interactive_comments
 
 SAVEHIST=10000
 HISTSIZE=5000
@@ -61,13 +59,21 @@ export DISABLE_SPRING=1
 export ERL_AFLAGS="-kernel shell_history enabled"
 export FZF_DEFAULT_OPTS='
   --color=dark
-  --color=fg:-1,bg:-1,hl:#5fff87,fg+:-1,bg+:-1,hl+:#ffaf5f
-  --color=info:#af87ff,prompt:#5fff87,pointer:#ff87d7,marker:#ff87d7,spinner:#ff87d7
-  --height 70% --layout=reverse --border'
+  --color=fg:#c0caf5,bg:#24283b,hl:#ff9e64
+  --color=fg+:#c0caf5,bg+:#292e42,hl+:#ff9e64
+  --color=info:#7aa2f7,prompt:#7dcfff,pointer:#7dcfff
+  --color=marker:#9ece6a,spinner:#9ece6a,header:#9ece6a
+  --height=70% --layout=reverse --border'
 eza_params=(
   '--git' '--icons' '--classify' '--group'
   '--group-directories-first' '--time-style=long-iso' '--color-scale=all'
 )
+FZF_DEFAULT_PREVIEW='[[ -d {} ]] && eza --tree --color=always {} || bat -n --color=always --line-range :500 {}'
+export FZF_CTRL_T_OPTS="--preview '$FZF_DEFAULT_PREVIEW'"
+export FZF_ALT_C_OPTS="--preview '$FZF_DEFAULT_PREVIEW'"
+FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type=d"
 
 alias env="env | sort"
 alias g='git'
@@ -105,25 +111,17 @@ alias cat=bat
 alias y=yazi
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias spelling-exceptions="nvim ~/.config/vale/george/spelling-exceptions.txt"
+alias cd='z'
+alias cdi='zi'
 
 bindkey $'^[[A' up-line-or-search    # up arrow
 bindkey $'^[[B' down-line-or-search  # down arrow
-
-
-zle     -N            fzf-cd-widget
-bindkey -M emacs '\C-f' fzf-cd-widget
-bindkey -M vicmd '\C-f' fzf-cd-widget
-bindkey -M viins '\C-f' fzf-cd-widget
-bindkey -rM emacs '\ec'
-bindkey -rM vicmd '\ec'
-bindkey -rM viins '\ec'
 
 . $HOME/.asdf/asdf.sh
 fpath=(${ASDF_DIR}/completions $fpath)
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-eval "$(zoxide init zsh)"
 
 if type brew &>/dev/null; then
     FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
@@ -133,6 +131,34 @@ fi
  source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
 
 autoload -Uz compinit && compinit
+eval "$(zoxide init zsh)"
+
+# Use fd (https://github.com/sharkdp/fd) for listing path candidates.
+# - The first argument to the function ($1) is the base path to start traversal
+# - See the source code (completion.{bash,zsh}) for the details.
+_fzf_compgen_path() {
+  fd --hidden --exclude .git . "$1"
+}
+
+# Use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+  fd --type=d --hidden --exclude .git . "$1"
+}
+
+# Advanced customization of fzf options via _fzf_comprun function
+# - The first argument to the function is the name of the command.
+# - You should make sure to pass the rest of the arguments to fzf.
+_fzf_comprun() {
+  local command=$1
+  shift
+
+  case "$command" in
+    cd)           fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
+    export|unset) fzf --preview "eval 'echo \$'{}"         "$@" ;;
+    ssh)          fzf --preview 'dig {}'                   "$@" ;;
+    *)            fzf --preview $FZF_DEFAULT_PREVIEW "$@" ;;
+  esac
+}
 
 # pnpm
 export PNPM_HOME="/Users/george/Library/pnpm"

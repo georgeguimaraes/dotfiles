@@ -120,7 +120,9 @@ bindkey $'^[[B' down-line-or-search  # down arrow
 . $HOME/.asdf/asdf.sh
 fpath=(${ASDF_DIR}/completions $fpath)
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+eval "$(fzf --zsh)"
+source ~/.fzf/fzf-git.sh/fzf-git.sh
+
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 if type brew &>/dev/null; then

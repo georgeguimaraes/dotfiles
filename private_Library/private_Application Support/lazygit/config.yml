@@ -6,6 +6,7 @@ git:
     pager: delta --detect-dark-light=never --paging=never
 gui:
   nerdFontsVersion: "3"
+  showDivergenceFromBaseBranch: arrowAndNumber
 customCommands:
   - key: "G"
     context: "localBranches"

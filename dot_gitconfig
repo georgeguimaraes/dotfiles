@@ -103,7 +103,7 @@
   plus-empty-line-marker-style  = syntax "#1E3A32"
   line-numbers-plus-style       = "#399a96"
   line-numbers-zero-style       = "#c0caf5"
-  line-numbers-left-format      = "{nm:^4}"
+  line-numbers-left-format      = "{nm:^5}"
 
   commit-decoration-style = blue ol
   commit-style = raw

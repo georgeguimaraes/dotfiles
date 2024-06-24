@@ -46,7 +46,7 @@ export PATH=~/bin:~/.local/bin:/usr/local/sbin:/usr/local/bin:~/go/bin:/Users/ge
 export PAGER="less"
 export LESS="-R"
 export EDITOR="nvim"
-export LS_COLORS="$(vivid generate tokyonight)"
+export LS_COLORS="$(vivid generate tokyonight-moon)"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export PATH="~/.local/bin:/usr/local/opt/libpq/bin:$PATH"
 export RIPGREP_CONFIG_PATH=~/.config/ripgreprc
@@ -58,12 +58,12 @@ export KERL_CONFIGURE_OPTIONS="--without-megaco --disable-jit --without-javac --
 export DISABLE_SPRING=1
 export ERL_AFLAGS="-kernel shell_history enabled"
 export FZF_DEFAULT_OPTS='
-  --color=dark
-  --color=fg:#c0caf5,bg:#24283b,hl:#ff9e64
-  --color=fg+:#c0caf5,bg+:#292e42,hl+:#ff9e64
-  --color=info:#7aa2f7,prompt:#7dcfff,pointer:#7dcfff
-  --color=marker:#9ece6a,spinner:#9ece6a,header:#9ece6a
-  --height=70% --layout=reverse --border'
+--color=dark
+--color=fg:#c0caf5,bg:#24283b,hl:#ff9e64
+--color=fg+:#c0caf5,bg+:#292e42,hl+:#ff9e64
+--color=info:#7aa2f7,prompt:#7dcfff,pointer:#7dcfff
+--color=marker:#9ece6a,spinner:#9ece6a,header:#9ece6a
+--height=70% --layout=reverse --border'
 eza_params=(
   '--git' '--icons' '--classify' '--group'
   '--group-directories-first' '--time-style=long-iso' '--color-scale=all'
@@ -126,11 +126,11 @@ source ~/.fzf/fzf-git.sh/fzf-git.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 if type brew &>/dev/null; then
-    FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
 fi
 
- source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
- source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
+source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
 
 autoload -Uz compinit && compinit
 eval "$(zoxide init zsh)"

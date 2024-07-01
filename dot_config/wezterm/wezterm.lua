@@ -1,6 +1,6 @@
 local wezterm = require("wezterm")
-local config = wezterm.config_builder()
 local smart_splits = wezterm.plugin.require("https://github.com/mrjones2014/smart-splits.nvim")
+local config = wezterm.config_builder()
 
 local process_icons = {
   ["podman"] = {

@@ -183,7 +183,7 @@ end
 local action = wezterm.action
 config.keys = {
   {
-    mods = "CMD",
+    mods = "CMD|SHIFT",
     key = "d",
     action = action.SplitPane({
       direction = "Right",
@@ -191,7 +191,7 @@ config.keys = {
     }),
   },
   {
-    mods = "CMD|SHIFT",
+    mods = "CMD",
     key = "d",
     action = action.SplitPane({
       direction = "Down",

@@ -42,13 +42,12 @@ setopt pushd_ignore_dups
 setopt pushdminus
 
 cdpath=(. ~ ~/code)
-export PATH=~/bin:~/.local/bin:/usr/local/sbin:/usr/local/bin:~/go/bin:/Users/george/.cargo/bin:$PATH
+export PATH=~/bin:~/.local/bin:/usr/local/sbin:/usr/local/bin:~/go/bin:/Users/george/.cargo/bin:~/.luarocks/bin:$PATH
 export PAGER="less"
 export LESS="-R"
 export EDITOR="nvim"
 export LS_COLORS="$(vivid generate tokyonight-moon)"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-export PATH="~/.local/bin:/usr/local/opt/libpq/bin:$PATH"
 export RIPGREP_CONFIG_PATH=~/.config/ripgreprc
 export NEOVIDE_FRAME="buttonless"
 export NEOVIDE_MULTIGRID=1

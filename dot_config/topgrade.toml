@@ -6,6 +6,6 @@ arguments = "--rebase --autostash"
 repos = ["~/.config/nvim", "~/.fzf/fzf-git.sh"]
 
 [commands]
-"Lazyvim" = 'nvim --headless "+Lazy! sync" +qa'
+"lazy.nvim plugins" = 'nvim --headless "+Lazy! sync" +qa'
 "Brew upgrade HEAD" = "HOMEBREW_NO_INSTALL_CLEANUP=1 brew upgrade --fetch-HEAD"
 # "Wezterm nightly" = "HOMEBREW_NO_INSTALL_CLEANUP=1 brew upgrade --cask wezterm-nightly --no-quarantine --greedy-latest"

@@ -92,7 +92,6 @@ alias mv='mv -iv'                           # Preferred 'mv' implementation
 alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
 alias bi='bundle install'
 alias be='bundle exec'
-alias vim="nvim"
 alias json="fx"
 alias nv="neovide --frame buttonless --multigrid"
 alias v='nvim'

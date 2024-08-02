@@ -1,0 +1,16 @@
+IEx
+ENV
+Lua
+PERF
+util
+nvim
+param
+claude
+linters
+LazyVim
+lazyvim
+linter's
+JimAgent
+anthropic
+Kubernetes
+codecompanion

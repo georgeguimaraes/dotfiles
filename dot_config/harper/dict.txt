@@ -12,7 +12,6 @@ linters
 LazyVim
 lazyvim
 linter's
-JimAgent
 filetype
 anthropic
 Kubernetes

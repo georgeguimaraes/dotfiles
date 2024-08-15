@@ -2,6 +2,7 @@ IEx
 ENV
 Lua
 LSP
+env
 PERF
 util
 nvim

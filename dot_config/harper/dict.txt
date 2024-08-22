@@ -15,5 +15,9 @@ lazyvim
 linter's
 filetype
 anthropic
+Guimarães
 Kubernetes
+Regressors
+Changepoint
 codecompanion
+Hyperparameter

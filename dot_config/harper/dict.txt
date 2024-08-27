@@ -16,6 +16,7 @@ linter's
 filetype
 anthropic
 Guimarães
+Piecewise
 Kubernetes
 Regressors
 Changepoint

@@ -95,6 +95,7 @@ alias be='bundle exec'
 alias json="fx"
 alias nv="neovide --frame buttonless --multigrid"
 alias v='nvim'
+alias vim='nvim'
 alias cz="chezmoi"
 alias ls='eza $eza_params'
 alias l='eza --git-ignore $eza_params'

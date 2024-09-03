@@ -1,9 +1,10 @@
 git:
   overrideGpg: true
   paging:
-    colorArg: never
-    useConfig: false
-    pager: delta --detect-dark-light=never --paging=never
+    # colorArg: never
+    # useConfig: false
+    # pager: delta --detect-dark-light=never --paging=never
+    externalDiffCommand: difft --color=always
 gui:
   nerdFontsVersion: "3"
   showDivergenceFromBaseBranch: arrowAndNumber
@@ -17,7 +18,8 @@ customCommands:
     command: "git gone"
   - key: <c-a>
     description: Pick AI commit
-    command: 'aichat "Please suggest 10 commit messages, given the following diff:
+    command:
+      'aichat "Please suggest 10 commit messages, given the following diff:
 
 
       \`\`\`diff

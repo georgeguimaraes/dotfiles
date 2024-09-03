@@ -3,8 +3,8 @@ git:
   paging:
     colorArg: never
     useConfig: false
-    pager: delta --detect-dark-light=never --paging=never
-    # externalDiffCommand: difft
+    # pager: delta --detect-dark-light=never --paging=never
+    externalDiffCommand: difft
 gui:
   nerdFontsVersion: "3"
   showDivergenceFromBaseBranch: arrowAndNumber

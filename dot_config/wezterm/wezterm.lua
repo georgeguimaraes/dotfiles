@@ -111,7 +111,8 @@ config.visual_bell = {
 }
 config.term = "wezterm"
 config.max_fps = 75
-config.color_scheme = "Tokyo Night Moon"
+
+config.color_scheme = "tokyonight_moon_gg"
 -- config.font = wezterm.font("Iosevka", { weight = "Medium" })
 -- config.font = wezterm.font("FiraCodeGG Nerd Font", { weight = "Medium" })
 -- config.font = wezterm.font("Iosevka GG", { stretch = "Expanded", weight = "Medium" })

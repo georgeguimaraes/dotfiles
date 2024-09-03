@@ -1,13 +1,20 @@
 git:
   overrideGpg: true
   paging:
-    # colorArg: never
-    # useConfig: false
-    # pager: delta --detect-dark-light=never --paging=never
-    externalDiffCommand: difft --color=always
+    colorArg: never
+    useConfig: false
+    pager: delta --detect-dark-light=never --paging=never
+    # externalDiffCommand: difft
 gui:
   nerdFontsVersion: "3"
   showDivergenceFromBaseBranch: arrowAndNumber
+  theme:
+    searchingActiveBorderColor:
+      - "#ff966c"
+      - "bold"
+    activeBorderColor:
+      - "#ff966c"
+      - "bold"
 keybinding:
   universal:
     nextScreenMode: =

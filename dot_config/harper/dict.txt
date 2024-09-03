@@ -12,6 +12,7 @@ claude
 linters
 LazyVim
 lazyvim
+LazyGit
 linter's
 filetype
 anthropic

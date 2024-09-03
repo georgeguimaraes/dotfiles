@@ -75,6 +75,7 @@
 [diff]
   colorMoved = true
   algorithm = histogram
+  external = difft
 
 [interactive]
   diffFilter = delta --color-only --features=interactive

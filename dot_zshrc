@@ -104,8 +104,8 @@ alias llm='eza --all --header --long --sort=modified $eza_params'
 alias la='eza -lbhHigUmuSa'
 alias lx='eza -lbhHigUmuSa@'
 alias tree='eza --tree $eza_params'
-alias lg='lazygit'
-alias gg='lazygit'
+alias lg='TERM=screen-256color lazygit'
+alias gg='TERM=screen-256color lazygit'
 alias cat=bat
 alias y=yazi
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
@@ -176,3 +176,7 @@ alias gitanalyzed="bash ~/.gitanalyzed/gitanalyzed.sh"
 if [ -f ~/.config/secrets.sh ]; then
   source ~/.config/secrets.sh
 fi
+
+# Overwrites ANSI color 241 to TokyoNight's blue.
+# This color is used a lot in lazygit.
+echo -ne "\033]4;241;rgb:65/bc/ff\007"

@@ -9,6 +9,7 @@ nvim
 param
 libuv
 claude
+MainDB
 linters
 LazyVim
 lazyvim

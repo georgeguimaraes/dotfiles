@@ -3,6 +3,7 @@ ENV
 Lua
 LSP
 env
+JWT
 PERF
 util
 nvim
@@ -16,6 +17,7 @@ lazyvim
 LazyGit
 linter's
 filetype
+capybara
 anthropic
 Guimarães
 Piecewise

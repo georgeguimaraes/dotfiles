@@ -184,3 +184,6 @@ echo -ne "\033]4;241;rgb:65/bc/ff\007"
 
 . "$HOME/.atuin/bin/env"
 eval "$(atuin init zsh --disable-up-arrow)"
+
+# for melos
+export PATH="$PATH":"$HOME/.pub-cache/bin"

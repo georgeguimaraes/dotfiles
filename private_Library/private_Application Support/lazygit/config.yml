@@ -102,5 +102,5 @@ customCommands:
                 fi
               rm -f "$COMMIT_MSG_FILE"
             done
-context: files
-subprocess: true
+    context: files
+    subprocess: true

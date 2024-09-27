@@ -26,6 +26,7 @@ Guimarães
 Piecewise
 Kubernetes
 Regressors
+treesitter
 Changepoint
 codecompanion
 Hyperparameter

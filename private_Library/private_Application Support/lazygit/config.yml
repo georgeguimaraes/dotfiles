@@ -90,16 +90,17 @@ customCommands:
         scenarios than include a lot of overlap.
 
         Write your 10 commit messages below in the format shown in Output Template section above." \
-          | fzf --height 40% --border --ansi --preview "echo {}" --preview-window=up:wrap \
-          | xargs -I {} bash -c '
+          | fzf --height 60% --border --ansi --preview "echo {}" --preview-window=up:wrap \
+          | while IFS= read -r line; do
               COMMIT_MSG_FILE=$(mktemp)
-              echo "{}" > "$COMMIT_MSG_FILE"
-              ${EDITOR:-nvim} "$COMMIT_MSG_FILE"
-              if [ -s "$COMMIT_MSG_FILE" ]; then
+                echo "$line" > "$COMMIT_MSG_FILE"
+                ${EDITOR:-nvim} "$COMMIT_MSG_FILE"
+                if [ -s "$COMMIT_MSG_FILE" ]; then
                   git commit -F "$COMMIT_MSG_FILE"
-              else
+                else
                   echo "Commit message is empty, commit aborted."
-              fi
-              rm -f "$COMMIT_MSG_FILE"'
-    context: files
-    subprocess: true
+                fi
+              rm -f "$COMMIT_MSG_FILE"
+            done
+context: files
+subprocess: true

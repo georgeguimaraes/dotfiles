@@ -1,5 +1,8 @@
 dark-mode: true
-sonnet: true
+
+o1-preview: true
+architect: true
+editor-model: sonnet
 
 ## Set the color for user input (default: #00cc00)
 user-input-color: #82aaff

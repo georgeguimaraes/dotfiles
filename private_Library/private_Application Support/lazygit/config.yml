@@ -1,3 +1,5 @@
+promptToReturnFromSubprocess: false
+
 git:
   overrideGpg: true
   paging:
@@ -48,12 +50,6 @@ customCommands:
         - test(unit): add new test cases
         - style: remove unused imports
         - refactor(pages): extract common code to \`utils/wait.ts\`
-
-        **Recent Commits on Repo for Reference:**
-
-        \`\`\`
-        $(git log -n 10 --pretty=format:'%h %s')
-        \`\`\`
 
         **Output Template**
 

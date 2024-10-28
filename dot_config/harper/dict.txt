@@ -24,6 +24,7 @@ Langfuse
 anthropic
 Guimarães
 Piecewise
+Changelog
 Kubernetes
 Regressors
 treesitter

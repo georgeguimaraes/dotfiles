@@ -129,6 +129,7 @@ config.font_size = 17
 config.use_fancy_tab_bar = true
 config.hide_tab_bar_if_only_one_tab = true
 config.enable_kitty_keyboard = true
+config.use_ime = false
 config.enable_kitty_graphics = true
 config.enable_csi_u_key_encoding = false
 config.window_decorations = "RESIZE"

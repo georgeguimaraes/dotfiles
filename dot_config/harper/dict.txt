@@ -13,6 +13,7 @@ libuv
 claude
 MainDB
 ArgoCD
+stylua
 linters
 LazyVim
 lazyvim

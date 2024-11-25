@@ -187,3 +187,10 @@ eval "$(atuin init zsh --disable-up-arrow)"
 
 # for melos
 export PATH="$PATH":"$HOME/.pub-cache/bin"
+
+# bun completions
+[ -s "/Users/george/.bun/_bun" ] && source "/Users/george/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

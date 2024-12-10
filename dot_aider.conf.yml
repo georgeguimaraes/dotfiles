@@ -17,3 +17,5 @@ tool-warning-color: #ffc777
 
 ## Set the color for assistant output (default: #0088ff)
 assistant-output-color: #c099ff
+
+gitignore: false

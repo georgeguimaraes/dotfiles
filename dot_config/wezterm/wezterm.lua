@@ -110,8 +110,8 @@ config.visual_bell = {
   target = "BackgroundColor",
 }
 config.term = "wezterm"
-config.max_fps = 120
-config.animation_fps = 120
+config.max_fps = 75
+config.animation_fps = 75
 
 config.color_scheme = "tokyonight_moon_gg"
 -- config.font = wezterm.font("Iosevka", { weight = "Medium" })

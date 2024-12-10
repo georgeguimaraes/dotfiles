@@ -107,6 +107,7 @@ alias lx='eza -lbhHigUmuSa@'
 alias tree='eza --tree $eza_params'
 alias lg='TERM=screen-256color lazygit'
 alias gg='TERM=screen-256color lazygit'
+alias lzd='TERM=screen-256color lazydocker'
 alias cat=bat
 alias y=yazi
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"

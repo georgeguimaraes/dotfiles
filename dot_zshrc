@@ -7,8 +7,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-source ~/.antidote/antidote.zsh
-antidote load ${ZDOTDIR:-$HOME}/.zsh_plugins.txt
+eval "$(sheldon source)"
 
 autoload -U colors && colors
 setopt prompt_subst
@@ -108,6 +107,7 @@ alias tree='eza --tree $eza_params'
 alias lg='TERM=screen-256color lazygit'
 alias gg='TERM=screen-256color lazygit'
 alias lzd='TERM=screen-256color lazydocker'
+alias kk='TERM=screen-256color lazydocker'
 alias cat=bat
 alias y=yazi
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"

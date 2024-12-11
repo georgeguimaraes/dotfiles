@@ -1,7 +1,1 @@
 eval "$(/opt/homebrew/bin/brew shellenv)"
-
-export NEOVIDE_FRAME="buttonless"
-export NEOVIDE_MULTIGRID=1
-
-# Added by OrbStack: command-line tools and integration
-source ~/.orbstack/shell/init.zsh 2>/dev/null || :

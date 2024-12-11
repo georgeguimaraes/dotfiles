@@ -130,11 +130,11 @@ source ~/.fzf/fzf-git.sh/fzf-git.sh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 if type brew &>/dev/null; then
-  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+  FPATH="$BREW_PREFIX/share/zsh/site-functions:${FPATH}"
 fi
 
-source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
-source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+source "$BREW_PREFIX/share/google-cloud-sdk/path.zsh.inc"
+source "$BREW_PREFIX/share/google-cloud-sdk/completion.zsh.inc"
 
 # Optimize completion system loading
 autoload -Uz compinit

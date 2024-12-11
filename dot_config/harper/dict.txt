@@ -8,6 +8,7 @@ LLM
 PERF
 util
 nvim
+Oban
 param
 libuv
 claude

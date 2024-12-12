@@ -1,81 +1,86 @@
+# zmodload zsh/zprof
+
 export LANG=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
 
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-# Cache brew prefix to avoid multiple slow calls
 BREW_PREFIX=${BREW_PREFIX:-$(brew --prefix)}
+ZSH_DISABLE_COMPFIX=true
+
+# Enable Powerlevel10k instant prompt
+# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+# fi
 
 eval "$(sheldon source)"
 
 autoload -U colors && colors
-setopt prompt_subst
-setopt always_to_end
-setopt auto_menu
-setopt complete_in_word
-setopt noflowcontrol
-setopt no_case_glob
-setopt correct
-setopt LONG_LIST_JOBS
-# setopt login
-# setopt interactive
-# setopt interactive_comments
 
+# Shell options
+setopt prompt_subst      # Allow substitutions in prompt
+setopt correct          # Command correction
+setopt long_list_jobs   # Display PID when suspending processes
+
+# Completion behavior
+setopt always_to_end    # Move cursor to end of completed word
+setopt auto_menu        # Show menu on second tab press
+setopt complete_in_word # Complete from both ends of word
+setopt no_case_glob     # Case insensitive globbing
+setopt noflowcontrol    # Disable flow control (ctrl-s/ctrl-q)
+
+# History options
 SAVEHIST=10000
 HISTSIZE=5000
-setopt EXTENDED_HISTORY          # Write the history file in the ':start:elapsed;command' format.
-setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
-# setopt SHARE_HISTORY             # Share history between all sessions.
-setopt HIST_EXPIRE_DUPS_FIRST    # Expire a duplicate event first when trimming history.
-setopt HIST_IGNORE_DUPS          # Do not record an event that was just recorded again.
-setopt HIST_IGNORE_ALL_DUPS      # Delete an old recorded event if a new event is a duplicate.
-setopt HIST_FIND_NO_DUPS         # Do not display a previously found event.
-setopt HIST_IGNORE_SPACE         # Do not record an event starting with a space.
-setopt HIST_SAVE_NO_DUPS         # Do not write a duplicate event to the history file.
-setopt HIST_VERIFY               # Do not execute immediately upon history expansion.
-setopt APPEND_HISTORY            # append to history file
-setopt HIST_NO_STORE             # Don't store history commands
-setopt auto_pushd 
-setopt pushd_ignore_dups
-setopt pushdminus
+setopt extended_history       # Save timestamp and duration
+setopt inc_append_history    # Add commands to history immediately
+setopt hist_expire_dups_first # Expire duplicate entries first
+setopt hist_ignore_dups      # Don't record consecutive duplicates
+setopt hist_ignore_all_dups  # Remove older duplicate entries
+setopt hist_find_no_dups     # Don't display duplicates in search
+setopt hist_ignore_space     # Don't record entries starting with space
+setopt hist_save_no_dups     # Don't write duplicate entries
+setopt hist_verify          # Show substituted command before running
+setopt hist_no_store        # Don't store history commands
+setopt append_history       # Append to history file
 
-cdpath=(. ~ ~/code)
-export PATH=~/bin:~/.local/bin:/usr/local/sbin:/usr/local/bin:~/go/bin:/Users/george/.cargo/bin:~/.luarocks/bin:$PATH
+# Directory navigation
+setopt auto_pushd           # Push old directory onto stack
+setopt pushd_ignore_dups    # Don't push duplicate directories
+setopt pushdminus          # Exchange meaning of +/- operators
+
+# Unified PATH management
+typeset -U PATH path
+path=(
+  ~/bin
+  ~/.local/bin
+  /usr/local/sbin
+  /usr/local/bin
+  ~/go/bin
+  ~/.cargo/bin
+  ~/.luarocks/bin
+  $PNPM_HOME
+  $HOME/.pub-cache/bin
+  /Applications/screenpipe.app/Contents/MacOS
+  $path
+)
+export PATH
+
 export PAGER="less"
 export LESS="-R"
 export EDITOR="nvim"
 export LS_COLORS="$(vivid generate tokyonight-moon)"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export RIPGREP_CONFIG_PATH=~/.config/ripgreprc
-export NEOVIDE_FRAME="buttonless"
-export NEOVIDE_MULTIGRID=1
-export KERL_BUILD_DOCS=yes # So that our elixirls doesn't complain
+export KERL_BUILD_DOCS=yes
 export CFLAGS="-O2 -g -fno-stack-check"
-export KERL_CONFIGURE_OPTIONS="--without-megaco --disable-jit --without-javac --with-ssl=$(brew --prefix openssl@1.1)"
+export KERL_CONFIGURE_OPTIONS="--without-megaco --disable-jit --without-javac --with-ssl=$BREW_PREFIX/opt/openssl@1.1"
 export DISABLE_SPRING=1
 export ERL_AFLAGS="-kernel shell_history enabled"
 export ELIXIR_ERL_OPTIONS="+sssdio 128"
-export FZF_DEFAULT_OPTS='
---color=dark
---color=fg:#c0caf5,bg:#24283b,hl:#ff9e64
---color=fg+:#c0caf5,bg+:#292e42,hl+:#ff9e64
---color=info:#7aa2f7,prompt:#7dcfff,pointer:#7dcfff
---color=marker:#9ece6a,spinner:#9ece6a,header:#9ece6a
---height=70% --layout=reverse --border'
+
 eza_params=(
   '--git' '--icons' '--classify' '--group'
   '--group-directories-first' '--time-style=long-iso' '--color-scale=all'
 )
-FZF_DEFAULT_PREVIEW='[[ -d {} ]] && eza --tree --color=always {} || bat -n --color=always --line-range :500 {}'
-export FZF_CTRL_T_OPTS="--preview '$FZF_DEFAULT_PREVIEW'"
-export FZF_ALT_C_OPTS="--preview '$FZF_DEFAULT_PREVIEW'"
-FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type=d"
 
 alias env="env | sort"
 alias g='git'
@@ -90,9 +95,9 @@ alias zshconfig='nvim ~/.zshrc'
 alias hosts='sudo nvim /etc/hosts'
 alias grep="grep -i"
 alias htop="sudo htop"
-alias cp='cp -iv'                           # Preferred 'cp' implementation
-alias mv='mv -iv'                           # Preferred 'mv' implementation
-alias mkdir='mkdir -pv'                     # Preferred 'mkdir' implementation
+alias cp='cp -iv'
+alias mv='mv -iv'
+alias mkdir='mkdir -pv'
 alias bi='bundle install'
 alias be='bundle exec'
 alias json="fx"
@@ -121,13 +126,13 @@ alias cdi='zi'
 bindkey $'^[[A' up-line-or-search    # up arrow
 bindkey $'^[[B' down-line-or-search  # down arrow
 
+eval "$(zoxide init zsh)"
+
 . $HOME/.asdf/asdf.sh
 fpath=(${ASDF_DIR}/completions $fpath)
 
-eval "$(fzf --zsh)"
-source ~/.fzf/fzf-git.sh/fzf-git.sh
-
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+. "$HOME/.atuin/bin/env"
+eval "$(atuin init zsh --disable-up-arrow)"
 
 if type brew &>/dev/null; then
   FPATH="$BREW_PREFIX/share/zsh/site-functions:${FPATH}"
@@ -136,74 +141,32 @@ fi
 source "$BREW_PREFIX/share/google-cloud-sdk/path.zsh.inc"
 source "$BREW_PREFIX/share/google-cloud-sdk/completion.zsh.inc"
 
-# Optimize completion system loading
-autoload -Uz compinit
-if [ $(date +'%j') != $(/usr/bin/stat -f '%Sm' -t '%j' ${ZDOTDIR:-$HOME}/.zcompdump) ]; then
-  compinit
-else
-  compinit -C
-fi
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-eval "$(zoxide init zsh)"
+[ -f ~/.config/zsh/fzf.zsh ] && source ~/.config/zsh/fzf.zsh
 
-# Use fd (https://github.com/sharkdp/fd) for listing path candidates.
-# - The first argument to the function ($1) is the base path to start traversal
-# - See the source code (completion.{bash,zsh}) for the details.
-_fzf_compgen_path() {
-  fd --hidden --exclude .git . "$1"
-}
+# Overwrites ANSI color 241 to TokyoNight's blue. Used in Lazygit.
+echo -ne "\033]4;241;rgb:65/bc/ff\007"
 
-# Use fd to generate the list for directory completion
-_fzf_compgen_dir() {
-  fd --type=d --hidden --exclude .git . "$1"
-}
-
-# Advanced customization of fzf options via _fzf_comprun function
-# - The first argument to the function is the name of the command.
-# - You should make sure to pass the rest of the arguments to fzf.
-_fzf_comprun() {
-  local command=$1
-  shift
-
-  case "$command" in
-    cd)           fzf --preview 'eza --tree --color=always {} | head -200' "$@" ;;
-    export|unset) fzf --preview "eval 'echo \$'{}"         "$@" ;;
-    ssh)          fzf --preview 'dig {}'                   "$@" ;;
-    *)            fzf --preview $FZF_DEFAULT_PREVIEW "$@" ;;
-  esac
-}
-
-# pnpm
-export PNPM_HOME="/Users/george/Library/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm endexport PATH="/opt/homebrew/opt/libpq/bin:$PATH"
-#
+# PostgreSQL and Docker configuration
 export PGGSSENCMODE=disable
 export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"
-alias gitanalyzed="bash ~/.gitanalyzed/gitanalyzed.sh"
 
+# Load secrets
 if [ -f ~/.config/secrets.sh ]; then
   source ~/.config/secrets.sh
 fi
 
-# Overwrites ANSI color 241 to TokyoNight's blue.
-# This color is used a lot in lazygit.
-echo -ne "\033]4;241;rgb:65/bc/ff\007"
-
-. "$HOME/.atuin/bin/env"
-eval "$(atuin init zsh --disable-up-arrow)"
-
-# for melos
-export PATH="$PATH":"$HOME/.pub-cache/bin"
-
-# bun completions
+# Bun
 [ -s "/Users/george/.bun/_bun" ] && source "/Users/george/.bun/_bun"
-
-# bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-export PATH="$PATH:/Applications/screenpipe.app/Contents/MacOS"
+# Initialize completions last, after all FPATH additions
+{
+  autoload -Uz compinit
+  compinit
+} &!
+
+# Uncomment to see startup profiling information
+# zprof

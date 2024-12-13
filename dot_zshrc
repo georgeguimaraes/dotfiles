@@ -135,9 +135,6 @@ eval "$(zoxide init zsh)"
 . $HOME/.asdf/asdf.sh
 fpath=(${ASDF_DIR}/completions $fpath)
 
-. "$HOME/.atuin/bin/env"
-eval "$(atuin init zsh --disable-up-arrow)"
-
 if type brew &>/dev/null; then
   FPATH="$BREW_PREFIX/share/zsh/site-functions:${FPATH}"
 fi
@@ -165,6 +162,9 @@ fi
 [ -s "/Users/george/.bun/_bun" ] && source "/Users/george/.bun/_bun"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+. $HOME/.atuin/bin/env
+eval "$(atuin init zsh --disable-up-arrow)"
 
 # Initialize completions last, after all FPATH additions
 zstyle ':completion:*' use-cache on

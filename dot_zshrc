@@ -4,12 +4,16 @@ export LANG=en_US.UTF-8
 export LC_ALL=en_US.UTF-8
 
 BREW_PREFIX=${BREW_PREFIX:-$(brew --prefix)}
+
+# disable zsh compinit security
+skip_global_compinit=1
 ZSH_DISABLE_COMPFIX=true
 
+POWERLEVEL9K_DISABLE_SSH=true
 # Enable Powerlevel10k instant prompt
-# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-# fi
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
 eval "$(sheldon source)"
 
@@ -163,9 +167,11 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Initialize completions last, after all FPATH additions
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
 {
   autoload -Uz compinit
-  compinit
+  compinit -C
 } &!
 
 # Uncomment to see startup profiling information

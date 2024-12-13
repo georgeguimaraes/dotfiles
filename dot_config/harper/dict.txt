@@ -5,16 +5,19 @@ LSP
 env
 JWT
 LLM
+dev
 PERF
 util
 nvim
 Oban
+asdf
 param
 libuv
 claude
 MainDB
 ArgoCD
 stylua
+Jaeger
 linters
 LazyVim
 lazyvim
@@ -32,4 +35,5 @@ Regressors
 treesitter
 Changepoint
 codecompanion
+OpenTelemetry
 Hyperparameter

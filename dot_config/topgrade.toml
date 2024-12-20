@@ -1,5 +1,5 @@
 [misc]
-disable = ["mas", "gem", "ruby_gems", "pnpm", "pip3", "yarn"]
+disable = ["mas", "gem", "ruby_gems", "pnpm", "pip3", "yarn", "asdf"]
 
 [git]
 arguments = "--rebase --autostash"

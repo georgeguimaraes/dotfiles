@@ -176,3 +176,6 @@ zstyle ':completion:*' cache-path ~/.zsh/cache
 
 # Uncomment to see startup profiling information
 # zprof
+
+# Added by Windsurf
+export PATH="/Users/george/.codeium/windsurf/bin:$PATH"

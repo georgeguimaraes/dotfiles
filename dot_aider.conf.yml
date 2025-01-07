@@ -2,6 +2,7 @@ dark-mode: true
 
 architect: true
 editor-model: anthropic/claude-3-5-sonnet-20241022
+# model: openai/o1
 
 ## Set the color for user input (default: #00cc00)
 user-input-color: #82aaff

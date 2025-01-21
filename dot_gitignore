@@ -2,3 +2,4 @@
 .byebug_history
 .aider*
 .solargraph.yml
+.elixir_ls

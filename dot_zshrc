@@ -132,9 +132,6 @@ bindkey $'^[[B' down-line-or-search  # down arrow
 
 eval "$(zoxide init zsh)"
 
-. /opt/homebrew/opt/asdf/libexec/asdf.sh
-fpath=(${ASDF_DIR}/completions $fpath)
-
 if type brew &>/dev/null; then
   FPATH="$BREW_PREFIX/share/zsh/site-functions:${FPATH}"
 fi

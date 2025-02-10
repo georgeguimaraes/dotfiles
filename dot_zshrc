@@ -58,6 +58,7 @@ path=(
   ~/.local/bin
   /usr/local/sbin
   /usr/local/bin
+  ~/.asdf/shims
   ~/go/bin
   ~/.cargo/bin
   ~/.luarocks/bin

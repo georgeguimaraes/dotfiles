@@ -1,10 +1,7 @@
 dark-mode: true
 
-# architect: true
-# editor-model: anthropic/claude-3-5-sonnet-20241022
-
-model: o3-mini
-reasoning-effort: high
+architect: true
+editor-model: anthropic/claude-3-5-sonnet-20241022
 
 ## Set the color for user input (default: #00cc00)
 user-input-color: #82aaff

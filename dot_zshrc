@@ -65,6 +65,7 @@ path=(
   $PNPM_HOME
   $HOME/.pub-cache/bin
   /Applications/screenpipe.app/Contents/MacOS
+  /opt/homebrew/anaconda3/bin
   $path
 )
 export PATH
@@ -149,7 +150,7 @@ echo -ne "\033]4;241;rgb:65/bc/ff\007"
 
 # PostgreSQL and Docker configuration
 export PGGSSENCMODE=disable
-export DOCKER_HOST="unix://${HOME}/.colima/default/docker.sock"
+[ "$(hostname)" = "tachi" ] && export DOCKER_HOST="unix://${}/.colima/default/docker.sock" 2>/dev/null
 
 # Load secrets
 if [ -f ~/.config/secrets.sh ]; then
@@ -164,6 +165,8 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 . $HOME/.atuin/bin/env
 eval "$(atuin init zsh --disable-up-arrow)"
 
+[ "$(hostname)" = "rocinante" ] && source /opt/homebrew/anaconda3/bin/activate
+
 # Initialize completions last, after all FPATH additions
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
@@ -174,6 +177,3 @@ zstyle ':completion:*' cache-path ~/.zsh/cache
 
 # Uncomment to see startup profiling information
 # zprof
-
-# Added by Windsurf
-export PATH="/Users/george/.codeium/windsurf/bin:$PATH"

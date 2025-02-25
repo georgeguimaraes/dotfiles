@@ -351,6 +351,16 @@ config.keys = {
     key = "g",
     action = action.PaneSelect({ mode = "SwapWithActive" }),
   },
+  {
+    key = "=",
+    mods = "CMD|SHIFT",
+    action = wezterm.action.ToggleFullScreen,
+  },
+  {
+    key = "Enter",
+    mods = "ALT",
+    action = wezterm.action.DisableDefaultAssignment,
+  },
 
   -- move between split panes
   split_nav("move", "h"),

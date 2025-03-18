@@ -58,6 +58,7 @@ path=(
   ~/.local/bin
   /usr/local/sbin
   /usr/local/bin
+  ~/.npm-global/bin
   ~/.asdf/shims
   ~/go/bin
   ~/.cargo/bin
@@ -128,7 +129,6 @@ alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias spelling-exceptions="nvim ~/.config/vale/george/spelling-exceptions.txt"
 alias cd='z'
 alias cdi='zi'
-alias claude='npx claude'
 
 bindkey $'^[[A' up-line-or-search    # up arrow
 bindkey $'^[[B' down-line-or-search  # down arrow

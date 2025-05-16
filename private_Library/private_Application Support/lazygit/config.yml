@@ -1,5 +1,4 @@
 promptToReturnFromSubprocess: false
-
 git:
   overrideGpg: true
   paging:
@@ -99,4 +98,4 @@ customCommands:
               rm -f "$COMMIT_MSG_FILE"
             done
     context: files
-    subprocess: true
+    output: terminal

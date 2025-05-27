@@ -13,3 +13,5 @@
 ## Commits
 
 - Omit Claude Code attribution footer in commits
+- Don't write comments that are obvious in the code
+

@@ -1,0 +1,34 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(~/.zshrc)",
+      "Bash(git status)",
+      "Bash(git diff:*)",
+      "Bash(git log:*)",
+      "Bash(git show:*)",
+      "Bash(git branch:*)",
+      "Bash(git remote:*)",
+      "Bash(git config:*)",
+      "Bash(git tag:*)",
+      "Bash(git describe:*)",
+      "Bash(git ls-files:*)",
+      "Bash(git blame:*)",
+      "Bash(git whatchanged:*)",
+      "Bash(git shortlog:*)",
+      "Bash(git reflog:*)",
+      "Bash(git rev-list:*)",
+      "Bash(git rev-parse:*)",
+      "Bash(git name-rev:*)",
+      "Bash(git diff-tree:*)",
+      "Bash(git merge-base:*)",
+      "Bash(git cherry:*)",
+      "Bash(git fsck)",
+      "Bash(git count-objects:*)",
+      "Bash(git verify-pack:*)"
+    ],
+    "deny": []
+  },
+  "env": {
+    "BASH_DEFAULT_TIMEOUT_MS": "600000"
+  }
+}

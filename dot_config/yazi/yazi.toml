@@ -1,4 +1,4 @@
-[manager]
+[mgr]
 # NOTE: can combined with tmTheme (sublime colorshceme file) for preview code highlight
 # highlight = "path/to/tmTheme"
 highlight = "~/.config/yazi/tokyonight_storm.tmTheme"

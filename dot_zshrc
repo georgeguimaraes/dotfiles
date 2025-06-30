@@ -128,14 +128,16 @@ alias cat=bat
 alias y=yazi
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias spelling-exceptions="nvim ~/.config/vale/george/spelling-exceptions.txt"
-alias cd='z'
 alias cdi='zi'
 alias claude="/Users/george/.claude/local/claude --verbose"
 
 bindkey $'^[[A' up-line-or-search    # up arrow
 bindkey $'^[[B' down-line-or-search  # down arrow
 
-eval "$(zoxide init zsh)"
+if [[ -z "$CLAUDE_CODE" ]]; then
+  eval "$(zoxide init zsh)"
+  alias cd="z"
+fi
 
 if type brew &>/dev/null; then
   FPATH="$BREW_PREFIX/share/zsh/site-functions:${FPATH}"

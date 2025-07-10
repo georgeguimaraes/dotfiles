@@ -83,7 +83,8 @@ export KERL_CONFIGURE_OPTIONS="--without-megaco --disable-jit --without-javac --
 export DISABLE_SPRING=1
 export ERL_AFLAGS="-kernel shell_history enabled"
 export ELIXIR_ERL_OPTIONS="+sssdio 128"
-export MIX_OS_DEPS_COMPILE_PARTITION_COUNT=4
+export MIX_OS_DEPS_COMPILE_PARTITION_COUNT=1
+export CXX="c++ -Wno-missing-template-arg-list-after-template-kw"
 
 eza_params=(
   '--git' '--icons' '--classify' '--group'
@@ -128,16 +129,14 @@ alias cat=bat
 alias y=yazi
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias spelling-exceptions="nvim ~/.config/vale/george/spelling-exceptions.txt"
+alias cd="z"
 alias cdi='zi'
 alias claude="/Users/george/.claude/local/claude --verbose"
 
 bindkey $'^[[A' up-line-or-search    # up arrow
 bindkey $'^[[B' down-line-or-search  # down arrow
 
-if [[ -z "$CLAUDE_CODE" ]]; then
-  eval "$(zoxide init zsh)"
-  alias cd="z"
-fi
+eval "$(zoxide init zsh)"
 
 if type brew &>/dev/null; then
   FPATH="$BREW_PREFIX/share/zsh/site-functions:${FPATH}"

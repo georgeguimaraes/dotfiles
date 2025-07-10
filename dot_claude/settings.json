@@ -29,7 +29,20 @@
     "deny": []
   },
   "env": {
-    "BASH_DEFAULT_TIMEOUT_MS": "180000",
-    "BASH_MAX_TIMEOUT_MS": "180000"
-  }
+    "BASH_DEFAULT_TIMEOUT_MS": "300000",
+    "BASH_MAX_TIMEOUT_MS": "300000",
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|MultiEdit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [[ \"$file_path\" == *.ex || \"$file_path\" == *.exs ]]; then mix format \"$file_path\"; fi"
+          }
+        ]
+      }
+    ]
+  },
 }

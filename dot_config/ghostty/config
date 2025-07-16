@@ -1,0 +1,98 @@
+# Ghostty Configuration - Converted from WezTerm
+# Based on WezTerm configuration with equivalent settings
+
+# ------------------------------------
+# Terminal Settings
+# ------------------------------------
+scrollback-limit = 100000
+
+# ------------------------------------
+# Tab Settings
+# ------------------------------------
+macos-titlebar-style = tabs
+
+# ------------------------------------
+# Appearance & Font Settings
+# ------------------------------------
+theme = "tokyonight_moon"
+font-family = "VictorMono NFM SemiBold"
+font-size = 18
+font-feature = -ss01
+
+# Window settings
+window-padding-x = 10
+window-padding-y = 10
+background-opacity = 0.97
+
+# ------------------------------------
+# Mouse & Clipboard Settings
+# ------------------------------------
+focus-follows-mouse = true
+clipboard-read = allow
+clipboard-write = allow
+copy-on-select = clipboard
+
+# ------------------------------------
+# Shell Integration
+# ------------------------------------
+shell-integration = detect
+
+# ------------------------------------
+# Confirmation Settings
+# ------------------------------------
+confirm-close-surface = false
+
+# ------------------------------------
+# Keybindings (converted from WezTerm)
+# ------------------------------------
+
+# Pane splitting
+keybind = super+shift+d=new_split:right
+keybind = super+d=new_split:down
+
+# Pane navigation (vim-aware handled by smart-splits plugin)
+keybind = ctrl+h=goto_split:left
+keybind = ctrl+j=goto_split:down
+keybind = ctrl+k=goto_split:up
+keybind = ctrl+l=goto_split:right
+
+# Pane resizing
+keybind = ctrl+shift+h=resize_split:left,3
+keybind = ctrl+shift+j=resize_split:down,3
+keybind = ctrl+shift+k=resize_split:up,3
+keybind = ctrl+shift+l=resize_split:right,3
+
+# Pane management
+keybind = super+z=toggle_split_zoom
+keybind = super+w=close_surface
+keybind = super+shift+w=close_tab
+keybind = super+r=goto_split:next
+keybind = super+shift+r=goto_split:previous
+
+# Tab navigation
+keybind = super+left_bracket=previous_tab
+keybind = super+right_bracket=next_tab
+keybind = super+shift+left_bracket=previous_tab
+keybind = super+shift+right_bracket=next_tab
+
+# Copy mode (using select_all since copy mode doesn't exist)
+keybind = super+shift+x=select_all
+
+# Configuration reload
+keybind = super+comma=reload_config
+
+# Text editing shortcuts (emacs-style bindings)
+keybind = alt+left=esc:b
+keybind = alt+right=esc:f
+keybind = super+left=esc:OH
+keybind = super+right=esc:OF
+keybind = super+backspace=esc:[21~
+
+# Fullscreen
+keybind = super+shift+equal=toggle_fullscreen
+
+# Disable alt+enter
+keybind = alt+enter=ignore
+
+# Copy to clipboard
+keybind = super+c=copy_to_clipboard

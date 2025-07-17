@@ -3,6 +3,7 @@
 ## General
 
 - Use macOS-specific commands and options for tools like grep, find, and sed
+- Never use iex since it's an interactive shell
 
 ## PR Creation
 

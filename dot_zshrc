@@ -181,3 +181,6 @@ zstyle ':completion:*' cache-path ~/.zsh/cache
 
 # Uncomment to see startup profiling information
 # zprof
+
+
+alias claude="/Users/george/.claude/local/claude"

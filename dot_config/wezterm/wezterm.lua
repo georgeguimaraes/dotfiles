@@ -225,6 +225,11 @@ config.colors = {
 local action = wezterm.action
 config.keys = {
   {
+    mods = "OPT",
+    key = "Enter",
+    action = wezterm.action.DisableDefaultAssignment,
+  },
+  {
     mods = "CMD|SHIFT",
     key = "d",
     action = action.SplitPane({

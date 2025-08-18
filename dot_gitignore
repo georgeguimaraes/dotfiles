@@ -2,3 +2,6 @@
 .byebug_history
 .aider*
 .solargraph.yml
+.lexical
+.elixir-ls
+.claude/settings.local.json

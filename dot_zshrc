@@ -59,6 +59,7 @@ path=(
   /usr/local/sbin
   /usr/local/bin
   ~/.asdf/shims
+  ~/.npm-global/bin
   ~/go/bin
   ~/.cargo/bin
   ~/.luarocks/bin
@@ -82,6 +83,8 @@ export KERL_CONFIGURE_OPTIONS="--without-megaco --disable-jit --without-javac --
 export DISABLE_SPRING=1
 export ERL_AFLAGS="-kernel shell_history enabled"
 export ELIXIR_ERL_OPTIONS="+sssdio 128"
+export MIX_OS_DEPS_COMPILE_PARTITION_COUNT=4
+export CXX="c++ -Wno-missing-template-arg-list-after-template-kw"
 
 eza_params=(
   '--git' '--icons' '--classify' '--group'

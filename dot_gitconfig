@@ -84,6 +84,9 @@
   line-numbers = true
   features = decorations
 
+[delta "lazygit"]
+  side-by-side = false
+
 [delta "interactive"]
   keep-plus-minus-markers = false
 

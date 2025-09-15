@@ -79,7 +79,8 @@ export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export RIPGREP_CONFIG_PATH=~/.config/ripgreprc
 export KERL_BUILD_DOCS=yes
 export CFLAGS="-O2 -g -fno-stack-check"
-export KERL_CONFIGURE_OPTIONS="--without-megaco --disable-jit --without-javac --with-ssl=$BREW_PREFIX/opt/openssl@1.1"
+WX_CONFIG=/opt/homebrew/Cellar/wxwidgets@3.2/3.2.8.1/bin/wx-config-3.2
+export KERL_CONFIGURE_OPTIONS="--with-wx-config=$WX_CONFIG"
 export DISABLE_SPRING=1
 export ERL_AFLAGS="-kernel shell_history enabled"
 export ELIXIR_ERL_OPTIONS="+sssdio 128"
@@ -129,6 +130,7 @@ alias cat=bat
 alias y=yazi
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias spelling-exceptions="nvim ~/.config/vale/george/spelling-exceptions.txt"
+alias gr="gt"
 
 bindkey $'^[[A' up-line-or-search    # up arrow
 bindkey $'^[[B' down-line-or-search  # down arrow
@@ -182,4 +184,3 @@ zstyle ':completion:*' cache-path ~/.zsh/cache
 # zprof
 
 
-alias claude="/Users/george/.claude/local/claude"

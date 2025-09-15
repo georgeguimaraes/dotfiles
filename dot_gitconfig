@@ -51,6 +51,7 @@
   ; preferred git log view
   lg = log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(white)%s%C(reset) %C(dim white)-%C(reset) %ar %C(dim white)<%an>%C(reset)%C(auto)%d%C(reset)' --all
   lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(yellow)%h%C(reset) %C(white)%s%C(reset) %C(dim white)-%C(reset) %ar %C(dim white)<%an>%C(reset)%C(auto)%d%C(reset)%n' --all --stat
+	stashbox = git lfs install stash list | fzf --preview 'git stash show -p $(echo {} | cut -d: -f1) | bat --style=numbers --color=always -l diff' --preview-window=right:70% --bind 'enter:execute(git stash pop $(echo {} | cut -d: -f1))+abort' --bind 'ctrl-d:execute(git stash drop $(echo {} | cut -d: -f1))+reload(git stash list)'
 
 [commit]
   gpgsign = true

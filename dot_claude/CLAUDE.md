@@ -16,3 +16,9 @@
 
 - Omit Claude Code attribution footer in commits
 - Don't write comments that are obvious in the code
+- ## LiveView Best Practices
+- **Avoid DB Queries in mount/3**: Mount is called twice (HTTP and WebSocket) causing duplicate queries
+  - Use mount only to initialize empty assigns with default values
+  - Move all database queries to handle_params
+  - For non-critical data, use async operations (send self messages)
+  - This pattern improves initial page load performance and prevents redundant queries

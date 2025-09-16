@@ -3,11 +3,11 @@
   email = george.guimaraes@gmail.com
   signingkey = 20E86F6F5FC22FA7!
 
-[includeIf "hasconfig:remote.*.url:https://github.com/cloudwalk/**"]
-  path = ~/.config/git/config-cloudwalk
+[includeIf "hasconfig:remote.*.url:https://github.com/new-gen-ai/**"]
+  path = ~/.config/git/config-new-gen-ai
 
-[includeIf "hasconfig:remote.*.url:git@github.com:cloudwalk/**"]
-  path = ~/.config/git/config-cloudwalk
+[includeIf "hasconfig:remote.*.url:git@github.com:new-gen-ai/**"]
+  path = ~/.config/git/config-new-gen-ai
 
 [core]
   excludesfile = ~/.gitignore

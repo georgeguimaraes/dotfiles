@@ -225,6 +225,22 @@ config.colors = {
 local action = wezterm.action
 config.keys = {
   {
+    key = " ",
+    mods = "CTRL",
+    action = wezterm.action.SendKey({
+      key = " ",
+      mods = "CTRL",
+    }),
+  },
+  {
+    key = "Enter",
+    mods = "",
+    action = wezterm.action.SendKey({
+      key = "Enter",
+      mods = "",
+    }),
+  },
+  {
     mods = "OPT",
     key = "Enter",
     action = wezterm.action.DisableDefaultAssignment,

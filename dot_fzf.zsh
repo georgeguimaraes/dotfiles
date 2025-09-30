@@ -11,3 +11,7 @@ fi
 # Key bindings
 # ------------
 source "/opt/homebrew/opt/fzf/shell/key-bindings.zsh"
+
+if [[ -f ~/.fzf/fzf-git.sh ]]; then
+  source ~/.fzf/fzf-git.sh
+fi

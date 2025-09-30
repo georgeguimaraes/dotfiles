@@ -131,6 +131,7 @@ alias y=yazi
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias spelling-exceptions="nvim ~/.config/vale/george/spelling-exceptions.txt"
 alias gr="gt"
+alias ccusage="npx ccusage@latest"
 
 bindkey $'^[[A' up-line-or-search    # up arrow
 bindkey $'^[[B' down-line-or-search  # down arrow
@@ -142,9 +143,6 @@ fi
 if type brew &>/dev/null; then
   FPATH="$BREW_PREFIX/share/zsh/site-functions:${FPATH}"
 fi
-
-source "$BREW_PREFIX/share/google-cloud-sdk/path.zsh.inc"
-source "$BREW_PREFIX/share/google-cloud-sdk/completion.zsh.inc"
 
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -162,12 +160,6 @@ if [ -f ~/.config/secrets.sh ]; then
   source ~/.config/secrets.sh
 fi
 
-# Bun
-[ -s "/Users/george/.bun/_bun" ] && source "/Users/george/.bun/_bun"
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-
-. $HOME/.atuin/bin/env
 eval "$(atuin init zsh --disable-up-arrow)"
 
 [ "$(hostname)" = "rocinante" ] && source /opt/homebrew/anaconda3/bin/activate
@@ -182,5 +174,3 @@ zstyle ':completion:*' cache-path ~/.zsh/cache
 
 # Uncomment to see startup profiling information
 # zprof
-
-

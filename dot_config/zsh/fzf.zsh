@@ -44,4 +44,3 @@ _fzf_comprun() {
 
 # Initialize FZF
 eval "$(fzf --zsh)"
-source ~/.fzf/fzf-git.sh/fzf-git.sh

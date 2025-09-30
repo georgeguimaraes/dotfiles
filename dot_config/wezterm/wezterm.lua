@@ -224,6 +224,7 @@ config.colors = {
 
 local action = wezterm.action
 config.keys = {
+  { key = "Enter", mods = "SHIFT", action = wezterm.action({ SendString = "\x1b\r" }) },
   {
     key = " ",
     mods = "CTRL",

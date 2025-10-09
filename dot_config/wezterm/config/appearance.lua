@@ -69,6 +69,8 @@ function M.apply(config)
         bg_color = "#1e2030",
       },
     },
+    quick_select_match_bg = { Color = "#222436" },
+    quick_select_match_fg = { Color = "#828bb8" },
   }
 end
 

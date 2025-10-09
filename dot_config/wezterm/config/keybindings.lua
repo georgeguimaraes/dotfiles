@@ -5,107 +5,22 @@ local M = {}
 
 local TIMEOUT = { key = 3000, leader = 1500 }
 
+-- Public interface
 function M.apply(config)
   config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = TIMEOUT.leader }
   config.keys = M.get_keys()
   config.key_tables = M.get_key_tables()
 end
 
-local function activate_table(name)
-  local action = wezterm.action
-  return action.ActivateKeyTable({
-    name = name,
-    one_shot = false,
-    until_unknown = name ~= "move",
-    timeout_milliseconds = TIMEOUT.key,
-  })
-end
-
-local function rename_tab_prompt()
-  local action = wezterm.action
-  return action.PromptInputLine({
-    description = "Rename tab:",
-    action = wezterm.action_callback(function(window, _, line)
-      if line then
-        window:active_tab():set_title(line)
-      end
-    end),
-  })
-end
-
-local function rename_workspace_prompt()
-  local action = wezterm.action
-  return action.PromptInputLine({
-    description = "Rename workspace:",
-    action = wezterm.action_callback(function(_, _, line)
-      if line then
-        local mux = wezterm.mux
-        mux.rename_workspace(mux.get_active_workspace(), line)
-      end
-    end),
-  })
-end
-
-local function copy_line_action()
-  local action = wezterm.action
-  return action.QuickSelectArgs({
-    label = "COPY LINE",
-    patterns = { "^.*\\S+.*$" },
-    scope_lines = 1,
-    action = action.Multiple({
-      action.CopyTo("ClipboardAndPrimarySelection"),
-      action.ClearSelection,
-    }),
-  })
-end
-
-local function copy_regex_action()
-  local action = wezterm.action
-  return action.QuickSelectArgs({
-    label = "COPY REGEX",
-    patterns = {
-      "(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}(?:/\\d{1,2})?)", -- IP addresses
-      "([0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2})", -- MAC
-      "([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\\.[a-zA-Z0-9_-]+)", -- Email
-      "([0-9a-f]{7,40})", -- Git hashes
-      "((?:https?://|git@|git://|ssh://|ftp://|file://)[\\w\\d\\.\\_\\-@:/~]+(?:\\?[\\w\\d\\-\\.%&=]*)?)", -- URLs
-    },
-    action = action.Multiple({
-      action.CopyTo("ClipboardAndPrimarySelection"),
-      action.ClearSelection,
-    }),
-  })
-end
-
-local function split_nav(resize_or_move, key)
-  return {
-    key = key,
-    mods = resize_or_move == "resize" and "CTRL|SHIFT" or "CTRL",
-    action = wezterm.action_callback(function(win, pane)
-      if helpers.is_vim(pane) then
-        -- pass the keys through to vim/nvim
-        win:perform_action({
-          SendKey = { key = key, mods = resize_or_move == "resize" and "CTRL|SHIFT" or "CTRL" },
-        }, pane)
-      else
-        if resize_or_move == "resize" then
-          win:perform_action({ AdjustPaneSize = { helpers.direction_keys[key], 3 } }, pane)
-        else
-          win:perform_action({ ActivatePaneDirection = helpers.direction_keys[key] }, pane)
-        end
-      end
-    end),
-  }
-end
-
+-- Public module functions
 function M.get_keys()
   local action = wezterm.action
   return {
-    { key = "Enter", mods = "SHIFT", action = wezterm.action({ SendString = "\x1b\r" }) },
+    { key = "Enter", mods = "SHIFT", action = action({ SendString = "\x1b\r" }) },
     {
       key = " ",
       mods = "CTRL",
-      action = wezterm.action.SendKey({
+      action = action.SendKey({
         key = " ",
         mods = "CTRL",
       }),
@@ -113,7 +28,7 @@ function M.get_keys()
     {
       key = "Enter",
       mods = "",
-      action = wezterm.action.SendKey({
+      action = action.SendKey({
         key = "Enter",
         mods = "",
       }),
@@ -121,7 +36,7 @@ function M.get_keys()
     {
       mods = "OPT",
       key = "Enter",
-      action = wezterm.action.DisableDefaultAssignment,
+      action = action.DisableDefaultAssignment,
     },
     {
       mods = "CMD|SHIFT",
@@ -261,21 +176,33 @@ function M.get_keys()
       key = "g",
       action = action.PaneSelect({ mode = "SwapWithActive" }),
     },
+    {
+      mods = "CMD",
+      key = "u",
+      action = M.open_url_action(),
+    },
+    {
+      mods = "CMD",
+      key = "o",
+      action = action.SpawnCommandInNewTab({ args = { "open", "." } }),
+    },
 
     -- move between split panes
-    split_nav("move", "h"),
-    split_nav("move", "j"),
-    split_nav("move", "k"),
-    split_nav("move", "l"),
+    M.split_nav("move", "h"),
+    M.split_nav("move", "j"),
+    M.split_nav("move", "k"),
+    M.split_nav("move", "l"),
 
     -- Leader key tables
     { key = "o", mods = "LEADER", action = action.SpawnCommandInNewTab({ args = { "open", "." } }) },
-    { key = "r", mods = "LEADER", action = activate_table("resize") },
-    { key = "y", mods = "LEADER", action = activate_table("copy") },
+    { key = "r", mods = "LEADER", action = M.activate_table("resize") },
+    { key = "y", mods = "LEADER", action = M.activate_table("copy") },
     { key = "h", mods = "LEADER", action = action.ActivateCommandPalette },
     { key = "v", mods = "LEADER", action = action.ActivateCopyMode },
-    { key = ",", mods = "LEADER", action = rename_tab_prompt() },
-    { key = "$", mods = "LEADER|SHIFT", action = rename_workspace_prompt() },
+    { key = ",", mods = "LEADER", action = M.rename_tab_prompt() },
+    { key = "$", mods = "LEADER|SHIFT", action = M.rename_workspace_prompt() },
+    { key = "-", mods = "LEADER", action = action.SplitVertical({ domain = "CurrentPaneDomain" }) },
+    { key = "\\", mods = "LEADER", action = action.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
   }
 end
 
@@ -297,11 +224,112 @@ function M.get_key_tables()
     copy = {
       { key = "b", action = action.EmitEvent("copy-buffer-from-pane") },
       { key = "p", action = action.EmitEvent("copy-text-from-pane") },
-      { key = "l", action = copy_line_action() },
-      { key = "r", action = copy_regex_action() },
+      { key = "l", action = M.copy_line_action() },
+      { key = "r", action = M.copy_regex_action() },
+      { key = "u", action = M.open_url_action() },
       { key = "Escape", action = "PopKeyTable" },
       { key = "Enter", action = "PopKeyTable" },
     },
+  }
+end
+
+function M.copy_line_action()
+  local action = wezterm.action
+  return action.QuickSelectArgs({
+    label = "COPY LINE",
+    patterns = { "^.*\\S+.*$" },
+    scope_lines = 1,
+    action = action.Multiple({
+      action.CopyTo("ClipboardAndPrimarySelection"),
+      action.ClearSelection,
+    }),
+  })
+end
+
+function M.copy_regex_action()
+  local action = wezterm.action
+  return action.QuickSelectArgs({
+    label = "COPY REGEX",
+    patterns = {
+      "(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}(?:/\\d{1,2})?)", -- IP addresses
+      "([0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2})", -- MAC
+      "([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\\.[a-zA-Z0-9_-]+)", -- Email
+      "([0-9a-f]{7,40})", -- Git hashes
+      "((?:https?://|git@|git://|ssh://|ftp://|file://)[\\w\\d\\.\\_\\-@:/~]+(?:\\?[\\w\\d\\-\\.%&=]*)?)", -- URLs
+    },
+    action = action.Multiple({
+      action.CopyTo("ClipboardAndPrimarySelection"),
+      action.ClearSelection,
+    }),
+  })
+end
+
+function M.open_url_action()
+  local action = wezterm.action
+  return action.QuickSelectArgs({
+    label = "OPEN URL",
+    patterns = {
+      "((?:https?://|git@|git://|ssh://|ftp://|file://)[\\w\\d\\.\\_\\-@:/~]+(?:\\?[\\w\\d\\-\\.%&=]*)?)",
+    },
+    action = wezterm.action_callback(function(window, pane)
+      local url = window:get_selection_text_for_pane(pane)
+      wezterm.open_with(url)
+    end),
+  })
+end
+
+function M.activate_table(name)
+  local action = wezterm.action
+  return action.ActivateKeyTable({
+    name = name,
+    one_shot = false,
+    until_unknown = name ~= "move",
+    timeout_milliseconds = TIMEOUT.key,
+  })
+end
+
+function M.rename_tab_prompt()
+  local action = wezterm.action
+  return action.PromptInputLine({
+    description = "Rename tab:",
+    action = wezterm.action_callback(function(window, _, line)
+      if line then
+        window:active_tab():set_title(line)
+      end
+    end),
+  })
+end
+
+function M.rename_workspace_prompt()
+  local action = wezterm.action
+  return action.PromptInputLine({
+    description = "Rename workspace:",
+    action = wezterm.action_callback(function(_, _, line)
+      if line then
+        local mux = wezterm.mux
+        mux.rename_workspace(mux.get_active_workspace(), line)
+      end
+    end),
+  })
+end
+
+function M.split_nav(resize_or_move, key)
+  return {
+    key = key,
+    mods = resize_or_move == "resize" and "CTRL|SHIFT" or "CTRL",
+    action = wezterm.action_callback(function(win, pane)
+      if helpers.is_vim(pane) then
+        win:perform_action({
+          SendKey = { key = key, mods = resize_or_move == "resize" and "CTRL|SHIFT" or "CTRL" },
+        }, pane)
+      else
+        if resize_or_move == "resize" then
+          win:perform_action({ AdjustPaneSize = { helpers.direction_keys[key], 3 } }, pane)
+        else
+          win:perform_action({ ActivatePaneDirection = helpers.direction_keys[key] }, pane)
+        end
+      end
+    end),
   }
 end
 

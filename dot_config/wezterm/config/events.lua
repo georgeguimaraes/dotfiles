@@ -50,11 +50,18 @@ function M.format_tab_title(tab, tabs, panes, config, hover, max_width)
 end
 
 function M.update_status(window, pane)
-  if window:active_key_table() == "copy_mode" then
+  local key_table = window:active_key_table()
+  if key_table == "copy_mode" or key_table == "copy" then
     window:set_right_status(wezterm.format({
       { Foreground = { Color = "#bb9af7" } },
       { Background = { Color = "#222436" } },
       { Text = wezterm.nerdfonts.oct_copy .. "  COPY  " },
+    }))
+  elseif key_table == "resize" then
+    window:set_right_status(wezterm.format({
+      { Foreground = { Color = "#82aaff" } },
+      { Background = { Color = "#222436" } },
+      { Text = wezterm.nerdfonts.md_resize .. "  RESIZE  " },
     }))
   else
     window:set_right_status("")

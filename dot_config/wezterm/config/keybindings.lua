@@ -3,6 +3,80 @@ local helpers = require("utils.helpers")
 
 local M = {}
 
+local TIMEOUT = { key = 3000, leader = 1500 }
+
+function M.apply(config)
+  config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = TIMEOUT.leader }
+  config.keys = M.get_keys()
+  config.key_tables = M.get_key_tables()
+end
+
+local function activate_table(name)
+  local action = wezterm.action
+  return action.ActivateKeyTable({
+    name = name,
+    one_shot = false,
+    until_unknown = name ~= "move",
+    timeout_milliseconds = TIMEOUT.key,
+  })
+end
+
+local function rename_tab_prompt()
+  local action = wezterm.action
+  return action.PromptInputLine({
+    description = "Rename tab:",
+    action = wezterm.action_callback(function(window, _, line)
+      if line then
+        window:active_tab():set_title(line)
+      end
+    end),
+  })
+end
+
+local function rename_workspace_prompt()
+  local action = wezterm.action
+  return action.PromptInputLine({
+    description = "Rename workspace:",
+    action = wezterm.action_callback(function(_, _, line)
+      if line then
+        local mux = wezterm.mux
+        mux.rename_workspace(mux.get_active_workspace(), line)
+      end
+    end),
+  })
+end
+
+local function copy_line_action()
+  local action = wezterm.action
+  return action.QuickSelectArgs({
+    label = "COPY LINE",
+    patterns = { "^.*\\S+.*$" },
+    scope_lines = 1,
+    action = action.Multiple({
+      action.CopyTo("ClipboardAndPrimarySelection"),
+      action.ClearSelection,
+    }),
+  })
+end
+
+local function copy_regex_action()
+  local action = wezterm.action
+  return action.QuickSelectArgs({
+    label = "COPY REGEX",
+    patterns = {
+      "(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}(?:/\\d{1,2})?)", -- IP addresses
+      "([0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2}:[0-9a-fA-F]{2})", -- MAC
+      "([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\\.[a-zA-Z0-9_-]+)", -- Email
+      "([0-9a-f]{7,40})", -- Git hashes
+      "((?:https?://|git@|git://|ssh://|ftp://|file://)[\\w\\d\\.\\_\\-@:/~]+(?:\\?[\\w\\d\\-\\.%&=]*)?)", -- URLs
+    },
+    action = action.Multiple({
+      action.CopyTo("ClipboardAndPrimarySelection"),
+      action.ClearSelection,
+    }),
+  })
+end
+
 local function split_nav(resize_or_move, key)
   return {
     key = key,
@@ -24,9 +98,9 @@ local function split_nav(resize_or_move, key)
   }
 end
 
-function M.apply(config)
+function M.get_keys()
   local action = wezterm.action
-  config.keys = {
+  return {
     { key = "Enter", mods = "SHIFT", action = wezterm.action({ SendString = "\x1b\r" }) },
     {
       key = " ",
@@ -80,6 +154,11 @@ function M.apply(config)
       action = action.ActivateCommandPalette,
     },
     {
+      key = "/",
+      mods = "CMD",
+      action = action.Search({ CaseInSensitiveString = "" }),
+    },
+    {
       mods = "CMD|SHIFT",
       key = "x",
       action = action.ActivateCopyMode,
@@ -99,11 +178,7 @@ function M.apply(config)
       key = ",",
       action = action.SpawnCommandInNewWindow({
         label = "Open Wezterm config",
-        args = { "/bin/zsh", "-c", "nvim " .. wezterm.shell_quote_arg(wezterm.config_file) },
-        set_environment_variables = {
-          PATH = "/Users/george/.asdf/shims:/Users/george/.asdf/bin:~/.local/bin:/Users/george/bin:/usr/local/sbin:/usr/local/bin:/Users/george/go/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Users/george/.cargo/bin:/opt/homebrew/opt/fzf/bin"
-            .. os.getenv("PATH"),
-        },
+        args = { "/bin/zsh", "-lc", "nvim " .. wezterm.shell_quote_arg(wezterm.config_file) },
       }),
     },
     { mods = "OPT", key = "LeftArrow", action = action.SendKey({ mods = "ALT", key = "b" }) },
@@ -111,6 +186,16 @@ function M.apply(config)
     { mods = "CMD", key = "LeftArrow", action = action.SendKey({ mods = "CTRL", key = "a" }) },
     { mods = "CMD", key = "RightArrow", action = action.SendKey({ mods = "CTRL", key = "e" }) },
     { mods = "CMD", key = "Backspace", action = action.SendKey({ mods = "CTRL", key = "u" }) },
+
+    -- Vim-style scrolling
+    { key = "k", mods = "OPT", action = action.ScrollByLine(-1) },
+    { key = "j", mods = "OPT", action = action.ScrollByLine(1) },
+    { key = "u", mods = "OPT", action = action.ScrollByPage(-0.5) },
+    { key = "d", mods = "OPT", action = action.ScrollByPage(0.5) },
+    { key = "b", mods = "OPT", action = action.ScrollByPage(-1) },
+    { key = "f", mods = "OPT", action = action.ScrollByPage(1) },
+    { key = "g", mods = "OPT", action = action.ScrollToTop },
+    { key = "g", mods = "OPT|SHIFT", action = action.ScrollToBottom },
     {
       mods = "CMD",
       key = "c",
@@ -182,11 +267,41 @@ function M.apply(config)
     split_nav("move", "j"),
     split_nav("move", "k"),
     split_nav("move", "l"),
-    -- resize panes
-    split_nav("resize", "h"),
-    split_nav("resize", "j"),
-    split_nav("resize", "k"),
-    split_nav("resize", "l"),
+
+    -- Leader key tables
+    { key = "o", mods = "LEADER", action = action.SpawnCommandInNewTab({ args = { "open", "." } }) },
+    { key = "r", mods = "LEADER", action = activate_table("resize") },
+    { key = "y", mods = "LEADER", action = activate_table("copy") },
+    { key = "h", mods = "LEADER", action = action.ActivateCommandPalette },
+    { key = "v", mods = "LEADER", action = action.ActivateCopyMode },
+    { key = ",", mods = "LEADER", action = rename_tab_prompt() },
+    { key = "$", mods = "LEADER|SHIFT", action = rename_workspace_prompt() },
+  }
+end
+
+function M.get_key_tables()
+  local action = wezterm.action
+  return {
+    resize = {
+      { key = "DownArrow", action = action.AdjustPaneSize({ "Down", 1 }) },
+      { key = "LeftArrow", action = action.AdjustPaneSize({ "Left", 1 }) },
+      { key = "RightArrow", action = action.AdjustPaneSize({ "Right", 1 }) },
+      { key = "UpArrow", action = action.AdjustPaneSize({ "Up", 1 }) },
+      { key = "j", action = action.AdjustPaneSize({ "Down", 1 }) },
+      { key = "h", action = action.AdjustPaneSize({ "Left", 1 }) },
+      { key = "l", action = action.AdjustPaneSize({ "Right", 1 }) },
+      { key = "k", action = action.AdjustPaneSize({ "Up", 1 }) },
+      { key = "Escape", action = "PopKeyTable" },
+      { key = "Enter", action = "PopKeyTable" },
+    },
+    copy = {
+      { key = "b", action = action.EmitEvent("copy-buffer-from-pane") },
+      { key = "p", action = action.EmitEvent("copy-text-from-pane") },
+      { key = "l", action = copy_line_action() },
+      { key = "r", action = copy_regex_action() },
+      { key = "Escape", action = "PopKeyTable" },
+      { key = "Enter", action = "PopKeyTable" },
+    },
   }
 end
 

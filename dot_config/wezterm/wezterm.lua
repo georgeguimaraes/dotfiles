@@ -2,6 +2,7 @@ local wezterm = require("wezterm")
 local config = wezterm.config_builder()
 
 -- Load configuration modules
+require("config.launch").apply(config)
 require("config.appearance").apply(config)
 require("config.keybindings").apply(config)
 require("config.events").setup()

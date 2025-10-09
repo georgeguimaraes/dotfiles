@@ -27,7 +27,6 @@ The leader key is `CTRL+a` with a 1.5 second timeout.
 - `CMD+SHIFT+d` - Split pane right (33%)
 - `CMD+z` - Toggle pane zoom
 - `CTRL+hjkl` - Navigate between panes (vim-aware)
-- `CTRL+SHIFT+hjkl` - Resize panes (vim-aware)
 - `CMD+r` / `CMD+SHIFT+r` - Rotate panes clockwise/counter-clockwise
 - `CMD+g` - Pane swap mode
 - `LEADER+-` - Split pane vertically

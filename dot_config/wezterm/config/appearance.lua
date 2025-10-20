@@ -20,11 +20,11 @@ function M.apply(config)
   -- Color scheme and fonts
   config.color_scheme = "tokyonight_moon_gg"
   config.font = wezterm.font({ family = "VictorMono Nerd Font", weight = 500, harfbuzz_features = { "ss01=off" } })
-  config.font_size = 17
+  config.font_size = 18
 
   -- Tab bar
   config.use_fancy_tab_bar = true
-  config.hide_tab_bar_if_only_one_tab = true
+  config.hide_tab_bar_if_only_one_tab = false
 
   -- Window appearance
   config.window_decorations = "RESIZE"
@@ -37,7 +37,7 @@ function M.apply(config)
     bottom = 10,
   }
   config.window_frame = {
-    font_size = 16,
+    font_size = 18,
     active_titlebar_bg = "#222436",
   }
 

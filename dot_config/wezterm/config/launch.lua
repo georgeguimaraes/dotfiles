@@ -14,7 +14,7 @@ function M.apply(config)
 
   -- Keyboard and input protocols
   config.enable_kitty_keyboard = true
-  config.use_ime = false
+  config.use_ime = true
   config.enable_kitty_graphics = true
   config.enable_csi_u_key_encoding = false
 

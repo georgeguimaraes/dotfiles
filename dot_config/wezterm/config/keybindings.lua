@@ -3,7 +3,7 @@ local helpers = require("utils.helpers")
 
 local M = {}
 
-local TIMEOUT = { key = 3000, leader = 1500 }
+local TIMEOUT = { key = 3000, leader = 3000 }
 
 -- Public interface
 function M.apply(config)
@@ -63,6 +63,8 @@ function M.get_keys()
     { key = "]", mods = "CMD", action = action.ActivateTabRelative(1) },
     { key = "[", mods = "CMD|SHIFT", action = action.MoveTabRelative(-1) },
     { key = "]", mods = "CMD|SHIFT", action = action.MoveTabRelative(1) },
+    { key = "k", mods = "CMD", action = action.ClearScrollback("ScrollbackAndViewport") },
+    { key = "k", mods = "CMD|SHIFT", action = action.ClearScrollback("ScrollbackOnly") },
     {
       mods = "CMD",
       key = "p",
@@ -102,9 +104,51 @@ function M.get_keys()
     { mods = "CMD", key = "RightArrow", action = action.SendKey({ mods = "CTRL", key = "e" }) },
     { mods = "CMD", key = "Backspace", action = action.SendKey({ mods = "CTRL", key = "u" }) },
 
-    -- Vim-style scrolling
-    { key = "k", mods = "OPT", action = action.ScrollByLine(-1) },
-    { key = "j", mods = "OPT", action = action.ScrollByLine(1) },
+    -- Vim-style scrolling (disabled when inside nvim)
+    {
+      key = "h",
+      mods = "OPT",
+      action = wezterm.action_callback(function(window, pane)
+        if helpers.is_vim(pane) then
+          window:perform_action(action.SendKey({ mods = "ALT", key = "h" }), pane)
+        else
+          window:perform_action(action.SendKey({ mods = "ALT", key = "h" }), pane)
+        end
+      end),
+    },
+    {
+      key = "j",
+      mods = "OPT",
+      action = wezterm.action_callback(function(window, pane)
+        if helpers.is_vim(pane) then
+          window:perform_action(action.SendKey({ mods = "ALT", key = "j" }), pane)
+        else
+          window:perform_action(action.ScrollByLine(1), pane)
+        end
+      end),
+    },
+    {
+      key = "k",
+      mods = "OPT",
+      action = wezterm.action_callback(function(window, pane)
+        if helpers.is_vim(pane) then
+          window:perform_action(action.SendKey({ mods = "ALT", key = "k" }), pane)
+        else
+          window:perform_action(action.ScrollByLine(-1), pane)
+        end
+      end),
+    },
+    {
+      key = "l",
+      mods = "OPT",
+      action = wezterm.action_callback(function(window, pane)
+        if helpers.is_vim(pane) then
+          window:perform_action(action.SendKey({ mods = "ALT", key = "l" }), pane)
+        else
+          window:perform_action(action.SendKey({ mods = "ALT", key = "l" }), pane)
+        end
+      end),
+    },
     { key = "u", mods = "OPT", action = action.ScrollByPage(-0.5) },
     { key = "d", mods = "OPT", action = action.ScrollByPage(0.5) },
     { key = "b", mods = "OPT", action = action.ScrollByPage(-1) },

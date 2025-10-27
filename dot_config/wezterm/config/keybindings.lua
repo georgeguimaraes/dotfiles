@@ -7,7 +7,7 @@ local TIMEOUT = { key = 3000, leader = 3000 }
 
 -- Public interface
 function M.apply(config)
-  config.leader = { key = "a", mods = "CTRL", timeout_milliseconds = TIMEOUT.leader }
+  config.leader = { key = "\\", mods = "CTRL", timeout_milliseconds = TIMEOUT.leader }
   config.keys = M.get_keys()
   config.key_tables = M.get_key_tables()
 end
@@ -363,9 +363,14 @@ function M.split_nav(resize_or_move, key)
     mods = resize_or_move == "resize" and "CTRL|SHIFT" or "CTRL",
     action = wezterm.action_callback(function(win, pane)
       if helpers.is_vim(pane) then
-        win:perform_action({
-          SendKey = { key = key, mods = resize_or_move == "resize" and "CTRL|SHIFT" or "CTRL" },
-        }, pane)
+        -- For Ctrl+J in vim, send F13 to avoid conflicts with terminal apps
+        if key == "j" and resize_or_move == "move" then
+          win:perform_action({ SendKey = { key = "F13" } }, pane)
+        else
+          win:perform_action({
+            SendKey = { key = key, mods = resize_or_move == "resize" and "CTRL|SHIFT" or "CTRL" },
+          }, pane)
+        end
       else
         if resize_or_move == "resize" then
           win:perform_action({ AdjustPaneSize = { helpers.direction_keys[key], 3 } }, pane)

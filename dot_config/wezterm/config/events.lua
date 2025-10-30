@@ -14,6 +14,9 @@ function M.setup()
   wezterm.on("flash-terminal", function(window)
     M.flash_screen(window)
   end)
+
+  -- Strip ANSI codes from pasted content
+  wezterm.on("paste", M.strip_ansi_on_paste)
 end
 
 function M.flash_screen(window)
@@ -83,6 +86,20 @@ function M.copy_text(window, pane)
   local text = pane:get_lines_as_text(pane:get_dimensions().viewport_rows)
   window:copy_to_clipboard(text)
   M.flash_screen(window)
+end
+
+function M.strip_ansi_on_paste(window, pane)
+  local clipboard = window:get_clipboard("Clipboard")
+  if not clipboard or clipboard == "" then
+    return clipboard
+  end
+
+  -- Strip ANSI escape codes (colors, formatting, cursor movements)
+  local cleaned = clipboard:gsub("\x1b%[[0-9;]*[mGKHJABCDsuhlf]", "")
+  -- Also strip carriage returns that can cause line overwrites
+  cleaned = cleaned:gsub("\r", "")
+
+  return cleaned
 end
 
 return M

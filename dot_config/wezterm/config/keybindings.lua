@@ -237,6 +237,19 @@ function M.get_keys()
     M.split_nav("move", "k"),
     M.split_nav("move", "l"),
 
+    -- Map Ctrl+M in vim to F14 to avoid conflict with Enter
+    {
+      key = "m",
+      mods = "CTRL",
+      action = wezterm.action_callback(function(win, pane)
+        if helpers.is_vim(pane) then
+          win:perform_action({ SendKey = { key = "F14" } }, pane)
+        else
+          win:perform_action({ SendKey = { key = "m", mods = "CTRL" } }, pane)
+        end
+      end),
+    },
+
     -- Leader key tables
     { key = "o", mods = "LEADER", action = action.SpawnCommandInNewTab({ args = { "open", "." } }) },
     { key = "r", mods = "LEADER", action = M.activate_table("resize") },

@@ -5,7 +5,7 @@ local M = {}
 function M.apply(config)
   -- Shell and window size
   config.default_prog = { "/bin/zsh", "-l" }
-  config.initial_cols = 147
+  config.initial_cols = 140
   config.initial_rows = 40
 
   -- Terminal behavior

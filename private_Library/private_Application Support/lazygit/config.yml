@@ -1,11 +1,11 @@
 promptToReturnFromSubprocess: false
 git:
   overrideGpg: true
-  paging:
-    colorArg: never
-    useConfig: false
-    pager: delta --detect-dark-light=never --paging=never
-    # externalDiffCommand: difft --display inline --background dark
+  pagers:
+    - colorArg: never
+      useConfig: false
+      pager: delta --detect-dark-light=never --paging=never
+      # externalDiffCommand: difft --display inline --background dark
 gui:
   nerdFontsVersion: "3"
   showDivergenceFromBaseBranch: arrowAndNumber

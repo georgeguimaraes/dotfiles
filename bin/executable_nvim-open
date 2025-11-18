@@ -1,0 +1,81 @@
+#!/bin/bash
+# nvim-open: Open files in existing Neovim instance via RPC
+
+set -euo pipefail
+
+DEBUG=${DEBUG:-0}
+
+# Parse arguments
+if [[ $# -eq 1 ]]; then
+  file="${1%%:*}"
+  line="${1#*:}"
+  [[ "$line" == "$file" ]] && line="1"
+elif [[ $# -eq 2 ]]; then
+  file="$1"
+  line="$2"
+else
+  echo "Usage: nvim-open <file>[:line] or nvim-open <file> <line>" >&2
+  exit 1
+fi
+
+# Make file path absolute
+[[ ! "$file" = /* ]] && file="$(pwd)/$file"
+
+[[ $DEBUG -eq 1 ]] && echo "[DEBUG] File: $file:$line" >&2
+
+# Helper: Get TTY for a Neovim socket
+get_nvim_tty() {
+  local sock=$1
+  local pid=$(lsof -t "$sock" 2>/dev/null | head -1)
+  [[ -n "$pid" ]] && lsof -p "$pid" 2>/dev/null | grep -E '/dev/tty' | awk '{print $NF}' | head -1
+}
+
+# Strategy 1: Use $NVIM if set
+if [[ -n "${NVIM:-}" ]]; then
+  socket="$NVIM"
+  [[ $DEBUG -eq 1 ]] && echo "[DEBUG] Using \$NVIM" >&2
+
+# Strategy 2: Find Neovim in active WezTerm pane
+elif command -v wezterm >/dev/null 2>&1; then
+  active_tty=$(wezterm cli list --format json 2>/dev/null | \
+    jq -r '.[] | select(.is_active == true) | .tty_name' | head -1)
+
+  if [[ -n "$active_tty" ]]; then
+    for sock in $(find /var/folders /tmp -name 'nvim.*.0' -type s 2>/dev/null); do
+      if [[ "$(get_nvim_tty "$sock")" == "$active_tty" ]]; then
+        socket="$sock"
+        [[ $DEBUG -eq 1 ]] && echo "[DEBUG] Found in active pane" >&2
+        break
+      fi
+    done
+  fi
+
+  # Strategy 3: Use most recent socket
+  if [[ -z "${socket:-}" ]]; then
+    socket=$(find /var/folders /tmp -name 'nvim.*.0' -type s -exec stat -f "%m %N" {} \; 2>/dev/null | \
+      sort -rn | head -1 | awk '{print $2}' || true)
+    [[ $DEBUG -eq 1 ]] && echo "[DEBUG] Using most recent" >&2
+  fi
+fi
+
+# Open in existing Neovim or start new
+if [[ -n "${socket:-}" ]] && [[ -S "$socket" ]]; then
+  # Send commands to existing instance
+  nvim --server "$socket" --remote-send "<Esc>:edit $file<CR>:$line<CR>zz"
+
+  # Focus the WezTerm pane
+  if command -v wezterm >/dev/null 2>&1; then
+    tty=$(get_nvim_tty "$socket")
+    if [[ -n "$tty" ]]; then
+      pane_id=$(wezterm cli list --format json 2>/dev/null | \
+        jq -r --arg tty "$tty" '.[] | select(.tty_name == $tty) | .pane_id' | head -1)
+      [[ -n "$pane_id" ]] && wezterm cli activate-pane --pane-id "$pane_id" 2>/dev/null
+    fi
+  fi
+
+  # Bring WezTerm to foreground
+  osascript -e 'tell application "WezTerm" to activate' 2>/dev/null || true
+else
+  # No socket found, open new instance
+  exec nvim "+${line}" "$file"
+fi

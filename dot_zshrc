@@ -74,6 +74,7 @@ export PATH
 export PAGER="less"
 export LESS="-R"
 export EDITOR="nvim"
+export PLUG_EDITOR="nvim-open"
 export LS_COLORS="$(vivid generate tokyonight-moon)"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export RIPGREP_CONFIG_PATH=~/.config/ripgreprc

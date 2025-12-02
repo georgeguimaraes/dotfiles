@@ -25,6 +25,11 @@ customCommands:
     context: "localBranches"
     command: "git gone"
   - key: <c-a>
+    description: AI commit (aicommit2)
+    command: aicommit2
+    context: files
+    output: terminal
+  - key: <c-A>
     description: Pick AI commit
     command: |
       aichat "Please suggest 10 commit messages, given the following diff:

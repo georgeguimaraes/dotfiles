@@ -6,3 +6,4 @@
 .elixir-ls
 .expert
 .claude/settings.local.json
+lefthook-local.yml

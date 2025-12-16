@@ -16,7 +16,8 @@ function M.setup()
   end)
 
   -- Strip ANSI codes from pasted content
-  wezterm.on("paste", M.strip_ansi_on_paste)
+  -- DISABLED: Causes 100% CPU / flashing - see https://github.com/wezterm/wezterm/discussions/4425
+  -- wezterm.on("paste", M.strip_ansi_on_paste)
 end
 
 function M.flash_screen(window)

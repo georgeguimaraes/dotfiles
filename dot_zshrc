@@ -161,6 +161,9 @@ if [ -f ~/.config/secrets.sh ]; then
   source ~/.config/secrets.sh
 fi
 
+# Load custom configs from ~/.zsh/
+for file in ~/.zsh/*.zsh; do [[ -r "$file" ]] && source "$file"; done
+
 eval "$(atuin init zsh --disable-up-arrow)"
 
 [ "$(hostname)" = "rocinante" ] && source /opt/homebrew/anaconda3/bin/activate

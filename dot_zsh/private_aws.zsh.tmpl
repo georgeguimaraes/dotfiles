@@ -1,0 +1,297 @@
+# AWS CLI helpers
+# Source this file from ~/.zshrc:
+#   for file in ~/.zsh/*.zsh; do [[ -r "$file" ]] && source "$file"; done
+#
+# Configure private values in ~/.config/chezmoi/chezmoi.toml:
+#   [data]
+#     aws_region = "us-east-2"
+#     aws_sso_session = "my-sso"
+#     aws_default_profile = "my-profile"
+
+# ============================================================================
+# Configuration (from chezmoi)
+# ============================================================================
+
+_AWS_REGION="{{ .aws_region }}"
+_AWS_SSO_SESSION="{{ .aws_sso_session }}"
+_AWS_DEFAULT_PROFILE="{{ .aws_default_profile }}"
+
+# ============================================================================
+# ECS Exec - Connect to containers with fzf selection
+# ============================================================================
+
+ecs-connect() {
+  local profile="${1:-$_AWS_DEFAULT_PROFILE}"
+  local region="$_AWS_REGION"
+
+  # Check dependencies
+  if ! command -v fzf &> /dev/null; then
+    echo "Error: fzf is not installed. Run: brew install fzf"
+    return 1
+  fi
+
+  if ! command -v session-manager-plugin &> /dev/null; then
+    echo "Error: session-manager-plugin is not installed."
+    echo "Run: brew install --cask session-manager-plugin"
+    return 1
+  fi
+
+  echo "Using profile: $profile"
+  echo ""
+
+  # Select cluster
+  echo "Fetching clusters..."
+  local clusters=$(aws ecs list-clusters \
+    --region $region \
+    --profile $profile \
+    --query 'clusterArns[*]' \
+    --output text 2>/dev/null | tr '\t' '\n' | rev | cut -d'/' -f1 | rev)
+
+  if [[ -z "$clusters" ]]; then
+    echo "Error: No clusters found or failed to fetch. Check your AWS credentials."
+    return 1
+  fi
+
+  local cluster=$(echo "$clusters" | fzf --prompt="Select cluster: " --height=40% --reverse)
+  [[ -z "$cluster" ]] && echo "Cancelled." && return 1
+  echo "Cluster: $cluster"
+
+  # Select service
+  echo "Fetching services..."
+  local services=$(aws ecs list-services \
+    --cluster $cluster \
+    --region $region \
+    --profile $profile \
+    --query 'serviceArns[*]' \
+    --output text 2>/dev/null | tr '\t' '\n' | rev | cut -d'/' -f1 | rev)
+
+  if [[ -z "$services" ]]; then
+    echo "Error: No services found in cluster $cluster"
+    return 1
+  fi
+
+  local service=$(echo "$services" | fzf --prompt="Select service: " --height=40% --reverse)
+  [[ -z "$service" ]] && echo "Cancelled." && return 1
+  echo "Service: $service"
+
+  # Select task
+  echo "Fetching tasks..."
+  local tasks=$(aws ecs list-tasks \
+    --cluster $cluster \
+    --service-name $service \
+    --region $region \
+    --profile $profile \
+    --query 'taskArns[*]' \
+    --output text 2>/dev/null | tr '\t' '\n' | rev | cut -d'/' -f1 | rev)
+
+  if [[ -z "$tasks" ]]; then
+    echo "Error: No running tasks found for service $service"
+    return 1
+  fi
+
+  local task=$(echo "$tasks" | fzf --prompt="Select task: " --height=40% --reverse)
+  [[ -z "$task" ]] && echo "Cancelled." && return 1
+  echo "Task: $task"
+
+  # Select container
+  echo "Fetching containers..."
+  local containers=$(aws ecs describe-tasks \
+    --cluster $cluster \
+    --tasks $task \
+    --region $region \
+    --profile $profile \
+    --query 'tasks[0].containers[*].name' \
+    --output text 2>/dev/null | tr '\t' '\n')
+
+  if [[ -z "$containers" ]]; then
+    echo "Error: No containers found in task $task"
+    return 1
+  fi
+
+  local container
+  if [[ $(echo "$containers" | wc -l) -eq 1 ]]; then
+    container="$containers"
+    echo "Container: $container (auto-selected, only one available)"
+  else
+    container=$(echo "$containers" | fzf --prompt="Select container: " --height=40% --reverse)
+    [[ -z "$container" ]] && echo "Cancelled." && return 1
+    echo "Container: $container"
+  fi
+
+  echo ""
+  echo "Connecting..."
+  echo "============================================"
+
+  aws ecs execute-command \
+    --cluster $cluster \
+    --task $task \
+    --container $container \
+    --region $region \
+    --profile $profile \
+    --command "/bin/bash" \
+    --interactive
+}
+
+# ============================================================================
+# ECS Deployment Status - Quick view of service deployments
+# ============================================================================
+
+ecs-status() {
+  local profile="${1:-$_AWS_DEFAULT_PROFILE}"
+  local region="$_AWS_REGION"
+
+  echo "Fetching ECS status for profile: $profile"
+  echo ""
+
+  local clusters=$(aws ecs list-clusters \
+    --region $region \
+    --profile $profile \
+    --query 'clusterArns[*]' \
+    --output text 2>/dev/null | tr '\t' '\n' | rev | cut -d'/' -f1 | rev)
+
+  for cluster in $clusters; do
+    echo "Cluster: $cluster"
+    echo "----------------------------------------"
+
+    local services=$(aws ecs list-services \
+      --cluster $cluster \
+      --region $region \
+      --profile $profile \
+      --query 'serviceArns[*]' \
+      --output text 2>/dev/null | tr '\t' '\n' | rev | cut -d'/' -f1 | rev)
+
+    for service in $services; do
+      local status=$(aws ecs describe-services \
+        --cluster $cluster \
+        --services $service \
+        --region $region \
+        --profile $profile \
+        --query 'services[0].{running: runningCount, desired: desiredCount, status: status}' \
+        --output text 2>/dev/null)
+      echo "  $service: $status"
+    done
+    echo ""
+  done
+}
+
+# ============================================================================
+# ECS Deployment History - View deployments with image tags/git SHAs
+# ============================================================================
+
+ecs-deployments() {
+  local profile="${1:-$_AWS_DEFAULT_PROFILE}"
+  local region="$_AWS_REGION"
+
+  if ! command -v fzf &> /dev/null; then
+    echo "Error: fzf is not installed. Run: brew install fzf"
+    return 1
+  fi
+
+  echo "Using profile: $profile"
+  echo ""
+
+  # Select cluster
+  echo "Fetching clusters..."
+  local clusters=$(aws ecs list-clusters \
+    --region $region \
+    --profile $profile \
+    --query 'clusterArns[*]' \
+    --output text 2>/dev/null | tr '\t' '\n' | rev | cut -d'/' -f1 | rev)
+
+  if [[ -z "$clusters" ]]; then
+    echo "Error: No clusters found or failed to fetch. Check your AWS credentials."
+    return 1
+  fi
+
+  local cluster=$(echo "$clusters" | fzf --prompt="Select cluster: " --height=40% --reverse)
+  [[ -z "$cluster" ]] && echo "Cancelled." && return 1
+
+  # Select service
+  echo "Fetching services..."
+  local services=$(aws ecs list-services \
+    --cluster $cluster \
+    --region $region \
+    --profile $profile \
+    --query 'serviceArns[*]' \
+    --output text 2>/dev/null | tr '\t' '\n' | rev | cut -d'/' -f1 | rev)
+
+  if [[ -z "$services" ]]; then
+    echo "Error: No services found in cluster $cluster"
+    return 1
+  fi
+
+  local service=$(echo "$services" | fzf --prompt="Select service: " --height=40% --reverse)
+  [[ -z "$service" ]] && echo "Cancelled." && return 1
+
+  # Get current task definition family from service
+  local task_def_arn=$(aws ecs describe-services \
+    --cluster $cluster \
+    --services $service \
+    --region $region \
+    --profile $profile \
+    --query 'services[0].taskDefinition' \
+    --output text 2>/dev/null)
+
+  local task_family=$(echo "$task_def_arn" | rev | cut -d'/' -f1 | rev | cut -d':' -f1)
+
+  echo ""
+  echo "Deployment History: $service"
+  echo "Task Family: $task_family"
+  echo "======================================================================================================="
+  printf "%-6s %-18s %-14s %s\n" "REV" "REGISTERED" "GIT SHA" "IMAGE SHA"
+  echo "-------------------------------------------------------------------------------------------------------"
+
+  # List task definition revisions (most recent first)
+  aws ecs list-task-definitions \
+    --family-prefix "$task_family" \
+    --sort DESC \
+    --max-items 15 \
+    --region $region \
+    --profile $profile \
+    --query 'taskDefinitionArns[*]' \
+    --output text 2>/dev/null | tr '\t' '\n' | while read -r taskdef; do
+
+    [[ -z "$taskdef" ]] && continue
+
+    local rev="${taskdef##*:}"
+
+    # Get BUILD_SHA, image, and registration date from task definition
+    local info=$(aws ecs describe-task-definition \
+      --task-definition "$taskdef" \
+      --region $region \
+      --profile $profile \
+      --query '{sha: taskDefinition.containerDefinitions[0].environment[?name==`BUILD_SHA`].value | [0], registered: taskDefinition.registeredAt, image: taskDefinition.containerDefinitions[0].image}' \
+      --output json 2>/dev/null)
+
+    local build_sha=$(echo "$info" | jq -r '.sha // "unknown"')
+    local registered=$(echo "$info" | jq -r '.registered // ""')
+    local image=$(echo "$info" | jq -r '.image // ""')
+
+    # Extract image SHA (after @sha256: or after last colon for tags)
+    local image_sha=""
+    if [[ "$image" == *"@sha256:"* ]]; then
+      image_sha="${image##*@sha256:}"
+      image_sha="${image_sha:0:12}"
+    elif [[ "$image" == *":"* ]]; then
+      image_sha="${image##*:}"
+      [[ ${#image_sha} -gt 12 ]] && image_sha="${image_sha:0:12}"
+    fi
+
+    # Format the date (strip timezone and milliseconds for macOS date compatibility)
+    local date_clean="${registered%%.*}"  # Remove .148000-03:00
+    local date_formatted=$(date -j -f "%Y-%m-%dT%H:%M:%S" "$date_clean" "+%Y-%m-%d %H:%M" 2>/dev/null)
+    [[ -z "$date_formatted" ]] && date_formatted="${registered:0:16}"  # Fallback: first 16 chars
+
+    printf "%-6s %-18s %-14s %s\n" "$rev" "$date_formatted" "${build_sha:0:12}" "$image_sha"
+  done
+}
+
+# ============================================================================
+# AWS SSO Login helper
+# ============================================================================
+
+aws-login() {
+  aws sso login --sso-session="$_AWS_SSO_SESSION"
+  echo ""
+  echo "Logged in to SSO session: $_AWS_SSO_SESSION"
+}

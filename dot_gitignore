@@ -8,3 +8,8 @@
 .claude/settings.local.json
 lefthook-local.yml
 docs/plans
+.beads/
+
+# Beads stealth mode: /Users/george/code/soothsayer (added by bd init --stealth)
+/Users/george/code/soothsayer/.beads/
+/Users/george/code/soothsayer/.claude/settings.local.json

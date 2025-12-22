@@ -1,7 +1,57 @@
 {
+  "alwaysThinkingEnabled": true,
+  "enabledPlugins": {
+    "context7@claude-plugins-official": true,
+    "elements-of-style@superpowers-marketplace": false,
+    "superpowers@superpowers-marketplace": true
+  },
   "env": {
     "BASH_DEFAULT_TIMEOUT_MS": "300000",
     "BASH_MAX_TIMEOUT_MS": "300000"
+  },
+  "hooks": {
+    "PostToolUse": [
+      {
+        "hooks": [
+          {
+            "command": "if [[ \"$file_path\" == *.ex || \"$file_path\" == *.exs ]]; then mix format \"$file_path\"; fi",
+            "type": "command"
+          }
+        ],
+        "matcher": "Edit|MultiEdit|Write"
+      }
+    ],
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "command": "bd prime",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "if [ -f \"$CLAUDE_PROJECT_DIR/AGENTS.md\" ]; then cat \"$CLAUDE_PROJECT_DIR/AGENTS.md\"; fi",
+            "type": "command"
+          }
+        ],
+        "matcher": "startup"
+      },
+      {
+        "hooks": [
+          {
+            "command": "bd prime",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      }
+    ]
   },
   "permissions": {
     "allow": [
@@ -58,34 +108,5 @@
       "WebFetch(domain:hexdocs.pm)"
     ],
     "deny": []
-  },
-  "hooks": {
-    "SessionStart": [
-      {
-        "matcher": "startup",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if [ -f \"$CLAUDE_PROJECT_DIR/AGENTS.md\" ]; then cat \"$CLAUDE_PROJECT_DIR/AGENTS.md\"; fi"
-          }
-        ]
-      }
-    ],
-    "PostToolUse": [
-      {
-        "matcher": "Edit|MultiEdit|Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if [[ \"$file_path\" == *.ex || \"$file_path\" == *.exs ]]; then mix format \"$file_path\"; fi"
-          }
-        ]
-      }
-    ]
-  },
-  "enabledPlugins": {
-    "superpowers@superpowers-marketplace": true,
-    "elements-of-style@superpowers-marketplace": true
-  },
-  "alwaysThinkingEnabled": true
+  }
 }

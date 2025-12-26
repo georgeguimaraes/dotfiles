@@ -1,6 +1,7 @@
 ArgoCD
 Changelog
 Changepoint
+ExUnit
 Guimarães
 Hyperparameter
 IEx

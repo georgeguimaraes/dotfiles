@@ -178,4 +178,5 @@ zstyle ':completion:*' cache-path ~/.zsh/cache
 
 # Uncomment to see startup profiling information
 # zprof
+export ENABLE_LSP_TOOL=1
 alias claude-patched='node ~/.claude-lsp/node_modules/@anthropic-ai/claude-code/cli.js'

@@ -178,3 +178,4 @@ zstyle ':completion:*' cache-path ~/.zsh/cache
 
 # Uncomment to see startup profiling information
 # zprof
+alias claude-patched='node ~/.claude-lsp/node_modules/@anthropic-ai/claude-code/cli.js'

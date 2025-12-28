@@ -103,14 +103,13 @@
     "mix-format@claude-code-elixir": true,
     "code-review@claude-plugins-official": true,
     "security-guidance@claude-plugins-official": true,
-    "figma@claude-plugins-official": true,
     "pr-review-toolkit@claude-plugins-official": true,
-    "aws-cost-ops@aws-skills": true,
     "document-skills@anthropic-agent-skills": true,
     "mix-compile@claude-code-elixir": true,
     "elixir-architectural-thinking@claude-code-elixir": true,
     "otp-thinking@claude-code-elixir": true,
-    "phoenix-ecto-thinking@claude-code-elixir": true
+    "phoenix-ecto-thinking@claude-code-elixir": true,
+    "context-engineering@context-engineering-marketplace": true
   },
   "alwaysThinkingEnabled": true
 }

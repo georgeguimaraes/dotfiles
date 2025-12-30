@@ -134,6 +134,12 @@ alias spelling-exceptions="nvim ~/.config/vale/george/spelling-exceptions.txt"
 alias gr="gt"
 alias ccusage="npx ccusage@latest"
 
+wezterm-upgrade() {
+  brew upgrade wezterm@nightly
+  fileicon set /Applications/WezTerm.app ~/.config/wezterm/wezterm.icns
+  killall Dock
+}
+
 bindkey $'^[[A' up-line-or-search    # up arrow
 bindkey $'^[[B' down-line-or-search  # down arrow
 

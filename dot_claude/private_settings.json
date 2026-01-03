@@ -99,6 +99,17 @@
           }
         ]
       }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "command -v wezterm >/dev/null 2>&1 && wezterm cli set-tab-title '' 2>/dev/null; rm -f ~/.claude/terminal_title"
+          }
+        ]
+      }
     ]
   },
   "enabledPlugins": {

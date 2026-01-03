@@ -48,16 +48,19 @@ TEMP_FILE="${TITLE_FILE}.tmp.$$"
 echo "$FINAL_TITLE" > "$TEMP_FILE"
 mv "$TEMP_FILE" "$TITLE_FILE" 2>/dev/null || rm -f "$TEMP_FILE"
 
-# Set the terminal title using ANSI escape sequences
-# Detect terminal type and set title accordingly
-case "$TERM" in
-    xterm*|rxvt*|screen*|tmux*)
-        # Standard xterm-compatible terminals
-        printf '\033]0;%s\007' "$FINAL_TITLE"
-        ;;
-    *)
-        # Fallback: try anyway, suppress errors
-        # This works for iTerm2, Alacritty, and most modern terminals
-        printf '\033]0;%s\007' "$FINAL_TITLE" 2>/dev/null
-        ;;
-esac
+# Set the terminal title
+# Use wezterm CLI if available (bypasses Claude Code stdout capture)
+# Falls back to OSC escape sequences for other terminals
+if command -v wezterm >/dev/null 2>&1 && [ "$TERM" = "wezterm" ]; then
+    wezterm cli set-tab-title "$FINAL_TITLE" 2>/dev/null
+else
+    # Set using ANSI escape sequences for other terminals
+    case "$TERM" in
+        xterm*|rxvt*|screen*|tmux*)
+            printf '\033]0;%s\007' "$FINAL_TITLE"
+            ;;
+        *)
+            printf '\033]0;%s\007' "$FINAL_TITLE" 2>/dev/null
+            ;;
+    esac
+fi

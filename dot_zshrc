@@ -186,3 +186,5 @@ zstyle ':completion:*' cache-path ~/.zsh/cache
 # zprof
 export ENABLE_LSP_TOOL=1
 alias claude-patched='node ~/.claude-lsp/node_modules/@anthropic-ai/claude-code/cli.js'
+
+if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi

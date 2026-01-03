@@ -35,6 +35,22 @@ function M.format_tab_title(tab, tabs, panes, config, hover, max_width)
     end
   end
 
+  -- Respect custom tab titles set via `wezterm cli set-tab-title`
+  local custom_title = tab.tab_title
+  if custom_title and #custom_title > 0 then
+    local title = custom_title
+    if tab.active_pane.is_zoomed then
+      title = title .. " " .. wezterm.nerdfonts.md_alpha_z_box
+    end
+    if has_unseen_output then
+      return {
+        { Foreground = { Color = "#737aa2" } },
+        { Text = title },
+      }
+    end
+    return { { Text = title } }
+  end
+
   local title = string.format("%s   %s", helpers.get_process(tab), helpers.get_current_working_dir(tab))
 
   if tab.active_pane.is_zoomed then

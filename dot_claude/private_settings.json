@@ -55,9 +55,17 @@
       "Bash(rg:*)",
       "Bash(sed:*)",
       "WebFetch(domain:github.com)",
-      "WebFetch(domain:hexdocs.pm)"
+      "WebFetch(domain:hexdocs.pm)",
+      "Read(//Users/george/.config/nvim/**)",
+      "WebSearch",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(wezterm cli set-tab-title:*)",
+      "WebFetch(domain:api.github.com)",
+      "Bash(git clone:*)"
     ],
-    "deny": []
+    "deny": [],
+    "ask": [],
+    "defaultMode": "default"
   },
   "hooks": {
     "PreCompact": [
@@ -98,6 +106,15 @@
             "command": "echo \"{\\\"systemMessage\\\": \\\"Today is $(date '+%A, %B %d, %Y')\\\"}\""
           }
         ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"systemMessage\": \"SKILL NAMING: Elixir skills from claude-code-elixir plugin do NOT use superpowers: prefix. Use: otp-thinking, elixir-thinking, phoenix-ecto-thinking, elixir-architectural-thinking (NOT superpowers:otp-thinking). Only superpowers plugin skills use superpowers: prefix.\"}'"
+          }
+        ]
       }
     ],
     "SessionEnd": [
@@ -106,7 +123,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "command -v wezterm >/dev/null 2>&1 && wezterm cli set-tab-title '' 2>/dev/null; rm -f ~/.claude/terminal_title"
+            "command": "printf '\\033]0;zsh\\007' > /dev/tty 2>/dev/null || true"
           }
         ]
       }
@@ -132,7 +149,15 @@
     "context-engineering@context-engineering-marketplace": true,
     "elixir-skill-awareness@claude-code-elixir": true,
     "elixir-thinking@claude-code-elixir": true,
-    "elixir@claude-code-elixir": true
+    "elixir@claude-code-elixir": true,
+    "agent-architecture@context-engineering-marketplace": true,
+    "agent-development@context-engineering-marketplace": true,
+    "agent-evaluation@context-engineering-marketplace": true,
+    "context-engineering-fundamentals@context-engineering-marketplace": true,
+    "superpowers-developing-for-claude-code@superpowers-marketplace": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "clangd-lsp@claude-plugins-official": true,
+    "cognitive-architecture@context-engineering-marketplace": true
   },
   "alwaysThinkingEnabled": true
 }

@@ -92,15 +92,32 @@ M.direction_keys = {
   l = "Right",
 }
 
-function M.get_current_working_dir(tab)
-  local current_dir = tab.active_pane.current_working_dir or "~"
-  local file_path = current_dir.file_path
-
-  if file_path == os.getenv("HOME") then
+function M.extract_dir_name(file_path)
+  if not file_path then return nil end
+  local home = os.getenv("HOME")
+  if file_path == home or file_path == home .. "/" then
     return "~"
   end
+  return file_path:gsub("/$", ""):match("([^/]+)$")
+end
 
-  return string.gsub(file_path, "(.*[/\\])(.*)", "%2")
+function M.get_cwd_from_pane(pane_id)
+  local pane = wezterm.mux.get_pane(pane_id)
+  if not pane then return nil end
+
+  local ok, pane_cwd = pcall(function() return pane:get_current_working_dir() end)
+  if not ok or not pane_cwd then return nil end
+
+  local file_path = type(pane_cwd) == "string" and pane_cwd:gsub("^file://", "") or pane_cwd.file_path
+  return M.extract_dir_name(file_path)
+end
+
+function M.get_current_working_dir(tab)
+  local current_dir = tab.active_pane.current_working_dir
+  if not current_dir or not current_dir.file_path then
+    return "~"
+  end
+  return M.extract_dir_name(current_dir.file_path) or "~"
 end
 
 function M.get_process(tab)

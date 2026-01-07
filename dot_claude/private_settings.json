@@ -1,7 +1,8 @@
 {
   "env": {
     "BASH_DEFAULT_TIMEOUT_MS": "300000",
-    "BASH_MAX_TIMEOUT_MS": "300000"
+    "BASH_MAX_TIMEOUT_MS": "300000",
+    "SLASH_COMMAND_TOOL_CHAR_BUDGET": "30000"
   },
   "permissions": {
     "allow": [
@@ -61,7 +62,10 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(wezterm cli set-tab-title:*)",
       "WebFetch(domain:api.github.com)",
-      "Bash(git clone:*)"
+      "Bash(git clone:*)",
+      "Bash(gt log:*)",
+      "Bash(gt ls:*)",
+      "Bash(gt restack:*)"
     ],
     "deny": [],
     "ask": [],
@@ -106,15 +110,6 @@
             "command": "echo \"{\\\"systemMessage\\\": \\\"Today is $(date '+%A, %B %d, %Y')\\\"}\""
           }
         ]
-      },
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "echo '{\"systemMessage\": \"SKILL NAMING: Elixir skills from claude-code-elixir plugin do NOT use superpowers: prefix. Use: otp-thinking, elixir-thinking, phoenix-ecto-thinking, elixir-architectural-thinking (NOT superpowers:otp-thinking). Only superpowers plugin skills use superpowers: prefix.\"}'"
-          }
-        ]
       }
     ],
     "SessionEnd": [
@@ -130,34 +125,13 @@
     ]
   },
   "enabledPlugins": {
-    "context7@claude-plugins-official": true,
-    "elements-of-style@superpowers-marketplace": true,
-    "superpowers@superpowers-marketplace": true,
-    "stripe@claude-plugins-official": true,
-    "lua-lsp@claude-plugins-official": true,
-    "plugin-dev@claude-plugins-official": true,
-    "elixir-lsp@claude-code-elixir": false,
-    "mix-format@claude-code-elixir": false,
-    "code-review@claude-plugins-official": true,
-    "security-guidance@claude-plugins-official": true,
-    "pr-review-toolkit@claude-plugins-official": true,
-    "document-skills@anthropic-agent-skills": true,
-    "mix-compile@claude-code-elixir": false,
-    "elixir-architectural-thinking@claude-code-elixir": true,
-    "otp-thinking@claude-code-elixir": true,
-    "phoenix-ecto-thinking@claude-code-elixir": true,
-    "context-engineering@context-engineering-marketplace": true,
-    "elixir-skill-awareness@claude-code-elixir": true,
-    "elixir-thinking@claude-code-elixir": true,
+    "graphite@claude-code-graphite": true,
+    "graphite-mcp@claude-code-graphite": true,
     "elixir@claude-code-elixir": true,
-    "agent-architecture@context-engineering-marketplace": true,
-    "agent-development@context-engineering-marketplace": true,
-    "agent-evaluation@context-engineering-marketplace": true,
-    "context-engineering-fundamentals@context-engineering-marketplace": true,
-    "superpowers-developing-for-claude-code@superpowers-marketplace": true,
-    "rust-analyzer-lsp@claude-plugins-official": true,
-    "clangd-lsp@claude-plugins-official": true,
-    "cognitive-architecture@context-engineering-marketplace": true
+    "elixir-lsp@claude-code-elixir": true,
+    "mix-compile@claude-code-elixir": true,
+    "mix-credo@claude-code-elixir": true,
+    "mix-format@claude-code-elixir": true
   },
   "alwaysThinkingEnabled": true
 }

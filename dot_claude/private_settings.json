@@ -131,7 +131,13 @@
     "elixir-lsp@claude-code-elixir": true,
     "mix-compile@claude-code-elixir": true,
     "mix-credo@claude-code-elixir": true,
-    "mix-format@claude-code-elixir": true
+    "mix-format@claude-code-elixir": true,
+    "context7@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true,
+    "plugin-dev@claude-plugins-official": true,
+    "linear@claude-plugins-official": true
   },
   "alwaysThinkingEnabled": true
 }

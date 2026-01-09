@@ -85,7 +85,7 @@ export KERL_CONFIGURE_OPTIONS="--with-wx-config=$WX_CONFIG"
 export DISABLE_SPRING=1
 export ERL_AFLAGS="-kernel shell_history enabled"
 export ELIXIR_ERL_OPTIONS="+sssdio 128"
-export MIX_OS_DEPS_COMPILE_PARTITION_COUNT=4
+export MIX_OS_DEPS_COMPILE_PARTITION_COUNT=8
 export CXX="c++ -Wno-missing-template-arg-list-after-template-kw"
 
 eza_params=(
@@ -185,6 +185,3 @@ zstyle ':completion:*' cache-path ~/.zsh/cache
 # Uncomment to see startup profiling information
 # zprof
 export ENABLE_LSP_TOOL=1
-alias claude-patched='node ~/.claude-lsp/node_modules/@anthropic-ai/claude-code/cli.js'
-
-if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi

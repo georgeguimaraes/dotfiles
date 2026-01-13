@@ -68,38 +68,25 @@ function M.format_tab_title(tab, tabs, panes, config, hover, max_width)
   if pane_title and #pane_title > 0 and not dominated_title then
     local cwd = helpers.get_cwd_from_pane(tab.active_pane.pane_id) or helpers.get_current_working_dir(tab) or ""
 
-    -- Check if Claude is in foreground to reformat title
-    local pane = wezterm.mux.get_pane(tab.active_pane.pane_id)
-    local is_claude = false
-    if pane then
-      local ok, info = pcall(function() return pane:get_foreground_process_info() end)
-      if ok and info and info.executable then
-        is_claude = info.executable:lower():find("claude") ~= nil
+    -- Check for Claude Code star icons and replace with static icon
+    local star_chars = { "✳", "✶", "✽" }
+    local first_char = pane_title:sub(1, 3)
+    local found_star = false
+    for _, star in ipairs(star_chars) do
+      if first_char == star then
+        found_star = true
+        break
       end
     end
 
     local title
-    if is_claude then
-      -- Extract star prefix and move it to front: "✳ Some Title" -> "✳ cwd: Some Title"
-      -- Claude Code uses various star chars: ✳ ✶ ✽ (all 3 bytes in UTF-8)
-      local star_chars = { "✳", "✶", "✽" }
-      local first_char = pane_title:sub(1, 3)
-      local found_star = nil
-      for _, star in ipairs(star_chars) do
-        if first_char == star then
-          found_star = star
-          break
-        end
-      end
-      if found_star then
-        local rest = pane_title:sub(4):gsub("^%s*", "") -- remove leading space
-        title = found_star .. " " .. cwd .. ": " .. rest
-      else
-        title = (#cwd > 0) and (cwd .. ": " .. pane_title) or pane_title
-      end
+    if found_star then
+      local rest = pane_title:sub(4):gsub("^%s*", "") -- remove leading space
+      title = first_char .. " " .. cwd .. ": " .. rest
     else
       title = (#cwd > 0) and (cwd .. ": " .. pane_title) or pane_title
     end
+
     if tab.active_pane.is_zoomed then
       title = title .. " " .. wezterm.nerdfonts.md_alpha_z_box
     end

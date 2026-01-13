@@ -80,12 +80,20 @@ function M.format_tab_title(tab, tabs, panes, config, hover, max_width)
 
     local title
     if is_claude then
-      -- Extract emoji prefix and move it to front: "✳ Some Title" -> "✳ cwd: Some Title"
-      -- Check for ✳ specifically (3 bytes in UTF-8)
-      local prefix = pane_title:sub(1, 5) -- "✳ " is 3 bytes + space + maybe more
-      if prefix:sub(1, 3) == "✳" then
+      -- Extract star prefix and move it to front: "✳ Some Title" -> "✳ cwd: Some Title"
+      -- Claude Code uses various star chars: ✳ ✶ ✽ (all 3 bytes in UTF-8)
+      local star_chars = { "✳", "✶", "✽" }
+      local first_char = pane_title:sub(1, 3)
+      local found_star = nil
+      for _, star in ipairs(star_chars) do
+        if first_char == star then
+          found_star = star
+          break
+        end
+      end
+      if found_star then
         local rest = pane_title:sub(4):gsub("^%s*", "") -- remove leading space
-        title = "✳ " .. cwd .. ": " .. rest
+        title = found_star .. " " .. cwd .. ": " .. rest
       else
         title = (#cwd > 0) and (cwd .. ": " .. pane_title) or pane_title
       end

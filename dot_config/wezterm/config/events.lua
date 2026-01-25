@@ -68,21 +68,21 @@ function M.format_tab_title(tab, tabs, panes, config, hover, max_width)
   if pane_title and #pane_title > 0 and not dominated_title then
     local cwd = helpers.get_cwd_from_pane(tab.active_pane.pane_id) or helpers.get_current_working_dir(tab) or ""
 
-    -- Check for Claude Code star icons and replace with static icon
-    local star_chars = { "✳", "✶", "✽" }
+    -- Check for Claude Code icons (✳, ⠂, ⠐) and reformat as: <icon> <cwd>: <rest>
+    local claude_icons = { "✳", "⠂", "⠐" }
     local first_char = pane_title:sub(1, 3)
-    local found_star = false
-    for _, star in ipairs(star_chars) do
-      if first_char == star then
-        found_star = true
+    local found_icon = nil
+    for _, icon in ipairs(claude_icons) do
+      if first_char == icon then
+        found_icon = icon
         break
       end
     end
 
     local title
-    if found_star then
+    if found_icon then
       local rest = pane_title:sub(4):gsub("^%s*", "") -- remove leading space
-      title = first_char .. " " .. cwd .. ": " .. rest
+      title = found_icon .. " " .. cwd .. ": " .. rest
     else
       title = (#cwd > 0) and (cwd .. ": " .. pane_title) or pane_title
     end

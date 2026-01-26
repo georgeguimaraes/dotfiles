@@ -83,7 +83,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "if [ -f \"$CLAUDE_PROJECT_DIR/AGENTS.md\" ]; then cat \"$CLAUDE_PROJECT_DIR/AGENTS.md\"; fi"
+            "command": "if [ -f \"$CLAUDE_PROJECT_DIR/AGENTS.md\" ] && [ ! -f \"$CLAUDE_PROJECT_DIR/CLAUDE.md\" ]; then cat \"$CLAUDE_PROJECT_DIR/AGENTS.md\"; fi"
           }
         ]
       },
@@ -103,7 +103,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "if [ -f \"$CLAUDE_PROJECT_DIR/AGENTS.md\" ]; then cat \"$CLAUDE_PROJECT_DIR/AGENTS.md\"; fi"
+            "command": "if [ -f \"$CLAUDE_PROJECT_DIR/AGENTS.md\" ] && [ ! -f \"$CLAUDE_PROJECT_DIR/CLAUDE.md\" ]; then cat \"$CLAUDE_PROJECT_DIR/AGENTS.md\"; fi"
           }
         ]
       },

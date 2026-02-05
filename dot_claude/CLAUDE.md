@@ -46,11 +46,11 @@
 - For complex problems, throw more compute at it via subagents
 - One task per subagent for focused execution
 
-### 3. Self-Improvement Loop
-- After ANY correction from the user: update `~/.claude/tasks/lessons.md` with the pattern
+### 3. Self-Improvement Loop (Compound Step)
+- After ANY correction from the user: add entry to Lessons Learned section below
 - Write rules for yourself that prevent the same mistake
 - Ruthlessly iterate on these lessons until mistake rate drops
-- Review lessons at session start for relevant project
+- Review Lessons Learned at session start
 
 ### 4. Verification Before Done
 - Never mark a task complete without proving it works
@@ -74,3 +74,26 @@
 - **Simplicity First**: Make every change as simple as possible. Impact minimal code.
 - **No Laziness**: Find root causes. No temporary fixes. Senior developer standards.
 - **Minimal Impact**: Changes should only touch what's necessary. Avoid introducing bugs.
+
+---
+
+## Lessons Learned
+
+Accumulated patterns and mistakes that compound across sessions. Add new entries at the top.
+
+### Patterns That Work
+
+<!-- Successful approaches to reuse -->
+
+### Mistakes to Avoid
+
+<!-- Anti-patterns with context -->
+
+### Recent Entries
+
+<!-- Format:
+#### [Date] Short Title
+**Context**: What was happening
+**Mistake**: What went wrong
+**Rule**: How to prevent it next time
+-->

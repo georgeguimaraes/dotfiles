@@ -133,6 +133,8 @@ alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias spelling-exceptions="nvim ~/.config/vale/george/spelling-exceptions.txt"
 alias gr="gt"
 alias ccusage="npx ccusage@latest"
+alias personal-claude='CLAUDE_CONFIG_DIR="$HOME/.personal-claude" claude'
+alias pclaude='personal-claude'
 
 wezterm-upgrade() {
   brew upgrade wezterm@nightly

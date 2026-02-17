@@ -1,0 +1,10 @@
+#!/bin/bash
+set -e
+
+brew upgrade --cask wezterm@nightly
+
+curl -sL https://github.com/mikker/wezterm-icon/raw/main/wezterm.icns -o /tmp/wezterm.icns
+cp /tmp/wezterm.icns "/Applications/WezTerm.app/Contents/Resources/terminal.icns"
+touch "/Applications/WezTerm.app"
+
+echo "WezTerm nightly upgraded and icon applied."

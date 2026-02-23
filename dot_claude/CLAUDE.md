@@ -18,19 +18,35 @@
 - If you need to limit output, use command-specific flags (e.g., `git log -n 10` instead of `git log | head -10`)
 - Avoid chained pipes that can cause output to buffer indefinitely
 
+## Writing Style (all prose: PR descriptions, comments, replies, drafted messages)
+- Match George's voice: casual, direct, conversational
+- Short paragraphs, not walls of text
+- Use contractions naturally (they're, I'm, won't, don't)
+- Informal transitions: "that said", "so", "anyway", "also"
+- Start sentences lowercase when it feels natural in context
+- No em dashes, no semicolons, no formal connectors ("however", "furthermore", "additionally")
+- No LLM fluff words ("certainly", "great question", "I'd be happy to", "it's worth noting")
+- No "It's not X, it's Y" contrasting constructions — lead with the positive claim instead
+- Flowing prose over bullet points when writing replies or messages
+- When making multiple points, use short paragraphs not a numbered list
+- Light on hedging: say what you think, qualify only when genuinely uncertain
+- Smileys :) are fine, no other emoji unless asked
+- Reference specifics (courses taken, concrete examples from the data) to ground arguments
+- Never hard-wrap lines; let sentences flow naturally at full length
+
 ## PR Creation
 - Omit Claude Code attribution footer in PRs
 - Skip test plan and validation steps in PR descriptions
 - Use semantic commit prefix in PR titles (e.g., feat:, fix:, chore:, docs:, perf:, refactor:)
 - Capitalize the title after the prefix
 - Write human-like descriptions: casual, concise, no LLM fluff, no em dashes, no dashes, minimal bullet points, use colons if needed
+- Don't use a "## Summary" heading in PR descriptions, just start with the content directly
 
 ## Commits
 
 - Omit Claude Code attribution footer in commits
 - Always refactor the code you wrote to remove unnecessary comments
 - Write human-like messages: casual, concise, no LLM fluff, no em dashes, no dashes. Try to use colons if needed
-- Don't hard-wrap lines in commit/PR descriptions; let sentences flow naturally without mid-sentence line breaks
 
 ## Workflow Orchestration
 
@@ -91,9 +107,7 @@ Accumulated patterns and mistakes that compound across sessions. Add new entries
 
 ### Recent Entries
 
-<!-- Format:
-#### [Date] Short Title
-**Context**: What was happening
-**Mistake**: What went wrong
-**Rule**: How to prevent it next time
--->
+#### [2026-02-16] iOS visual debugging: suggest Safari Web Inspector early
+**Context**: Debugging dim text rendering on iOS in an Obsidian plugin. Spent many iterations guessing CSS properties (color, opacity, font-weight, overflow, compositing) when the root cause was `-webkit-mask-image` applied by Obsidian's core CSS.
+**Mistake**: Dismissed mobile inspection ("it's on mobile") instead of suggesting Safari Web Inspector connected to the iOS device, which would have shown the mask property immediately in computed styles.
+**Rule**: For ANY iOS/mobile WebKit visual bug, immediately suggest connecting Safari Web Inspector (Mac Safari > Develop > [device]) to inspect computed styles. Don't guess: inspect. When obvious CSS properties (color, opacity, font) are ruled out, systematically check less common visual properties: `mask`, `mask-image`, `clip-path`, `mix-blend-mode`, `backdrop-filter`.

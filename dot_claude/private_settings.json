@@ -99,6 +99,7 @@
       "Bash(git shortlog:*)",
       "Bash(git show:*)",
       "Bash(git stash:*)",
+      "Bash(git status:*)",
       "Bash(git status)",
       "Bash(git switch:*)",
       "Bash(git worktree:*)",

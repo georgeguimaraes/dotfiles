@@ -12,9 +12,9 @@
 # Configuration (from chezmoi)
 # ============================================================================
 
-_AWS_REGION="{{ .aws_region }}"
-_AWS_SSO_SESSION="{{ .aws_sso_session }}"
-_AWS_DEFAULT_PROFILE="{{ .aws_default_profile }}"
+_AWS_REGION="{{ get . "aws_region" | default "" }}"
+_AWS_SSO_SESSION="{{ get . "aws_sso_session" | default "" }}"
+_AWS_DEFAULT_PROFILE="{{ get . "aws_default_profile" | default "" }}"
 
 # ============================================================================
 # ECS Exec - Connect to containers with fzf selection

@@ -256,7 +256,17 @@
       "Bash(gt untrack:*)",
       "Bash(gt up:*)",
       "Bash(gt upstack:*)",
-      "Bash(gt --version:*)"
+      "Bash(gt --version:*)",
+      "Bash(gh api:*)",
+      "mcp__plugin_episodic-memory_episodic-memory__search",
+      "Bash(gt split:*)",
+      "WebFetch(domain:app.graphite.com)",
+      "WebFetch(domain:hex.pm)",
+      "mcp__plugin_linear_linear__get_issue",
+      "mcp__plugin_linear_linear__list_issues",
+      "mcp__posthog__query-run",
+      "WebFetch(domain:preview.hex.pm)",
+      "WebFetch(domain:docs.github.com)"
     ],
     "deny": [],
     "ask": [],
@@ -334,6 +344,8 @@
     "mix-credo@claude-code-elixir": true,
     "elixir@claude-code-elixir": true
   },
-  "alwaysThinkingEnabled": true,
-  "skipDangerousModePermissionPrompt": true
+  "effortLevel": "high",
+  "autoUpdatesChannel": "latest",
+  "skipDangerousModePermissionPrompt": true,
+  "model": "opus[1m]"
 }

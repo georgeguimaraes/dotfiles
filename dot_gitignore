@@ -7,6 +7,7 @@
 .expert
 .claude/settings.local.json
 lefthook-local.yml
+.e2e-secrets
 
 # Beads stealth mode: /Users/george/code/soothsayer (added by bd init --stealth)
 /Users/george/code/soothsayer/.beads/

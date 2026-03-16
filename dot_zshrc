@@ -83,6 +83,7 @@ export CFLAGS="-O2 -g -fno-stack-check"
 WX_CONFIG=/opt/homebrew/Cellar/wxwidgets@3.2/3.2.8.1/bin/wx-config-3.2
 export KERL_CONFIGURE_OPTIONS="--with-wx-config=$WX_CONFIG"
 export DISABLE_SPRING=1
+export GITHUB_TOKEN="$(gh auth token)"
 export ERL_AFLAGS="-kernel shell_history enabled"
 export ELIXIR_ERL_OPTIONS="+sssdio 128"
 export MIX_OS_DEPS_COMPILE_PARTITION_COUNT=8

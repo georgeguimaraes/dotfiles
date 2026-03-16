@@ -41,6 +41,7 @@
 - Capitalize the title after the prefix
 - Write human-like descriptions: casual, concise, no LLM fluff, no em dashes, no dashes, minimal bullet points, use colons if needed
 - Don't use a "## Summary" heading in PR descriptions, just start with the content directly
+- When a PR is created via Graphite (`gt submit`), show the Graphite link (`https://app.graphite.com/...`) not the GitHub link
 
 ## Commits
 

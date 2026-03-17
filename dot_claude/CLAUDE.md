@@ -112,3 +112,5 @@ Accumulated patterns and mistakes that compound across sessions. Add new entries
 **Context**: Debugging dim text rendering on iOS in an Obsidian plugin. Spent many iterations guessing CSS properties (color, opacity, font-weight, overflow, compositing) when the root cause was `-webkit-mask-image` applied by Obsidian's core CSS.
 **Mistake**: Dismissed mobile inspection ("it's on mobile") instead of suggesting Safari Web Inspector connected to the iOS device, which would have shown the mask property immediately in computed styles.
 **Rule**: For ANY iOS/mobile WebKit visual bug, immediately suggest connecting Safari Web Inspector (Mac Safari > Develop > [device]) to inspect computed styles. Don't guess: inspect. When obvious CSS properties (color, opacity, font) are ruled out, systematically check less common visual properties: `mask`, `mask-image`, `clip-path`, `mix-blend-mode`, `backdrop-filter`.
+
+@RTK.md

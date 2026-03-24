@@ -87,6 +87,26 @@
 - Zero context switching required from the user
 - Go fix failing CI tests without being told how
 
+## Testing
+
+**Use `unbuffer` when running mix commands.** When stdout is not a TTY (pipes, CI runners, agent harnesses, subprocesses), the C stdlib switches from line buffering to block buffering (~4-8KB chunks). Programs detect this via `isatty()` on the output file descriptor. The BEAM VM inherits this behavior from its C runtime — Erlang's `:io.columns/1` checks the *input* descriptor, not output, so Elixir can't reliably detect whether its output is being piped. This means `mix test` output may arrive late, get truncated, or lose ANSI formatting when captured by another process.
+
+`unbuffer` (from the `expect` package) allocates a pseudo-terminal (pty) between your shell and the command, making the program believe stdout is a real terminal. This restores line buffering and ANSI output:
+
+```bash
+# Bad — block-buffered, output may arrive late or truncated
+mix test
+mix ecto.migrate
+
+# Good — pty-backed, line-buffered, full output captured
+unbuffer mix test
+unbuffer mix test --cover
+unbuffer mix ecto.migrate
+unbuffer mix run priv/repo/seeds.exs
+```
+
+`unbuffer` ships with `expect` — install via `brew install expect` (macOS) or `apt install expect` (Debian/Ubuntu).
+
 ## Core Principles
 - **Simplicity First**: Make every change as simple as possible. Impact minimal code.
 - **No Laziness**: Find root causes. No temporary fixes. Senior developer standards.
@@ -112,5 +132,3 @@ Accumulated patterns and mistakes that compound across sessions. Add new entries
 **Context**: Debugging dim text rendering on iOS in an Obsidian plugin. Spent many iterations guessing CSS properties (color, opacity, font-weight, overflow, compositing) when the root cause was `-webkit-mask-image` applied by Obsidian's core CSS.
 **Mistake**: Dismissed mobile inspection ("it's on mobile") instead of suggesting Safari Web Inspector connected to the iOS device, which would have shown the mask property immediately in computed styles.
 **Rule**: For ANY iOS/mobile WebKit visual bug, immediately suggest connecting Safari Web Inspector (Mac Safari > Develop > [device]) to inspect computed styles. Don't guess: inspect. When obvious CSS properties (color, opacity, font) are ruled out, systematically check less common visual properties: `mask`, `mask-image`, `clip-path`, `mix-blend-mode`, `backdrop-filter`.
-
-@RTK.md

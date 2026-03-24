@@ -324,17 +324,7 @@
         ]
       }
     ],
-    "PreToolUse": [
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/Users/george/.claude/hooks/rtk-rewrite.sh"
-          }
-        ]
-      }
-    ]
+    "PreToolUse": []
   },
   "enabledPlugins": {
     "context7@claude-plugins-official": true,
@@ -353,10 +343,10 @@
     "mix-format@claude-code-elixir": true,
     "mix-compile@claude-code-elixir": true,
     "mix-credo@claude-code-elixir": true,
-    "elixir@claude-code-elixir": true
+    "elixir@claude-code-elixir": true,
+    "superpowers@claude-plugins-official": true
   },
   "effortLevel": "high",
   "autoUpdatesChannel": "latest",
-  "skipDangerousModePermissionPrompt": true,
-  "model": "opus[1m]"
+  "skipDangerousModePermissionPrompt": true
 }

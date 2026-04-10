@@ -190,3 +190,7 @@ zstyle ':completion:*' cache-path ~/.zsh/cache
 export ENABLE_LSP_TOOL=1
 
 if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)"; fi
+
+# Added by GitButler installer
+export PATH="/Users/george/.local/bin:$PATH"
+eval "$(but completions zsh)"

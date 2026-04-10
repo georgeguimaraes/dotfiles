@@ -344,7 +344,9 @@
     "mix-compile@claude-code-elixir": true,
     "mix-credo@claude-code-elixir": true,
     "elixir@claude-code-elixir": true,
-    "superpowers@claude-plugins-official": true
+    "superpowers@claude-plugins-official": true,
+    "example-skills@anthropic-agent-skills": true,
+    "notion@claude-plugins-official": true
   },
   "effortLevel": "high",
   "autoUpdatesChannel": "latest",

@@ -10,6 +10,10 @@ skip_global_compinit=1
 ZSH_DISABLE_COMPFIX=true
 
 POWERLEVEL9K_DISABLE_SSH=true
+
+autoload -Uz compinit
+compinit -C
+
 # Enable Powerlevel10k instant prompt
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
@@ -177,13 +181,9 @@ eval "$(atuin init zsh --disable-up-arrow)"
 
 [ "$(hostname)" = "rocinante" ] && source /opt/homebrew/anaconda3/bin/activate
 
-# Initialize completions last, after all FPATH additions
+# Completion caching
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
-{
-  autoload -Uz compinit
-  compinit -C
-} &!
 
 # Uncomment to see startup profiling information
 # zprof

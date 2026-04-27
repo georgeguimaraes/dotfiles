@@ -348,7 +348,9 @@
     "example-skills@anthropic-agent-skills": true,
     "notion@claude-plugins-official": true
   },
-  "effortLevel": "high",
+  "effortLevel": "xhigh",
   "autoUpdatesChannel": "latest",
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "verbose": true,
+  "remoteControlAtStartup": false
 }

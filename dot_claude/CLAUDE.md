@@ -19,7 +19,6 @@ No em dashes, semicolons, formal connectors ("however", "furthermore"), or LLM f
 - Semantic prefix in PR titles (feat:, fix:, chore:), capitalized after prefix
 - Skip test plan sections in PR descriptions. No "## Summary" heading, just start with content
 - Casual, concise descriptions and commit messages: no fluff, no em dashes, minimal bullets, use colons
-- For Graphite PRs (`gt submit`), show the Graphite link not GitHub
 - Remove unnecessary comments from code you wrote before committing
 
 ## Testing

@@ -136,7 +136,7 @@ alias cat=bat
 alias y=yazi
 alias tailscale="/Applications/Tailscale.app/Contents/MacOS/Tailscale"
 alias spelling-exceptions="nvim ~/.config/vale/george/spelling-exceptions.txt"
-alias gr="gt"
+alias gr="gh dash"
 alias ccusage="npx ccusage@latest"
 alias personal-claude='CLAUDE_CONFIG_DIR="$HOME/.personal-claude" claude'
 alias pclaude='personal-claude'

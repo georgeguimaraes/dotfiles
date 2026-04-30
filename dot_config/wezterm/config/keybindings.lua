@@ -43,7 +43,7 @@ function M.get_keys()
       key = "d",
       action = action.SplitPane({
         direction = "Right",
-        size = { Percent = 40 },
+        size = { Percent = 50 },
       }),
     },
     {
@@ -51,7 +51,7 @@ function M.get_keys()
       key = "d",
       action = action.SplitPane({
         direction = "Down",
-        size = { Percent = 40 },
+        size = { Percent = 50 },
       }),
     },
     {

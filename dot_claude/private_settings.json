@@ -1,10 +1,88 @@
 {
-  "env": {
-    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
-  },
   "attribution": {
     "commit": "",
     "pr": ""
+  },
+  "autoUpdatesChannel": "latest",
+  "effortLevel": "xhigh",
+  "enabledPlugins": {
+    "code-review@claude-plugins-official": true,
+    "code-simplifier@claude-plugins-official": true,
+    "context7@claude-plugins-official": true,
+    "elixir-lsp@claude-code-elixir": true,
+    "elixir@claude-code-elixir": true,
+    "episodic-memory@superpowers-marketplace": true,
+    "example-skills@anthropic-agent-skills": true,
+    "figma@claude-plugins-official": true,
+    "linear@claude-plugins-official": true,
+    "lua-lsp@claude-plugins-official": true,
+    "mix-compile@claude-code-elixir": true,
+    "mix-credo@claude-code-elixir": true,
+    "mix-format@claude-code-elixir": true,
+    "notion@claude-plugins-official": true,
+    "playground@claude-plugins-official": true,
+    "plugin-dev@claude-plugins-official": true,
+    "ralph-loop@claude-plugins-official": true,
+    "security-guidance@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true,
+    "swift-lsp@claude-plugins-official": true
+  },
+  "env": {
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "hooks": {
+    "PreCompact": [
+      {
+        "hooks": [
+          {
+            "command": "if [ -f \"$CLAUDE_PROJECT_DIR/AGENTS.md\" ] && [ ! -f \"$CLAUDE_PROJECT_DIR/CLAUDE.md\" ]; then cat \"$CLAUDE_PROJECT_DIR/AGENTS.md\"; fi",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      },
+      {
+        "hooks": [
+          {
+            "command": "echo \"{\\\"systemMessage\\\": \\\"Today is $(date '+%A, %B %d, %Y')\\\"}\"",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      }
+    ],
+    "PreToolUse": [],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "command": "printf '\\033]0;zsh\\007' > /dev/tty 2>/dev/null || true",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "command": "if [ -f \"$CLAUDE_PROJECT_DIR/AGENTS.md\" ] && [ ! -f \"$CLAUDE_PROJECT_DIR/CLAUDE.md\" ]; then cat \"$CLAUDE_PROJECT_DIR/AGENTS.md\"; fi",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      },
+      {
+        "hooks": [
+          {
+            "command": "echo \"{\\\"systemMessage\\\": \\\"Today is $(date '+%A, %B %d, %Y')\\\"}\"",
+            "type": "command"
+          }
+        ],
+        "matcher": ""
+      }
+    ]
   },
   "includeCoAuthoredBy": false,
   "permissions": {
@@ -266,91 +344,29 @@
       "mcp__plugin_linear_linear__list_issues",
       "mcp__posthog__query-run",
       "WebFetch(domain:preview.hex.pm)",
-      "WebFetch(domain:docs.github.com)"
+      "WebFetch(domain:docs.github.com)",
+      "Bash(cd /Users/george/code/new-gen-ai/canopy/backend/ngen)",
+      "Bash(mise exec -- mix hex.outdated 2>&1)",
+      "Bash(grep -E \"(ash|spark|reactor|splode|igniter)\")",
+      "Bash(cd /Users/george/code/new-gen-ai/canopy/backend/ngen)",
+      "Bash(mise exec -- mix hex.info ash_appsignal 2>&1)",
+      "Bash(head -10)",
+      "Bash(which mix)",
+      "Bash(mix --version 2>&1)",
+      "Bash(head -3)",
+      "Bash(but:*)",
+      "Bash(head:*)",
+      "Bash(cd:*)",
+      "Bash(git:*)",
+      "Bash(head:*)",
+      "Bash(/Users/george/Applications/GitButler.app/Contents/MacOS/gitbutler-tauri:*)",
+      "Bash(head:*)"
     ],
-    "deny": [],
     "ask": [],
-    "defaultMode": "default"
+    "defaultMode": "default",
+    "deny": []
   },
-  "hooks": {
-    "PreCompact": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if [ -f \"$CLAUDE_PROJECT_DIR/AGENTS.md\" ] && [ ! -f \"$CLAUDE_PROJECT_DIR/CLAUDE.md\" ]; then cat \"$CLAUDE_PROJECT_DIR/AGENTS.md\"; fi"
-          }
-        ]
-      },
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "echo \"{\\\"systemMessage\\\": \\\"Today is $(date '+%A, %B %d, %Y')\\\"}\""
-          }
-        ]
-      }
-    ],
-    "SessionStart": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "if [ -f \"$CLAUDE_PROJECT_DIR/AGENTS.md\" ] && [ ! -f \"$CLAUDE_PROJECT_DIR/CLAUDE.md\" ]; then cat \"$CLAUDE_PROJECT_DIR/AGENTS.md\"; fi"
-          }
-        ]
-      },
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "echo \"{\\\"systemMessage\\\": \\\"Today is $(date '+%A, %B %d, %Y')\\\"}\""
-          }
-        ]
-      }
-    ],
-    "SessionEnd": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "printf '\\033]0;zsh\\007' > /dev/tty 2>/dev/null || true"
-          }
-        ]
-      }
-    ],
-    "PreToolUse": []
-  },
-  "enabledPlugins": {
-    "context7@claude-plugins-official": true,
-    "code-review@claude-plugins-official": true,
-    "security-guidance@claude-plugins-official": true,
-    "ralph-loop@claude-plugins-official": true,
-    "plugin-dev@claude-plugins-official": true,
-    "linear@claude-plugins-official": true,
-    "figma@claude-plugins-official": true,
-    "episodic-memory@superpowers-marketplace": true,
-    "code-simplifier@claude-plugins-official": true,
-    "lua-lsp@claude-plugins-official": true,
-    "playground@claude-plugins-official": true,
-    "swift-lsp@claude-plugins-official": true,
-    "elixir-lsp@claude-code-elixir": true,
-    "mix-format@claude-code-elixir": true,
-    "mix-compile@claude-code-elixir": true,
-    "mix-credo@claude-code-elixir": true,
-    "elixir@claude-code-elixir": true,
-    "superpowers@claude-plugins-official": true,
-    "example-skills@anthropic-agent-skills": true,
-    "notion@claude-plugins-official": true
-  },
-  "effortLevel": "xhigh",
-  "autoUpdatesChannel": "latest",
+  "remoteControlAtStartup": false,
   "skipDangerousModePermissionPrompt": true,
-  "verbose": true,
-  "remoteControlAtStartup": false
+  "verbose": true
 }

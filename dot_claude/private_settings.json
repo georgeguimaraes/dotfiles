@@ -1,88 +1,10 @@
 {
-  "attribution": {
-    "commit": "",
-    "pr": ""
-  },
-  "autoUpdatesChannel": "latest",
-  "effortLevel": "xhigh",
-  "enabledPlugins": {
-    "code-review@claude-plugins-official": true,
-    "code-simplifier@claude-plugins-official": true,
-    "context7@claude-plugins-official": true,
-    "elixir-lsp@claude-code-elixir": true,
-    "elixir@claude-code-elixir": true,
-    "episodic-memory@superpowers-marketplace": true,
-    "example-skills@anthropic-agent-skills": true,
-    "figma@claude-plugins-official": true,
-    "linear@claude-plugins-official": true,
-    "lua-lsp@claude-plugins-official": true,
-    "mix-compile@claude-code-elixir": true,
-    "mix-credo@claude-code-elixir": true,
-    "mix-format@claude-code-elixir": true,
-    "notion@claude-plugins-official": true,
-    "playground@claude-plugins-official": true,
-    "plugin-dev@claude-plugins-official": true,
-    "ralph-loop@claude-plugins-official": true,
-    "security-guidance@claude-plugins-official": true,
-    "superpowers@claude-plugins-official": true,
-    "swift-lsp@claude-plugins-official": true
-  },
   "env": {
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
   },
-  "hooks": {
-    "PreCompact": [
-      {
-        "hooks": [
-          {
-            "command": "if [ -f \"$CLAUDE_PROJECT_DIR/AGENTS.md\" ] && [ ! -f \"$CLAUDE_PROJECT_DIR/CLAUDE.md\" ]; then cat \"$CLAUDE_PROJECT_DIR/AGENTS.md\"; fi",
-            "type": "command"
-          }
-        ],
-        "matcher": ""
-      },
-      {
-        "hooks": [
-          {
-            "command": "echo \"{\\\"systemMessage\\\": \\\"Today is $(date '+%A, %B %d, %Y')\\\"}\"",
-            "type": "command"
-          }
-        ],
-        "matcher": ""
-      }
-    ],
-    "PreToolUse": [],
-    "SessionEnd": [
-      {
-        "hooks": [
-          {
-            "command": "printf '\\033]0;zsh\\007' > /dev/tty 2>/dev/null || true",
-            "type": "command"
-          }
-        ],
-        "matcher": ""
-      }
-    ],
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "command": "if [ -f \"$CLAUDE_PROJECT_DIR/AGENTS.md\" ] && [ ! -f \"$CLAUDE_PROJECT_DIR/CLAUDE.md\" ]; then cat \"$CLAUDE_PROJECT_DIR/AGENTS.md\"; fi",
-            "type": "command"
-          }
-        ],
-        "matcher": ""
-      },
-      {
-        "hooks": [
-          {
-            "command": "echo \"{\\\"systemMessage\\\": \\\"Today is $(date '+%A, %B %d, %Y')\\\"}\"",
-            "type": "command"
-          }
-        ],
-        "matcher": ""
-      }
-    ]
+  "attribution": {
+    "commit": "",
+    "pr": ""
   },
   "includeCoAuthoredBy": false,
   "permissions": {
@@ -362,11 +284,68 @@
       "Bash(/Users/george/Applications/GitButler.app/Contents/MacOS/gitbutler-tauri:*)",
       "Bash(head:*)"
     ],
+    "deny": [],
     "ask": [],
-    "defaultMode": "default",
-    "deny": []
+    "defaultMode": "default"
   },
-  "remoteControlAtStartup": false,
+  "hooks": {
+    "PreCompact": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f \"$CLAUDE_PROJECT_DIR/AGENTS.md\" ] && [ ! -f \"$CLAUDE_PROJECT_DIR/CLAUDE.md\" ]; then cat \"$CLAUDE_PROJECT_DIR/AGENTS.md\"; fi"
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"{\\\"systemMessage\\\": \\\"Today is $(date '+%A, %B %d, %Y')\\\"}\""
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [],
+    "SessionEnd": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "printf '\\033]0;zsh\\007' > /dev/tty 2>/dev/null || true"
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "if [ -f \"$CLAUDE_PROJECT_DIR/AGENTS.md\" ] && [ ! -f \"$CLAUDE_PROJECT_DIR/CLAUDE.md\" ]; then cat \"$CLAUDE_PROJECT_DIR/AGENTS.md\"; fi"
+          }
+        ]
+      },
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo \"{\\\"systemMessage\\\": \\\"Today is $(date '+%A, %B %d, %Y')\\\"}\""
+          }
+        ]
+      }
+    ]
+  },
+  "enabledPlugins": {},
+  "effortLevel": "xhigh",
+  "autoUpdatesChannel": "latest",
   "skipDangerousModePermissionPrompt": true,
-  "verbose": true
+  "verbose": true,
+  "remoteControlAtStartup": false
 }

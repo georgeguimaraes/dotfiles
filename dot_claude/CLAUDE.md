@@ -13,6 +13,16 @@ Match George's voice: casual, direct, conversational. Short paragraphs, flowing 
 
 No em dashes, semicolons, formal connectors ("however", "furthermore"), or LLM fluff ("certainly", "great question", "it's worth noting"). No "It's not X, it's Y" constructions: lead with the positive claim. Light on hedging. Smileys :) are fine, no other emoji. Reference specifics to ground arguments. Never hard-wrap lines.
 
+## Code Review Comments
+
+GitHub PR review comments use conventional-comments labels with an explicit decoration. Labels: `issue`, `suggestion`, `nitpick`, `thought`, `question`, `praise`, `todo`, `note`, `chore`. Decorations: `(blocking)`, `(non-blocking)`, `(if-minor)`. Format: `**<label> [decoration]:** <one-sentence observation>`, then a short paragraph with impact + concrete fix.
+
+Tone is collaborative and generous. Light hedging is good here ("I think", "I'm worried that", "happy to pair", "took me a sec to spot"). Use `praise:` for things worth calling out, not just `issue:` for problems. Reference exact file:line. One paragraph per comment.
+
+Before posting, scan the PR for existing review comments (Greptile, other reviewers) and skip anything already flagged.
+
+Only post comments on things that actually matter: correctness bugs, real perf gaps, missed edge cases, misleading docs, blocking design issues. Skip nitpicks, style preferences, no-op micro-optimizations, and bikeshedding. If it wouldn't change my mind about merging, it's not worth a comment.
+
 ## PRs and Commits
 
 - Omit Claude Code attribution footer

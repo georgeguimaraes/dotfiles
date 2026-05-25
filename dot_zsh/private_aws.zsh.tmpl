@@ -7,6 +7,7 @@
 #     aws_region = "us-east-2"
 #     aws_sso_session = "my-sso"
 #     aws_default_profile = "my-profile"
+#     aws_profiles = "profile-a\nprofile-b"
 
 # ============================================================================
 # Configuration (from chezmoi)
@@ -15,13 +16,40 @@
 _AWS_REGION="{{ get . "aws_region" | default "" }}"
 _AWS_SSO_SESSION="{{ get . "aws_sso_session" | default "" }}"
 _AWS_DEFAULT_PROFILE="{{ get . "aws_default_profile" | default "" }}"
+_AWS_PROFILES="{{ get . "aws_profiles" | default "" }}"
+
+# ============================================================================
+# Helpers
+# ============================================================================
+
+_aws-select-profile() {
+  if ! command -v fzf &> /dev/null; then
+    echo "Error: fzf is not installed. Run: brew install fzf" >&2
+    return 1
+  fi
+  local profiles
+  if [[ -n "$_AWS_PROFILES" ]]; then
+    profiles=$(printf "$_AWS_PROFILES")
+  else
+    profiles=$(aws configure list-profiles 2>/dev/null)
+  fi
+  echo "$profiles" | fzf --prompt="Select AWS profile: " --height=40% --reverse
+}
+
+_aws-ensure-login() {
+  local profile="$1"
+  if ! aws sts get-caller-identity --profile "$profile" &> /dev/null; then
+    echo "Credentials missing or expired. Running aws-login..."
+    aws-login || return 1
+  fi
+}
 
 # ============================================================================
 # ECS Exec - Connect to containers with fzf selection
 # ============================================================================
 
 aws-ecs-connect() {
-  local profile="${1:-$_AWS_DEFAULT_PROFILE}"
+  local profile="$1"
   local region="$_AWS_REGION"
 
   # Check dependencies
@@ -36,7 +64,13 @@ aws-ecs-connect() {
     return 1
   fi
 
+  if [[ -z "$profile" ]]; then
+    profile=$(_aws-select-profile)
+    [[ -z "$profile" ]] && echo "Cancelled." && return 1
+  fi
+
   echo "Using profile: $profile"
+  _aws-ensure-login "$profile" || return 1
   echo ""
 
   # Select cluster
@@ -137,8 +171,15 @@ aws-ecs-connect() {
 # ============================================================================
 
 aws-ecs-status() {
-  local profile="${1:-$_AWS_DEFAULT_PROFILE}"
+  local profile="$1"
   local region="$_AWS_REGION"
+
+  if [[ -z "$profile" ]]; then
+    profile=$(_aws-select-profile)
+    [[ -z "$profile" ]] && echo "Cancelled." && return 1
+  fi
+
+  _aws-ensure-login "$profile" || return 1
 
   echo "Fetching ECS status for profile: $profile"
   echo ""
@@ -179,7 +220,7 @@ aws-ecs-status() {
 # ============================================================================
 
 aws-ecs-deployments() {
-  local profile="${1:-$_AWS_DEFAULT_PROFILE}"
+  local profile="$1"
   local region="$_AWS_REGION"
 
   if ! command -v fzf &> /dev/null; then
@@ -187,7 +228,13 @@ aws-ecs-deployments() {
     return 1
   fi
 
+  if [[ -z "$profile" ]]; then
+    profile=$(_aws-select-profile)
+    [[ -z "$profile" ]] && echo "Cancelled." && return 1
+  fi
+
   echo "Using profile: $profile"
+  _aws-ensure-login "$profile" || return 1
   echo ""
 
   # Select cluster

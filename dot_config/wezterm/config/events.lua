@@ -68,20 +68,36 @@ function M.format_tab_title(tab, tabs, panes, config, hover, max_width)
   if pane_title and #pane_title > 0 and not dominated_title then
     local cwd = helpers.get_cwd_from_pane(tab.active_pane.pane_id) or helpers.get_current_working_dir(tab) or ""
 
-    -- Check for Claude Code icons (✳, ⠂, ⠐) and reformat as: <icon> <cwd>: <rest>
-    local claude_icons = { "✳", "⠂", "⠐" }
+    -- Check for agent CLI animated icons and reformat as: <icon> <cwd>: <rest>
+    --   Claude Code: ✳, ⠂, ⠐
+    --   Codex CLI:   ⠋ ⠙ ⠹ ⠸ ⠼ ⠴ ⠦ ⠧ ⠇ ⠏ (10-frame braille spinner, thinking)
+    --                [ ! ], [ . ] (action required)
+    local agent_icons = {
+      "✳", "⠂", "⠐",
+      "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏",
+    }
     local first_char = pane_title:sub(1, 3)
     local found_icon = nil
-    for _, icon in ipairs(claude_icons) do
+    local rest_start = 4 -- byte offset of remainder after a 3-byte UTF-8 icon + space
+    for _, icon in ipairs(agent_icons) do
       if first_char == icon then
         found_icon = icon
         break
       end
     end
 
+    -- Codex bracketed icons: "[ ! ]" or "[ . ]" at the start
+    if not found_icon then
+      local bracket_icon = pane_title:match("^(%[ . %])")
+      if bracket_icon then
+        found_icon = bracket_icon
+        rest_start = #bracket_icon + 1
+      end
+    end
+
     local title
     if found_icon then
-      local rest = pane_title:sub(4):gsub("^%s*", "") -- remove leading space
+      local rest = pane_title:sub(rest_start):gsub("^%s*", "") -- remove leading space
       title = found_icon .. " " .. cwd .. ": " .. rest
     else
       title = (#cwd > 0) and (cwd .. ": " .. pane_title) or pane_title

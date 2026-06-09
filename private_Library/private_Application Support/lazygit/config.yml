@@ -29,7 +29,7 @@ customCommands:
     command: aicommit2
     context: files
     output: terminal
-  - key: <c-A>
+  - key: <c-g>
     description: Pick AI commit
     command: |
       aichat "Please suggest 10 commit messages, given the following diff:

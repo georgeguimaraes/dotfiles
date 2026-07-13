@@ -51,3 +51,16 @@ Skip tests for:
 - Enter plan mode for non-trivial tasks (3+ steps or architectural decisions). Re-plan immediately when things go sideways.
 - Use subagents liberally: offload research, exploration, parallel analysis. One task per subagent.
 - When given a bug report: just fix it. Don't ask for hand-holding. Chase down logs, errors, failing tests, then resolve them.
+
+## Verification
+
+"Done" means verified: the check ran and I saw its output. A green run isn't enough. Predict the observable consequences of the change (timings, counts, coverage, cache hits), then compare against the real run. A verification that can't fail is theater.
+
+Failure modes to check before opening a PR:
+- Instance-patching: a reviewer flagged N spots but the class has more members. Grep for the shared mechanism and sweep every site.
+- Copied lists: dependency lists (path filters, cache keys, configs) written by copying an existing list instead of tracing what the consumer actually reads.
+- Green-but-wrong: CI passes while behavior silently regressed. The numbers catch what re-reading the diff can't.
+
+Re-reading my own diff re-confirms the assumptions that produced the bug. For fresh eyes: run /review before opening any non-trivial PR (skip only typo-level and docs-only changes), and review at the plan stage for structural changes (an error there costs a paragraph, not a rewrite). Give verifier subagents a falsifiable charter ("try to refute this, flag only correctness-affecting gaps"), never open-ended critique.
+
+If blocked after 2-3 attempts on the same problem, stop and present findings instead of continuing to guess.

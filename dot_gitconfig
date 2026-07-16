@@ -26,6 +26,7 @@
   ap = add --patch
   ci = commit
   st = status
+  s = status
   co = checkout
   br = branch
   ls = ls-files

@@ -100,7 +100,6 @@ eza_params=(
 alias env="env | sort"
 alias g='git'
 alias gpl='git pull'
-alias gs='git status'
 alias gd='git diff'
 alias gci='git ci'
 alias gco='git co'

@@ -348,7 +348,12 @@
   "advisorModel": "fable",
   "autoUpdatesChannel": "latest",
   "tui": "default",
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  },
   "skipDangerousModePermissionPrompt": true,
   "verbose": true,
-  "remoteControlAtStartup": false
+  "remoteControlAtStartup": false,
+  "voiceEnabled": true
 }

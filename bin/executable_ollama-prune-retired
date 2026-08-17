@@ -1,0 +1,84 @@
+#!/usr/bin/env bash
+# Remove ollama cloud-model stubs whose registry tag no longer exists.
+#
+# Cloud models live on ollama.com and are represented locally by a ~400 byte
+# stub. When ollama retires one, the tag disappears from the registry, so the
+# stub can neither be pulled nor run: `ollama pull` dies with "pull model
+# manifest: file does not exist", which takes topgrade's ollama step down with
+# it. Real local models are only reported, never deleted, since their weights
+# still work offline.
+#
+# Never exits non-zero on a runtime problem: a missing daemon or an unreachable
+# registry means "do nothing", not "fail the topgrade run".
+
+REGISTRY="https://registry.ollama.ai/v2"
+
+api_host=${OLLAMA_HOST:-127.0.0.1:11434}
+[[ $api_host == http* ]] || api_host="http://$api_host"
+
+dry_run=0
+case "${1-}" in
+  -n | --dry-run) dry_run=1 ;;
+  "") ;;
+  *)
+    echo "usage: ${0##*/} [--dry-run]" >&2
+    exit 2
+    ;;
+esac
+
+ollama_bin=$(command -v ollama || echo /usr/local/bin/ollama)
+
+# Prints the registry HTTP status for a model tag, or "skip" for names we have
+# no business resolving (anything hosted outside registry.ollama.ai), or "000"
+# when the network is the problem rather than the model.
+manifest_status() {
+  local name=$1 repo tag last
+
+  last=${name##*/}
+  if [[ $last == *:* ]]; then
+    tag=${last##*:}
+    repo=${name%:*}
+  else
+    tag=latest
+    repo=$name
+  fi
+
+  [[ $repo == */* ]] || repo="library/$repo"
+  # hf.co/..., registry.example.com/..., anything with a host component
+  [[ ${repo%%/*} == *.* ]] && {
+    echo skip
+    return
+  }
+
+  local status
+  status=$(curl -s -m 15 -o /dev/null -w '%{http_code}' "$REGISTRY/$repo/manifests/$tag" 2>/dev/null)
+  echo "${status:-000}"
+}
+
+tags_json=$(curl -s -m 5 "$api_host/api/tags" 2>/dev/null)
+[[ -n $tags_json ]] || exit 0
+jq -e . >/dev/null 2>&1 <<<"$tags_json" || exit 0
+
+while IFS=$'\t' read -r name remote_host; do
+  [[ -n $name ]] || continue
+
+  case "$(manifest_status "$name")" in
+    404) ;;
+    *) continue ;;
+  esac
+
+  if [[ -z $remote_host ]]; then
+    echo "$name: tag retired upstream, keeping local weights (topgrade will fail to pull it)" >&2
+    continue
+  fi
+
+  if ((dry_run)); then
+    echo "would remove $name (retired cloud model)"
+  else
+    echo "removing $name (retired cloud model)"
+    "$ollama_bin" rm "$name" >/dev/null 2>&1 ||
+      echo "$name: removal failed" >&2
+  fi
+done < <(jq -r '(.models // [])[] | [.name, (.remote_host // "")] | @tsv' <<<"$tags_json")
+
+exit 0

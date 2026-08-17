@@ -69,11 +69,12 @@ function M.format_tab_title(tab, tabs, panes, config, hover, max_width)
     local cwd = helpers.get_cwd_from_pane(tab.active_pane.pane_id) or helpers.get_current_working_dir(tab) or ""
 
     -- Check for agent CLI animated icons and reformat as: <icon> <cwd>: <rest>
-    --   Claude Code: ✳, ⠂, ⠐
+    --   Claude Code: ✳ (idle), ◐ ◑ (busy spinner since 2.1.229; ◓ ◒ just in case)
     --   Codex CLI:   ⠋ ⠙ ⠹ ⠸ ⠼ ⠴ ⠦ ⠧ ⠇ ⠏ (10-frame braille spinner, thinking)
     --                [ ! ], [ . ] (action required)
     local agent_icons = {
-      "✳", "⠂", "⠐",
+      "✳",
+      "◐", "◓", "◑", "◒",
       "⠋", "⠙", "⠹", "⠸", "⠼", "⠴", "⠦", "⠧", "⠇", "⠏",
     }
     local first_char = pane_title:sub(1, 3)

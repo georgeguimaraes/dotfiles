@@ -19,7 +19,6 @@
       "Bash(brew uninstall:*)",
       "Bash(cat:*)",
       "Bash(curl:*)",
-      "Bash(chmod:*)",
       "Bash(column:*)",
       "Bash(cp:*)",
       "Bash(cut:*)",
@@ -31,7 +30,6 @@
       "Bash(du:*)",
       "Bash(echo:*)",
       "Bash(elixir:*)",
-      "Bash(env:*)",
       "Bash(file:*)",
       "Bash(find:*)",
       "Bash(gh browse:*)",
@@ -170,8 +168,6 @@
       "Bash(mix usage_rules.search_docs:*)",
       "Bash(mix xref:*)",
       "Bash(mv:*)",
-      "Bash(npm run:*)",
-      "Bash(npx:*)",
       "Bash(open:*)",
       "Bash(openssl:*)",
       "Bash(pbcopy:*)",
@@ -183,7 +179,6 @@
       "Bash(printf:*)",
       "Bash(ps:*)",
       "Bash(pwd:*)",
-      "Bash(python3:*)",
       "Bash(readlink:*)",
       "Bash(realpath:*)",
       "Bash(rg:*)",
@@ -258,37 +253,18 @@
       "Bash(gt upstack:*)",
       "Bash(gt --version:*)",
       "Bash(gh api:*)",
-      "mcp__plugin_episodic-memory_episodic-memory__search",
       "Bash(gt split:*)",
       "WebFetch(domain:app.graphite.com)",
       "WebFetch(domain:hex.pm)",
-      "mcp__plugin_linear_linear__get_issue",
-      "mcp__plugin_linear_linear__list_issues",
       "mcp__posthog__query-run",
       "WebFetch(domain:preview.hex.pm)",
       "WebFetch(domain:docs.github.com)",
-      "Bash(cd /Users/george/code/new-gen-ai/canopy/backend/ngen)",
-      "Bash(mise exec -- mix hex.outdated 2>&1)",
-      "Bash(grep -E \"(ash|spark|reactor|splode|igniter)\")",
-      "Bash(cd /Users/george/code/new-gen-ai/canopy/backend/ngen)",
-      "Bash(mise exec -- mix hex.info ash_appsignal 2>&1)",
-      "Bash(head -10)",
-      "Bash(which mix)",
-      "Bash(mix --version 2>&1)",
-      "Bash(head -3)",
-      "Bash(but:*)",
-      "Bash(head:*)",
-      "Bash(cd:*)",
-      "Bash(git:*)",
-      "Bash(head:*)",
-      "Bash(/Users/george/Applications/GitButler.app/Contents/MacOS/gitbutler-tauri:*)",
-      "Bash(head:*)"
+      "Bash(/Users/george/Applications/GitButler.app/Contents/MacOS/gitbutler-tauri:*)"
     ],
     "deny": [],
     "ask": [],
-    "defaultMode": "default"
+    "defaultMode": "auto"
   },
-  "model": "claude-fable-5[1m]",
   "hooks": {
     "PreCompact": [
       {
@@ -343,9 +319,6 @@
       }
     ]
   },
-  "enabledPlugins": {
-    "vercel@claude-plugins-official": true
-  },
   "effortLevel": "high",
   "advisorModel": "fable",
   "autoUpdatesChannel": "latest",
@@ -357,5 +330,38 @@
   "skipDangerousModePermissionPrompt": true,
   "verbose": true,
   "remoteControlAtStartup": false,
+  "autoMode": {
+    "soft_deny": [
+      "$defaults",
+      "Bash(gt sync:*) in new-gen-ai/canopy — Graphite branch rewrite/restack carve-out review",
+      "Bash(rm:*) targeting backend/ngen/config/prod.exs or infra/pulumi/src/secrets.ts — protect sensitive/IaC secrets files from deletion"
+    ],
+    "environment": [
+      "### Org-wide",
+      "**Organization**: new-gen-ai (GitHub org; repo new-gen-ai/canopy)",
+      "**Cloud provider(s)**: AWS (aws, aws-login, aws-ecs-connect in shell history; aws secretsmanager marker; infra/pulumi IaC)",
+      "**Repository visibility**: private (new-gen-ai/canopy — confirmed via gh)",
+      "**Internal sharing / snippet hosting**: None configured — treat public paste/gist services as outside the trust boundary",
+      "**Secrets management**: AWS Secrets Manager (aws secretsmanager marker); CI secrets referenced by name only (ANTHROPIC_API_KEY_CLAUDE_REVIEWS, CHECKLY_API_KEY, CODECOV_TOKEN, HOTFIX_MERGE_TOKEN, OBAN_LICENSE_KEY, PULUMI_ACCESS_TOKEN, SLACK_ALERTS_WEBHOOK_URL, SLACK_RELEASE_OPS_WEBHOOK_URL, VERCEL_TOKEN)",
+      "**Default / protected branches**: main (default; protected via rulesets 'Main Branch Rules' and 'Release branches' — active, per gh)",
+      "**CI/CD deploy targets**: GitHub Actions (.github/workflows), Pulumi (infra/pulumi), Vercel (VERCEL_TOKEN secret, storefront on Vercel per README)",
+      "**Network posture**: None configured",
+      "**Source control**: new-gen-ai/canopy (GitHub) and its remote(s) only — no additional orgs configured",
+      "**Trusted internal domains**: None configured",
+      "**Trusted cloud buckets**: None configured",
+      "**Key internal services**: portal.trykepler.ai (Kepler merchant portal, per README); Honeycomb (OpenTelemetry traces, per README); TurboPuffer (search/image vectors, per README)",
+      "**Internal package registry**: None configured",
+      "**Sensitive data locations & audiences**: .env, .env.local, .env.* (gitignored, credentials); backend/ngen/config/prod.exs; backend/ngen/envs/dev.secret.template.exs; agents/agent-service/.env.example; infra/pulumi/src/secrets.ts, infra/pulumi/src/iam.ts — share only with audiences cleared at the [named+specifics] bar",
+      "**Data retention / declassification**: None configured",
+      "**Sensitive remote targets**: any namespace/host/container carrying `prod`/`production` as a whole word/segment, including .github/workflows/ngen-prod-queue-digest.yml and backend/ngen/config/prod.exs",
+      "**Protected deployment namespaces / environments**: None configured — fall back to the Sensitive remote targets heuristic",
+      "**Protected IaC scopes**: IAM, RBAC, networking, quota, node-pool resources in infra/pulumi/src/iam.ts and infra/pulumi/src/secrets.ts; anything tagged prod/production",
+      "### User-specific",
+      "**Primary use of Claude Code**: software development (Elixir/Phoenix backend, Next.js storefront, per README and CLAUDE.md)",
+      "**Trusted repo**: new-gen-ai/canopy (private) at /Users/george/code/new-gen-ai/canopy/.claude/worktrees/quirky-hugging-spark and its GitHub remote — confidential material is fine here, but content ported from outside this session's repo is not this repo's own work",
+      "**Org-specific CLIs**: gt (Graphite, 280×), mix (Elixir, 245×), cz (commitizen, 61×), bd, wt, gg, pclaude, happy, aicommit2, aws-login, aws-ecs-connect (per shell history)",
+      "routine under george/ prefix: none identified"
+    ]
+  },
   "voiceEnabled": true
 }

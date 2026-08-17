@@ -216,6 +216,9 @@ records = true
 # strategy = "auto"
 
 [daemon]
+
+[ai]
+enabled = true
 ## Enables using the daemon to sync. Requires the daemon to be running in the background. Start it with `atuin daemon`
 # enabled = false
 

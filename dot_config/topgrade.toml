@@ -6,6 +6,9 @@ assume_yes = true
 arguments = "--rebase --autostash"
 repos = ["~/.config/nvim", "~/.fzf/fzf-git.sh"]
 
+[containers]
+ignored_containers = ["ngen-*", "otel-test-*"]
+
 [commands]
 "lazy.nvim plugins" = 'nvim --headless "+Lazy! sync" +qa'
 "Brew upgrade HEAD" = "HOMEBREW_NO_INSTALL_CLEANUP=1 brew upgrade --fetch-HEAD"

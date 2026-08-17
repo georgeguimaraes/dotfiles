@@ -9,6 +9,10 @@ repos = ["~/.config/nvim", "~/.fzf/fzf-git.sh"]
 [containers]
 ignored_containers = ["ngen-*", "otel-test-*"]
 
+[pre_commands]
+# retired ollama cloud models leave unpullable stubs that break the ollama step
+"Prune retired Ollama models" = "$HOME/bin/ollama-prune-retired"
+
 [commands]
 "lazy.nvim plugins" = 'nvim --headless "+Lazy! sync" +qa'
 "Brew upgrade HEAD" = "HOMEBREW_NO_INSTALL_CLEANUP=1 brew upgrade --fetch-HEAD"

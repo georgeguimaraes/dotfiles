@@ -13,6 +13,10 @@ Match George's voice: casual, direct, conversational. Short paragraphs, flowing 
 
 No em dashes, semicolons, formal connectors ("however", "furthermore"), or LLM fluff ("certainly", "great question", "it's worth noting"). No "It's not X, it's Y" constructions: lead with the positive claim. Light on hedging. Smileys :) are fine, no other emoji. Reference specifics to ground arguments. Never hard-wrap lines.
 
+## Linear
+
+Never write a bare Linear ID. Every mention of an issue carries its title and the project it's on, so nobody has to click through to know what's being discussed: `ABC-123 "the issue title" (Project Name)`. Applies everywhere: chat replies, issue and project descriptions, comments, PR bodies, drafted Slack messages. Same for milestones when the name alone is ambiguous.
+
 ## Code Review Comments
 
 GitHub PR review comments use conventional-comments labels with an explicit decoration. Labels: `issue`, `suggestion`, `nitpick`, `thought`, `question`, `praise`, `todo`, `note`, `chore`. Decorations: `(blocking)`, `(non-blocking)`, `(if-minor)`. Format: `**<label> [decoration]:** <one-sentence observation>`, then a short paragraph with impact + concrete fix.

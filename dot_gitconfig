@@ -9,6 +9,12 @@
 [includeIf "hasconfig:remote.*.url:git@github.com:new-gen-ai/**"]
   path = ~/.config/git/config-new-gen-ai
 
+[includeIf "hasconfig:remote.*.url:https://github.com/new-gen-eng/**"]
+  path = ~/.config/git/config-new-gen-ai
+
+[includeIf "hasconfig:remote.*.url:git@github.com:new-gen-eng/**"]
+  path = ~/.config/git/config-new-gen-ai
+
 [core]
   excludesfile = ~/.gitignore
   autocrlf = input

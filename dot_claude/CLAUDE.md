@@ -29,7 +29,7 @@ Only post comments on things that actually matter: correctness bugs, real perf g
 
 ## PRs and Commits
 
-- Omit Claude Code attribution footer
+- Don't add AI attribution to commits, PRs, comments, or generated code. No `Co-authored-by` or `Generated with` footers for Claude, Codex, or other tools.
 - Semantic prefix in PR titles (feat:, fix:, chore:), capitalized after prefix
 - Skip test plan sections in PR descriptions. No "## Summary" heading, just start with content
 - Casual, concise descriptions and commit messages: no fluff, no em dashes, minimal bullets, use colons
@@ -55,6 +55,17 @@ Skip tests for:
 - Enter plan mode for non-trivial tasks (3+ steps or architectural decisions). Re-plan immediately when things go sideways.
 - Use subagents liberally: offload research, exploration, parallel analysis. One task per subagent.
 - When given a bug report: just fix it. Don't ask for hand-holding. Chase down logs, errors, failing tests, then resolve them.
+
+## Simplicity
+
+Prefer the smallest implementation that satisfies the current acceptance criteria.
+
+- Start with existing modules and plain data structures.
+- Add a module only when it owns behavior, state, or a stable boundary.
+- Don't introduce abstractions for hypothetical reuse, future issue scope, or a single call site.
+- Before editing, list the minimum files and concepts required. If the implementation grows beyond that list, pause and explain why.
+- After editing, run a simplification pass: remove wrappers, indirection, configuration, and tests that don't protect a real branch or business rule.
+- When the issue explicitly defers broader architecture, treat that deferred scope as a constraint.
 
 ## Verification
 

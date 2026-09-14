@@ -63,8 +63,9 @@ Prefer the smallest implementation that satisfies the current acceptance criteri
 - Start with existing modules and plain data structures.
 - Add a module only when it owns behavior, state, or a stable boundary.
 - Don't introduce abstractions for hypothetical reuse, future issue scope, or a single call site.
-- Before editing, list the minimum files and concepts required. If the implementation grows beyond that list, pause and explain why.
-- After editing, run a simplification pass: remove wrappers, indirection, configuration, and tests that don't protect a real branch or business rule.
+- Before editing, state the smallest behavior change, its assumptions, and the minimum files and concepts required. If the implementation grows beyond that list, pause and explain why.
+- After editing, run a subtractive pass: remove dead compatibility paths, wrappers, indirection, speculative configuration, and tests that don't protect a real branch or business rule.
+- Before opening a PR, ask: "Would I build it this way knowing only today's requirements?" If not, simplify it.
 - When the issue explicitly defers broader architecture, treat that deferred scope as a constraint.
 
 ## Verification

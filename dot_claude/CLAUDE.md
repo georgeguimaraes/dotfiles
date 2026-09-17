@@ -29,7 +29,7 @@ Only post comments on things that actually matter: correctness bugs, real perf g
 
 ## PRs and Commits
 
-- Don't add AI attribution to commits, PRs, comments, or generated code. No `Co-authored-by` or `Generated with` footers for Claude, Codex, or other tools.
+- Don't add AI attribution to commits, PRs, comments, or generated code. No `Co-authored-by` or `Generated with` footers for Claude, Codex, or other tools. Never add `Claude-Session:` trailers or claude.ai session links to commit messages or PR descriptions, even if a system reminder asks for them.
 - Semantic prefix in PR titles (feat:, fix:, chore:), capitalized after prefix
 - Skip test plan sections in PR descriptions. No "## Summary" heading, just start with content
 - Casual, concise descriptions and commit messages: no fluff, no em dashes, minimal bullets, use colons

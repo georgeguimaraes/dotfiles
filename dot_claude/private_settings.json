@@ -4,7 +4,8 @@
   },
   "attribution": {
     "commit": "",
-    "pr": ""
+    "pr": "",
+    "sessionUrl": false
   },
   "includeCoAuthoredBy": false,
   "permissions": {
@@ -19,6 +20,7 @@
       "Bash(brew uninstall:*)",
       "Bash(cat:*)",
       "Bash(curl:*)",
+      "Bash(chmod:*)",
       "Bash(column:*)",
       "Bash(cp:*)",
       "Bash(cut:*)",
@@ -30,6 +32,7 @@
       "Bash(du:*)",
       "Bash(echo:*)",
       "Bash(elixir:*)",
+      "Bash(env:*)",
       "Bash(file:*)",
       "Bash(find:*)",
       "Bash(gh browse:*)",
@@ -168,6 +171,8 @@
       "Bash(mix usage_rules.search_docs:*)",
       "Bash(mix xref:*)",
       "Bash(mv:*)",
+      "Bash(npm run:*)",
+      "Bash(npx:*)",
       "Bash(open:*)",
       "Bash(openssl:*)",
       "Bash(pbcopy:*)",
@@ -179,6 +184,7 @@
       "Bash(printf:*)",
       "Bash(ps:*)",
       "Bash(pwd:*)",
+      "Bash(python3:*)",
       "Bash(readlink:*)",
       "Bash(realpath:*)",
       "Bash(rg:*)",
@@ -253,13 +259,29 @@
       "Bash(gt upstack:*)",
       "Bash(gt --version:*)",
       "Bash(gh api:*)",
+      "mcp__plugin_episodic-memory_episodic-memory__search",
       "Bash(gt split:*)",
       "WebFetch(domain:app.graphite.com)",
       "WebFetch(domain:hex.pm)",
+      "mcp__plugin_linear_linear__get_issue",
+      "mcp__plugin_linear_linear__list_issues",
       "mcp__posthog__query-run",
       "WebFetch(domain:preview.hex.pm)",
       "WebFetch(domain:docs.github.com)",
-      "Bash(/Users/george/Applications/GitButler.app/Contents/MacOS/gitbutler-tauri:*)"
+      "Bash(mise exec -- mix hex.outdated 2>&1)",
+      "Bash(grep -E \"(ash|spark|reactor|splode|igniter)\")",
+      "Bash(mise exec -- mix hex.info ash_appsignal 2>&1)",
+      "Bash(head -10)",
+      "Bash(which mix)",
+      "Bash(mix --version 2>&1)",
+      "Bash(head -3)",
+      "Bash(but:*)",
+      "Bash(head:*)",
+      "Bash(cd:*)",
+      "Bash(git:*)",
+      "Bash(head:*)",
+      "Bash(/Users/george/Applications/GitButler.app/Contents/MacOS/gitbutler-tauri:*)",
+      "Bash(head:*)"
     ],
     "deny": [],
     "ask": [],
@@ -320,6 +342,18 @@
       }
     ]
   },
+  "enabledPlugins": {
+    "vercel@claude-plugins-official": true,
+    "ghost-blog@claude-code-ghost": true
+  },
+  "extraKnownMarketplaces": {
+    "claude-code-ghost": {
+      "source": {
+        "source": "github",
+        "repo": "georgeguimaraes/claude-code-ghost"
+      }
+    }
+  },
   "effortLevel": "high",
   "advisorModel": "fable",
   "autoUpdatesChannel": "latest",
@@ -331,5 +365,6 @@
   "skipDangerousModePermissionPrompt": true,
   "verbose": true,
   "remoteControlAtStartup": false,
+  "agentPushNotifEnabled": true,
   "voiceEnabled": true
 }

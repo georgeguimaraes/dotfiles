@@ -3,3 +3,4 @@ export PATH="$PATH:/Users/george/.docker/bin"
 # End of Docker Desktop section.
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
+export PATH="$HOME/.local/bin:$PATH"

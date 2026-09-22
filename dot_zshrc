@@ -191,4 +191,7 @@ if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)
 
 # Added by GitButler installer
 export PATH="/Users/george/.local/bin:$PATH"
-eval "$(but completions zsh)"
+if command -v but >/dev/null 2>&1; then eval "$(but completions zsh)"; fi
+
+# asdf version manager
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"

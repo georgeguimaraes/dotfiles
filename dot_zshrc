@@ -56,6 +56,7 @@ setopt pushd_ignore_dups    # Don't push duplicate directories
 setopt pushdminus          # Exchange meaning of +/- operators
 
 # Unified PATH management
+export PNPM_HOME="$HOME/Library/pnpm"
 typeset -U PATH path
 path=(
   ~/bin
@@ -67,7 +68,7 @@ path=(
   ~/go/bin
   ~/.cargo/bin
   ~/.luarocks/bin
-  $PNPM_HOME
+  $PNPM_HOME/bin
   $HOME/.pub-cache/bin
   /Applications/screenpipe.app/Contents/MacOS
   /opt/homebrew/anaconda3/bin

@@ -21,6 +21,8 @@ Write descriptions so a reader can understand why the work matters, what to do, 
 
 When planning a milestone, use the existing issues where possible and avoid duplicate checkpoint tickets. Keep one parent and one level of direct children unless the user asks for a different structure. Preserve completed or canceled history when cleaning up the plan.
 
+Don't put phases or steps of one effort in a single issue. The first PR that links it closes it, and the later phases disappear with it. Make a parent for the effort and a sub-issue per phase or step, each with its own done-when, and link each PR to the sub-issue it finishes. When an issue closes with checks still unmet, move those checks to a new sub-issue instead of reopening.
+
 ## Code Review Comments
 
 GitHub PR review comments use conventional-comments labels with an explicit decoration. Labels: `issue`, `suggestion`, `nitpick`, `thought`, `question`, `praise`, `todo`, `note`, `chore`. Decorations: `(blocking)`, `(non-blocking)`, `(if-minor)`. Format: `**<label> [decoration]:** <one-sentence observation>`, then a short paragraph with impact + concrete fix.

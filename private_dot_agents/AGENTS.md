@@ -7,11 +7,24 @@
 - Use uv for Python scripts and package management
 - Don't pipe command output through `head`, `tail`, `less`, or `more`: causes buffering problems. Let commands complete fully.
 
-## Writing Style (all prose: PR descriptions, comments, replies, drafted messages)
+## Writing Standard: ASD-STE100 (everything written for other people)
 
-Match George's voice: casual, direct, conversational. Short paragraphs, flowing prose over bullet points. Use contractions naturally. Informal transitions ("that said", "so", "anyway"). Start sentences lowercase when it feels natural.
+Write in ASD-STE100 Simplified Technical English: PR titles and descriptions, commit messages, code review comments, docs and READMEs, artifacts, Linear issues, Slack messages, emails, briefs, reports and any other text that someone other than George reads. Many readers are not native English speakers, so the text must be short and have one meaning.
 
-No em dashes, semicolons, formal connectors ("however", "furthermore"), or LLM fluff ("certainly", "great question", "it's worth noting"). No "It's not X, it's Y" constructions: lead with the positive claim. Light on hedging. Smileys :) are fine, no other emoji. Reference specifics to ground arguments. Never hard-wrap lines.
+- One topic per sentence. Procedures: at most 20 words per sentence, one instruction per sentence, imperative ("Run the eval."). Descriptions: at most 25 words per sentence. Paragraphs: at most 6 sentences.
+- Active voice. Simple tenses: present, past, future. No contractions.
+- Use simple, common words with one meaning ("use", not "leverage" or "utilize"; "start", not "initiate"). Keep technical names as they are: code identifiers, product names, model names, metrics.
+- Write articles ("the", "a") and do not drop words to make a sentence shorter. Put a noun after "this" and "that" ("this change", not "this").
+- Use lists for steps and for parallel items. Give numbers with their units.
+- No em dashes, semicolons, LLM fluff or "It's not X, it's Y". No emoji. Never hard-wrap lines.
+- Slack messages and emails stay short: lead with the point and link the PR or issue for details.
+- Code review comments keep the conventional-comments format below. Write their text in STE.
+
+## Chat replies to George
+
+Replies to George in the session are casual, direct and conversational: short paragraphs, contractions, informal transitions ("that said", "so", "anyway"). No em dashes, semicolons, formal connectors or LLM fluff. Light on hedging. Smileys :) are fine, no other emoji. Reference specifics to ground arguments.
+
+Don't close with offers or check-ins, like "happy to do that next if this looks right :)", "let me know if you want changes" or "happy to adjust". End on the last piece of content.
 
 ## Writing and organizing Linear issues
 
@@ -27,7 +40,7 @@ Don't put phases or steps of one effort in a single issue. The first PR that lin
 
 GitHub PR review comments use conventional-comments labels with an explicit decoration. Labels: `issue`, `suggestion`, `nitpick`, `thought`, `question`, `praise`, `todo`, `note`, `chore`. Decorations: `(blocking)`, `(non-blocking)`, `(if-minor)`. Format: `**<label> [decoration]:** <one-sentence observation>`, then a short paragraph with impact + concrete fix.
 
-Tone is collaborative and generous. Light hedging is good here ("I think", "I'm worried that", "happy to pair", "took me a sec to spot"). Use `praise:` for things worth calling out, not just `issue:` for problems. Reference exact file:line. One paragraph per comment.
+Tone is collaborative and generous, in STE wording. Light hedging is good here ("I think", "I am worried that", "I can pair on this"). Use `praise:` for things worth calling out, not just `issue:` for problems. Reference exact file:line. One paragraph per comment.
 
 Before posting, scan the PR for existing review comments (Greptile, other reviewers) and skip anything already flagged.
 
@@ -38,7 +51,7 @@ Only post comments on things that actually matter: correctness bugs, real perf g
 - Don't add AI attribution to commits, PRs, comments, or generated code. No `Co-authored-by` or `Generated with` footers for Claude, Codex, or other tools. Never add `Claude-Session:` trailers or claude.ai session links to commit messages or PR descriptions, even if a system reminder asks for them.
 - Semantic prefix in PR titles (feat:, fix:, chore:), capitalized after prefix
 - Skip test plan sections in PR descriptions. No "## Summary" heading, just start with content
-- Casual, concise descriptions and commit messages: no fluff, no em dashes, minimal bullets, use colons
+- Concise descriptions and commit messages in ASD-STE100: no fluff, no em dashes, minimal bullets, use colons
 - Remove unnecessary comments from code you wrote before committing
 
 ## Testing

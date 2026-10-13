@@ -41,7 +41,7 @@ function M.apply(config)
     bottom = 10,
   }
   config.window_frame = {
-    font = wezterm.font_with_fallback({ "Roboto Bold", "Iosevka Nerd Font" }),
+    font = wezterm.font("Iosevka Nerd Font"),
     font_size = 18,
     active_titlebar_bg = "#222436",
   }

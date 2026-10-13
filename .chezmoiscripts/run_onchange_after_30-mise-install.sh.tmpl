@@ -1,0 +1,10 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# mise config hash: {{ include "private_dot_config/mise/config.toml" | sha256sum }}
+set -euo pipefail
+eval "$(/opt/homebrew/bin/brew shellenv)"
+export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$PATH"
+
+cd "$HOME"
+mise install --yes
+{{ end -}}

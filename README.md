@@ -26,10 +26,11 @@ These steps install the dotfiles with [chezmoi](https://www.chezmoi.io/). Some f
    ```sh
    chezmoi diff
    ```
-7. Apply the dotfiles:
+7. Apply the dotfiles and install the tools:
    ```sh
    chezmoi apply
    ```
+   The first apply takes some minutes, because it installs the Homebrew packages and the mise tools.
 8. Add your SSH key to GitHub.
 9. Set the remote to SSH, because chezmoi pushes each change automatically:
    ```sh
@@ -38,4 +39,12 @@ These steps install the dotfiles with [chezmoi](https://www.chezmoi.io/). Some f
 
 If your SSH key is already on GitHub, use `chezmoi init --ssh georgeguimaraes` in step 5 and skip steps 8 and 9.
 
-This repo has only configuration files. It does not install Homebrew packages, asdf, Node.js or pnpm. Install them manually.
+## What the scripts install
+
+The scripts in `.chezmoiscripts` run during `chezmoi apply`:
+
+- `run_onchange_before_10-brew-bundle.sh.tmpl` installs the Homebrew formulae, apps and fonts. It runs again when the list changes.
+- `run_once_after_20-installers.sh.tmpl` installs [mise](https://mise.jdx.dev/) and [uv](https://docs.astral.sh/uv/) with their official install scripts.
+- `run_onchange_after_30-mise-install.sh.tmpl` runs `mise install` for the tools in `~/.config/mise/config.toml`: Erlang, Elixir, Node.js LTS, Rust and some CLI tools. It runs again when that file changes.
+
+The scripts do not upgrade tools. Use `topgrade` for upgrades.

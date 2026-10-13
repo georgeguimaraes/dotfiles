@@ -4,3 +4,4 @@ export PATH="$PATH:/Users/george/.docker/bin"
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 export PATH="$HOME/.local/bin:$PATH"
+eval "$(~/.local/bin/mise activate zsh --shims)"

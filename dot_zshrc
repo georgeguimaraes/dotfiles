@@ -63,7 +63,6 @@ path=(
   ~/.local/bin
   /usr/local/sbin
   /usr/local/bin
-  ~/.asdf/shims
   ~/.npm-global/bin
   ~/go/bin
   ~/.cargo/bin
@@ -83,10 +82,6 @@ export PLUG_EDITOR="nvim-open"
 export LS_COLORS="$(vivid generate tokyonight-moon)"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export RIPGREP_CONFIG_PATH=~/.config/ripgreprc
-export KERL_BUILD_DOCS=yes
-export CFLAGS="-O2 -g -fno-stack-check"
-WX_CONFIG=/opt/homebrew/Cellar/wxwidgets@3.2/3.2.8.1/bin/wx-config-3.2
-export KERL_CONFIGURE_OPTIONS="--with-wx-config=$WX_CONFIG"
 export DISABLE_SPRING=1
 export ERL_AFLAGS="-kernel shell_history enabled"
 export ELIXIR_ERL_OPTIONS="+sssdio 128"
@@ -194,5 +189,4 @@ if command -v wt >/dev/null 2>&1; then eval "$(command wt config shell init zsh)
 export PATH="/Users/george/.local/bin:$PATH"
 if command -v but >/dev/null 2>&1; then eval "$(but completions zsh)"; fi
 
-# asdf version manager
-export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+eval "$(mise activate zsh)"

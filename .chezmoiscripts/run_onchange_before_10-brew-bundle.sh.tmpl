@@ -1,0 +1,88 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+set -euo pipefail
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+brew bundle --no-upgrade --file=- <<'EOF'
+brew "zsh"
+brew "zsh-completions"
+brew "bash"
+brew "git"
+brew "git-lfs"
+brew "git-delta"
+brew "git-extras"
+brew "gh"
+brew "curl", link: true
+brew "wget"
+brew "coreutils"
+brew "gnu-tar"
+brew "rsync"
+brew "tree"
+brew "watch"
+brew "watchexec"
+brew "fswatch"
+brew "jq"
+brew "fx"
+brew "xh"
+brew "tz"
+
+brew "neovim", args: ["HEAD"]
+brew "tree-sitter-cli"
+brew "luarocks"
+brew "ripgrep"
+brew "fd"
+brew "fzf"
+brew "markdownlint-cli2"
+brew "codespell"
+brew "vale"
+
+brew "bat"
+brew "eza"
+brew "zoxide"
+brew "atuin"
+brew "sheldon"
+brew "vivid"
+brew "btop"
+brew "htop"
+brew "yazi"
+brew "tmux"
+brew "zellij"
+brew "glow"
+brew "lazygit"
+brew "lazydocker"
+
+brew "chezmoi"
+brew "age"
+brew "topgrade"
+
+brew "awscli"
+brew "kubernetes-cli"
+brew "helm"
+brew "kind"
+brew "postgresql@17", link: true
+brew "pgcli"
+brew "imagemagick"
+brew "ollama"
+brew "aichat"
+
+cask "ghostty"
+cask "wezterm@nightly"
+cask "zed"
+cask "raycast"
+cask "1password-cli"
+cask "hyperkey"
+cask "monitorcontrol"
+cask "stats"
+cask "appcleaner"
+cask "linear"
+cask "gcloud-cli"
+cask "iina"
+
+cask "font-victor-mono-nerd-font"
+cask "font-iosevka-nerd-font"
+cask "font-caskaydia-cove-nerd-font"
+cask "font-maple-mono"
+cask "font-monaspace"
+cask "font-inter"
+EOF
+{{ end -}}

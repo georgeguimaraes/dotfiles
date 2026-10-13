@@ -1,5 +1,5 @@
 [misc]
-disable = ["mas", "gem", "ruby_gems", "pip3", "yarn", "asdf"]
+disable = ["mas", "gem", "ruby_gems", "pip3", "yarn"]
 assume_yes = true
 
 [git]
@@ -18,4 +18,3 @@ ignored_containers = ["ngen-*", "otel-test-*"]
 "Brew upgrade HEAD" = "HOMEBREW_NO_INSTALL_CLEANUP=1 brew upgrade --fetch-HEAD"
 # "Wezterm nightly" = "HOMEBREW_NO_INSTALL_CLEANUP=1 brew upgrade --cask wezterm-nightly --no-quarantine --greedy-latest"
 "gh extensions upgrade" = "gh extension upgrade --all"
-"tuicr upgrade" = "cargo install tuicr"

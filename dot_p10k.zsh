@@ -1715,7 +1715,7 @@
       tool=${(U)name//-/_}
       [[ $tool == NODE ]] && fg=POWERLEVEL9K_ASDF_NODEJS_FOREGROUND || fg=POWERLEVEL9K_ASDF_${tool}_FOREGROUND
       case $tool in
-        ERLANG|ELIXIR|NODE|RUST|PYTHON|GO|RUBY|JAVA|LUA) p10k segment -s $tool -f ${(P)fg:-$POWERLEVEL9K_ASDF_FOREGROUND} -i ${tool}_ICON -t $ver ;;
+        ERLANG|ELIXIR|NODE|RUST|PYTHON|GO|RUBY|JAVA|LUA) p10k segment -r -s $tool -f ${(P)fg:-$POWERLEVEL9K_ASDF_FOREGROUND} -i ${tool}_ICON -t $ver ;;
         *) p10k segment -s $tool -f ${(P)fg:-$POWERLEVEL9K_ASDF_FOREGROUND} -t "$name $ver" ;;
       esac
     done

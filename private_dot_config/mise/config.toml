@@ -2,7 +2,6 @@
 erlang = "latest"
 elixir = "latest"
 node = "lts"
-rust = "stable"
 cargo-binstall = "latest"
 "cargo:tuicr" = "latest"
 "pipx:git-filter-repo" = "latest"

@@ -1,0 +1,10 @@
+{{ if eq .chezmoi.os "darwin" -}}
+#!/bin/bash
+# WezTerm sets TERM=wezterm (config/launch.lua) for undercurl, and macOS has no terminfo for it.
+set -euo pipefail
+
+tempfile=$(mktemp)
+trap 'rm -f "$tempfile"' EXIT
+curl -fsSL -o "$tempfile" https://raw.githubusercontent.com/wezterm/wezterm/main/termwiz/data/wezterm.terminfo
+tic -x -o "$HOME/.terminfo" "$tempfile"
+{{ end -}}

@@ -50,6 +50,7 @@
     command_execution_time  # duration of the last command
     background_jobs         # presence of background jobs
     direnv                  # direnv status (https://direnv.net/)
+    mise                    # mise tool versions (user-defined, see prompt_mise below)
     virtualenv              # python virtual environment (https://docs.python.org/3/library/venv.html)
     anaconda                # conda environment (https://conda.io/)
     pyenv                   # python environment (https://github.com/pyenv/pyenv)
@@ -1692,6 +1693,32 @@
     # instant_prompt_example. This will give us the same `example` prompt segment in the instant
     # and regular prompts.
     prompt_example
+  }
+
+  # Shows mise tool versions that differ from the global mise config, like the old asdf segment
+  # with POWERLEVEL9K_ASDF_PROMPT_ALWAYS_SHOW=false. Reuses the asdf colors. The result is cached
+  # until the directory or the active mise tool set changes.
+  function prompt_mise() {
+    local key="$PWD|$__MISE_DIFF" name ver rest tool fg
+    if [[ $key != $_p9k_mise_key ]]; then
+      typeset -g _p9k_mise_key=$key
+      typeset -gA _p9k_mise_global=()
+      typeset -ga _p9k_mise_shown=()
+      mise -C ~ ls --current --offline 2>/dev/null | while read -r name ver rest; do
+        _p9k_mise_global[$name]=$ver
+      done
+      mise ls --current --offline 2>/dev/null | while read -r name ver rest; do
+        [[ $name == *:* || $ver == ${_p9k_mise_global[$name]} ]] || _p9k_mise_shown+=($name $ver)
+      done
+    fi
+    for name ver in $_p9k_mise_shown; do
+      tool=${(U)name//-/_}
+      [[ $tool == NODE ]] && fg=POWERLEVEL9K_ASDF_NODEJS_FOREGROUND || fg=POWERLEVEL9K_ASDF_${tool}_FOREGROUND
+      case $tool in
+        ERLANG|ELIXIR|NODE|RUST|PYTHON|GO|RUBY|JAVA|LUA) p10k segment -s $tool -f ${(P)fg:-$POWERLEVEL9K_ASDF_FOREGROUND} -i ${tool}_ICON -t $ver ;;
+        *) p10k segment -s $tool -f ${(P)fg:-$POWERLEVEL9K_ASDF_FOREGROUND} -t "$name $ver" ;;
+      esac
+    done
   }
 
   # User-defined prompt segments can be customized the same way as built-in segments.

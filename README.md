@@ -46,5 +46,6 @@ The scripts in `.chezmoiscripts` run during `chezmoi apply`:
 - `run_onchange_before_10-brew-bundle.sh.tmpl` installs the Homebrew formulae, apps and fonts. It runs again when the list changes.
 - `run_once_after_20-installers.sh.tmpl` installs [mise](https://mise.jdx.dev/) and [uv](https://docs.astral.sh/uv/) with their official install scripts.
 - `run_onchange_after_30-mise-install.sh.tmpl` runs `mise install` for the tools in `~/.config/mise/config.toml`: Erlang, Elixir, Node.js LTS, Rust and some CLI tools. It runs again when that file changes.
+- `run_once_after_40-wezterm-terminfo.sh.tmpl` installs the WezTerm terminfo. WezTerm sets `TERM=wezterm`, and Neovim needs this terminfo to show undercurl.
 
 The scripts do not upgrade tools. Use `topgrade` for upgrades.

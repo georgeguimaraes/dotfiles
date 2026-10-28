@@ -3,3 +3,6 @@
 defaults write com.superlogical.rex Workspace.terminalFontName -string "VictorMono Nerd Font Mono"
 defaults write com.superlogical.rex Workspace.terminalFontPointSize -float 18
 defaults write com.superlogical.rex Workspace.terminalFontSmoothing -bool true
+defaults write com.superlogical.rex Workspace.terminalCursorStyle -string "block"
+defaults write com.superlogical.rex Workspace.terminalCursorBlinkIntervalMilliseconds -int 0
+defaults write com.superlogical.rex Workspace.terminalCursorBlinkUsesCustomInterval -bool false

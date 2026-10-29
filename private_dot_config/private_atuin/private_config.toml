@@ -216,6 +216,8 @@ records = true
 # strategy = "auto"
 
 [daemon]
+enabled = true
+autostart = true
 
 [ai]
 enabled = true
@@ -237,3 +239,6 @@ enabled = true
 
 ## The port that should be used for TCP on non unix systems
 # tcp_port = 8889
+
+[threads]
+capture = true

@@ -28,6 +28,8 @@ Don't close with offers or check-ins, like "happy to do that next if this looks 
 
 ## Writing and organizing Linear issues
 
+Never write a bare Linear ID. Every mention of an issue carries its title and the project it's on, so nobody has to click through to know what's being discussed: `ABC-123 "the issue title" (Project Name)`. Applies everywhere: chat replies, issue and project descriptions, comments, PR bodies, drafted Slack messages. Same for milestones when the name alone is ambiguous.
+
 Write issue titles in plain language that names the work or outcome. Keep an established roadmap code, such as OR-13 or EV-4, at the start of the title when it helps map the issue back to the source plan.
 
 Write descriptions so a reader can understand why the work matters, what to do, and what observable evidence proves completion. Natural prose is fine; separate sections are optional. Make the next action concrete. Keep numerical thresholds, source requirements, ownership, dependencies, and target dates accurate. Say which work or evidence already exists so the issue does not imply it must be built again.
@@ -52,6 +54,7 @@ Only post comments on things that actually matter: correctness bugs, real perf g
 - Semantic prefix in PR titles (feat:, fix:, chore:), capitalized after prefix
 - Skip test plan sections in PR descriptions. No "## Summary" heading, just start with content
 - Concise descriptions and commit messages in ASD-STE100: no fluff, no em dashes, minimal bullets, use colons
+- No closing offers in PR descriptions, like "Happy to split this into smaller PRs" or "happy to change X if you prefer". End on the last piece of content
 - Remove unnecessary comments from code you wrote before committing
 
 ## Testing
@@ -87,6 +90,17 @@ Prefer the smallest implementation that satisfies the current acceptance criteri
 - After editing, run a subtractive pass: remove dead compatibility paths, wrappers, indirection, speculative configuration, and tests that don't protect a real branch or business rule.
 - Before opening a PR, ask: "Would I build it this way knowing only today's requirements?" If not, simplify it.
 - When the issue explicitly defers broader architecture, treat that deferred scope as a constraint.
+
+## Fix the general rule, not the case
+
+When a bug shows up for one kind of input (an edge, a missing value, an unusual variant, a boundary), the case is rarely special. Usually the general code holds a hidden assumption that this input breaks. Find that assumption and fix the code so the case is correct by construction. Don't add a branch for the case. Branches for cases multiply, get missed at other sites, and drift between implementations.
+
+- When a fix adds an `if`, a clause or an early return for one value or shape, stop. Name the assumption the general path makes, and remove it or move it to one explicit boundary.
+- Derive behavior from the structure (types, schema, declared sizes) instead of probing the data, so every valid input follows the same path.
+- Pick representations where the case is an ordinary value: an empty collection instead of nil, a neutral or initial value instead of a marker, a total function instead of a partial one.
+- Fix the shared mechanism, so every caller gets the fix. Don't patch the call site that reported the bug.
+- When choosing semantics, prefer one uniform rule over a rule with exceptions. Raise only when the result is undefined, and then with a clear error.
+- Test the cases at the boundaries of the domain explicitly. Check that the fix removed branches instead of adding them.
 
 ## Verification
 

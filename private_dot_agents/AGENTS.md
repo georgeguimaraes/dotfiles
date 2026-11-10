@@ -56,6 +56,7 @@ Only post comments on things that actually matter: correctness bugs, real perf g
 - Concise descriptions and commit messages in ASD-STE100: no fluff, no em dashes, minimal bullets, use colons
 - No closing offers in PR descriptions, like "Happy to split this into smaller PRs" or "happy to change X if you prefer". End on the last piece of content
 - Remove unnecessary comments from code you wrote before committing
+- Screenshots and videos in PRs, issues and comments: use `gh ... --attach './shot.png#alt text'` (gh 2.99+, on `gh pr create|edit|comment` and `gh issue create|edit|comment`). A body reference `![alt](./shot.png)` gets the uploaded URL in place. Files the body does not reference go at the end. Never upload through the GitHub web editor.
 
 ## Testing
 

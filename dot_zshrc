@@ -190,3 +190,6 @@ export PATH="/Users/george/.local/bin:$PATH"
 if command -v but >/dev/null 2>&1; then eval "$(but completions zsh)"; fi
 
 eval "$(mise activate zsh)"
+
+# Entire CLI shell completion
+if command -v entire >/dev/null 2>&1; then source <(entire completion zsh); fi

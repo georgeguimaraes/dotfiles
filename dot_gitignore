@@ -12,3 +12,5 @@ lefthook-local.yml
 # Beads stealth mode: /Users/george/code/soothsayer (added by bd init --stealth)
 /Users/george/code/soothsayer/.beads/
 /Users/george/code/soothsayer/.claude/settings.local.json
+
+**/.claude/settings.local.json

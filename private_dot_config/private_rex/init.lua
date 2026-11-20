@@ -53,7 +53,8 @@ rex.bind("cmd+d", "pane.split", { direction = "down" })
 rex.bind("cmd+z", "pane.zoom")
 rex.bind("cmd+w", "pane.close")
 rex.bind("cmd+shift+w", "client.tab.close")
-rex.bind("cmd+k", "com.superlogical.terminal.clear")
+rex.bind("cmd+shift+k", "com.superlogical.terminal.clear")
+rex.bind("cmd+k", "session.switch")
 
 -- Tabs
 
